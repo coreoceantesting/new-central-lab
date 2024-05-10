@@ -87,6 +87,13 @@
                 </li>
                 @endcan
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('register.patient') }}" >
+                        <i class="ri-user-line"></i>
+                        <span data-key="t-dashboards">Patient Registration</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>

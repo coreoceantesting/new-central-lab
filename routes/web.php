@@ -68,6 +68,9 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     Route::put('users/{user}/assign-role', [App\Http\Controllers\Admin\UserController::class, 'assignRole' ])->name('users.assign-role');
     Route::resource('roles', App\Http\Controllers\Admin\RoleController::class );
 
+    // patient registration
+    Route::get('patient-registration', [App\Http\Controllers\PatientController::class, 'index'])->name('register.patient');
+
 });
 
 
