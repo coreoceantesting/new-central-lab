@@ -53,6 +53,9 @@
                             <li class="nav-item">
                                 <a href="{{ route('labs.index') }}" class="nav-link" data-key="t-horizontal">Labs</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('maincategories.index') }}" class="nav-link" data-key="t-horizontal">Main Categories</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
