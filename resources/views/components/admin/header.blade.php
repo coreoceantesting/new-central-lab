@@ -4,21 +4,21 @@
             <div class="d-flex">
                 <!-- LOGO -->
                 <div class="navbar-brand-box horizontal-logo">
-                    <a href="index.html" class="logo logo-dark">
+                    <a href="{{ route('home') }}" class="logo logo-dark">
                         <span class="logo-sm">
-                            <img src="{{ asset('admin/images/logo-sm.png') }}" alt="" height="22" />
+                            <img src="{{ asset('admin/images/logo.png') }}" alt="" height="22" />
                         </span>
                         <span class="logo-lg">
-                            <img src="{{ asset('admin/images/logo-dark.png') }}" alt="" height="17" />
+                            <img src="{{ asset('admin/images/logo.png') }}" alt="" height="45" />
                         </span>
                     </a>
 
-                    <a href="index.html" class="logo logo-light">
+                    <a href="{{ route('home') }}" class="logo logo-light">
                         <span class="logo-sm">
-                            <img src="{{ asset('admin/images/logo-sm.png') }}" alt="" height="22" />
+                            <img src="{{ asset('admin/images/logo.png') }}" alt="" height="22" />
                         </span>
                         <span class="logo-lg">
-                            <img src="{{ asset('admin/images/logo-light.png') }}" alt="" height="17" />
+                            <img src="{{ asset('admin/images/logo.png') }}" alt="" height="45" />
                         </span>
                     </a>
                 </div>
@@ -32,7 +32,7 @@
                 </button>
 
                 <!-- App Search-->
-                <form class="app-search d-none d-md-block">
+                <form class="app-search d-none">
                     <div class="position-relative">
                         <input type="text" class="form-control" placeholder="Search..." autocomplete="off" id="search-options" value="" />
                         <span class="mdi mdi-magnify search-widget-icon"></span>
@@ -160,7 +160,7 @@
                     </button>
                 </div>
 
-                <div class="ms-1 header-item d-none d-sm-flex">
+                <div class="ms-1 header-item d-none">
                     <button type="button" id="change-theme-button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
                         <i class="bx bx-moon fs-22"></i>
                     </button>
@@ -170,7 +170,7 @@
                 <div class="dropdown ms-sm-3 header-item topbar-user">
                     <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
-                            <img class="rounded-circle header-profile-user" src="{{ asset('admin/images/users/avatar-1.jpg') }}" alt="Header Avatar" />
+                            <img class="rounded-circle header-profile-user" src="{{ asset('admin/images/users/user-dummy-img.jpg') }}" alt="Header Avatar" />
                             <span class="text-start ms-xl-2">
                                 <span class="d-none d-xl-inline-block ms-1 fw-semibold user-name-text">{{ ucfirst(auth()->user()->name) }}</span>
                                 <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">{{ auth()->user()->roles[0]->name }}</span>
@@ -181,9 +181,9 @@
                         <h6 class="dropdown-header">
                             Welcome {{ ucfirst(auth()->user()->name) }}!
                         </h6>
-                        <a class="dropdown-item" href="pages-profile.html"><i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
+                        {{-- <a class="dropdown-item" href="pages-profile.html"><i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
                             <span class="align-middle">Profile</span>
-                        </a>
+                        </a> --}}
                         <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                             <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
                             <span class="align-middle" data-key="t-logout">Logout</span>

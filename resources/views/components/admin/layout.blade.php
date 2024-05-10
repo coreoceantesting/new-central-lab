@@ -4,12 +4,12 @@
 
 <head>
     <meta charset="utf-8" />
-    <title>{{ config('app.name') }} | {{ $title }}</title>
+    <title>PMC | {{ $title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
 
-    <link rel="shortcut icon" href="{{ asset('admin/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('admin/images/login-logo.png') }}">
     <!--datatable css-->
     <link rel="stylesheet" href="{{ asset('admin/datatables/1.11.5/css/dataTables.bootstrap5.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('admin/datatables/responsive/2.2.9/css/responsive.bootstrap.min.css') }}" />
