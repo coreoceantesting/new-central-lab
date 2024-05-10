@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Main Category</x-slot>
-    <x-slot name="heading">Main Category</x-slot>
+    <x-slot name="title">Sub Category</x-slot>
+    <x-slot name="heading">Sub Category</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,19 +12,34 @@
                         @csrf
 
                         <div class="card-header">
-                            <h4 class="card-title">Add Main Category</h4>
+                            <h4 class="card-title">Add Sub Category</h4>
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="main_category_name">Main Category Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="main_category_name" name="main_category_name" type="text" placeholder="Enter Main Category Name">
-                                    <span class="text-danger is-invalid main_category_name_err"></span>
+                                    <label class="col-form-label" for="sub_category_name">Sub Category Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="sub_category_name" name="sub_category_name" type="text" placeholder="Enter Sub Category Name">
+                                    <span class="text-danger is-invalid sub_category_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Lab Initial">
-                                    <span class="text-danger is-invalid initial_err"></span>
+                                    <label class="col-form-label" for="units">Units <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="units" name="units" type="text" placeholder="Enter Units">
+                                    <span class="text-danger is-invalid units_err"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="bioreferal">BIO.REF INTERVAL <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="bioreferal" name="bioreferal" type="text" placeholder="Enter BIO.REF Interval">
+                                    <span class="text-danger is-invalid bioreferal_err"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="main_category">Main Category<span class="text-danger">*</span></label>
+                                    <select class="form-control" name="main_category" id="main_category">
+                                        <option value="">Select Main Category</option>
+                                        @foreach ($main_category as $list)
+                                            <option value="{{ $list->id }}">{{ $list->main_category_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger is-invalid main_category_err"></span>
                                 </div>
                             </div>
 
@@ -53,17 +68,31 @@
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="main_category_name">Main Category Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="main_category_name" name="main_category_name" type="text" placeholder="Enter Main Category Name">
-                                    <span class="text-danger is-invalid main_category_name_err"></span>
+                                    <label class="col-form-label" for="sub_category_name">Sub Category Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="sub_category_name" name="sub_category_name" type="text" placeholder="Enter Sub Category Name">
+                                    <span class="text-danger is-invalid sub_category_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Lab Initial">
-                                    <span class="text-danger is-invalid initial_err"></span>
+                                    <label class="col-form-label" for="units">Units <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="units" name="units" type="text" placeholder="Enter Units">
+                                    <span class="text-danger is-invalid units_err"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="bioreferal">BIO.REF INTERVAL <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="bioreferal" name="bioreferal" type="text" placeholder="Enter BIO.REF Interval">
+                                    <span class="text-danger is-invalid bioreferal_err"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="main_category">Main Category<span class="text-danger">*</span></label>
+                                    <select class="form-control" name="main_category" id="main_category">
+                                        <option value="">Select Main Category</option>
+                                        @foreach ($main_category as $list)
+                                            <option value="{{ $list->id }}">{{ $list->main_category_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger is-invalid main_category_err"></span>
                                 </div>
                             </div>
-
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-primary" id="editSubmit">Submit</button>
@@ -94,17 +123,21 @@
                                 <thead>
                                     <tr>
                                         <th>Sr.NO</th>
-                                        <th>Category Name</th>
-                                        <th>Category Initial</th>
+                                        <th>Sub Category Name</th>
+                                        <th>Main Category Name</th>
+                                        <th>Units</th>
+                                        <th>BIO.REF INTERVAL</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($main_category as $index => $category)
+                                    @foreach ($category_list as $index => $category)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
+                                            <td>{{ $category->sub_category_name }}</td>
                                             <td>{{ $category->main_category_name }}</td>
-                                            <td>{{ $category->initial }}</td>
+                                            <td>{{ $category->units }}</td>
+                                            <td>{{ $category->bioreferal }}</td>
                                             <td>
                                                 <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $category->id }}"><i data-feather="edit"></i></button>
                                                 <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $category->id }}"><i data-feather="trash-2"></i> </button>
@@ -132,7 +165,7 @@
 
         var formdata = new FormData(this);
         $.ajax({
-            url: '{{ route('maincategories.store') }}',
+            url: '{{ route('subcategories.store') }}',
             type: 'POST',
             data: formdata,
             contentType: false,
@@ -143,7 +176,7 @@
                 if (!data.error2)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('maincategories.index') }}';
+                            window.location.href = '{{ route('subcategories.index') }}';
                         });
                 else
                     swal("Error!", data.error2, "error");
@@ -170,7 +203,7 @@
     $("#buttons-datatables").on("click", ".edit-element", function(e) {
         e.preventDefault();
         var model_id = $(this).attr("data-id");
-        var url = "{{ route('maincategories.edit', ":model_id") }}";
+        var url = "{{ route('subcategories.edit', ":model_id") }}";
 
         $.ajax({
             url: url.replace(':model_id', model_id),
@@ -183,9 +216,11 @@
                 console.log(data);
                 if (!data.error)
                 {
-                    $("#editForm input[name='edit_model_id']").val(data.maincategory.id);
-                    $("#editForm input[name='main_category_name']").val(data.maincategory.main_category_name);
-                    $("#editForm input[name='initial']").val(data.maincategory.initial);
+                    $("#editForm input[name='edit_model_id']").val(data.subcategory.id);
+                    $("#editForm input[name='sub_category_name']").val(data.subcategory.sub_category_name);
+                    $("#editForm input[name='units']").val(data.subcategory.units);
+                    $("#editForm input[name='bioreferal']").val(data.subcategory.bioreferal);
+                    $("#editForm select[name='main_category']").val(data.subcategory.main_category);
                 }
                 else
                 {
@@ -209,7 +244,7 @@
             var formdata = new FormData(this);
             formdata.append('_method', 'PUT');
             var model_id = $('#edit_model_id').val();
-            var url = "{{ route('maincategories.update', ":model_id") }}";
+            var url = "{{ route('subcategories.update', ":model_id") }}";
             //
             $.ajax({
                 url: url.replace(':model_id', model_id),
@@ -223,7 +258,7 @@
                     if (!data.error2)
                         swal("Successful!", data.success, "success")
                             .then((action) => {
-                                window.location.href = '{{ route('maincategories.index') }}';
+                                window.location.href = '{{ route('subcategories.index') }}';
                             });
                     else
                         swal("Error!", data.error2, "error");
@@ -261,7 +296,7 @@
             if (justTransfer)
             {
                 var model_id = $(this).attr("data-id");
-                var url = "{{ route('maincategories.destroy', ":model_id") }}";
+                var url = "{{ route('subcategories.destroy', ":model_id") }}";
 
                 $.ajax({
                     url: url.replace(':model_id', model_id),
