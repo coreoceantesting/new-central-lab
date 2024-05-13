@@ -152,20 +152,8 @@
                                     <textarea class="form-control" name="address" id="address" cols="30" rows="2" placeholder="Enter Address"></textarea>
                                     <span class="text-danger is-invalid address_err"></span>
                                 </div>
-                                <div class="col-md-4">
-                                    <label class="col-form-label" for="tests">Select Test <span class="text-danger">*</span></label>
-                                    <select class="form-control multiple-select" name="tests[]" id="tests" multiple>
-                                        @foreach($mainCategories as $mainCategory)
-                                            <optgroup label="{{ $mainCategory->main_category_name }}">
-                                                @foreach($subCategories as $subCategory)
-                                                    @if($subCategory->main_category === $mainCategory->id)
-                                                        <option value="{{ $subCategory->id }}">{{ $subCategory->sub_category_name }}</option>
-                                                    @endif
-                                                @endforeach
-                                            </optgroup>
-                                        @endforeach
-                                    </select>
-                                    <span class="text-danger is-invalid gender_err"></span>
+                                <div class="col-md-4 edit_test">
+
                                 </div>
 
                                 <div class="col-md-4">
@@ -322,7 +310,9 @@
                     $("#editForm input[name='age']").val(data.details.age);
                     $("#editForm select[name='gender']").val(data.details.gender);
                     $("#editForm textarea[name='address']").val(data.details.address);
-                    $("#editForm select[name='tests']").val(data.details.tests);
+                    // $("#editForm select[name='tests']").val(data.details.tests);
+                    $('.edit_test').html(data.html);
+                    $('.multiple-select').multipleSelect()
                     $("#editForm select[name='lab']").val(data.details.lab);
                     $("#editForm input[name='refering_doctor_name']").val(data.details.refering_doctor_name);
                     $("#editForm input[name='date']").val(data.details.date);
@@ -436,4 +426,4 @@
     $(function () {
       $('.multiple-select').multipleSelect()
     })
-  </script>
+</script>
