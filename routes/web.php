@@ -70,6 +70,9 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
 
     // patient registration
     Route::get('patient-registration', [App\Http\Controllers\PatientController::class, 'index'])->name('register.patient');
+    Route::post('patient-store', [App\Http\Controllers\PatientController::class, 'store'])->name('store.patient');
+    Route::get('patient-edit/{id}', [App\Http\Controllers\PatientController::class, 'edit'])->name('edit.patient');
+    Route::put('patient-update/{id}', [App\Http\Controllers\PatientController::class, 'update'])->name('update.patient');
 
 });
 

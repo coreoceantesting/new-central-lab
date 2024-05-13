@@ -23,6 +23,7 @@
     <link href="{{ asset('admin/css/app.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('admin/css/font-awesome-all.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://unpkg.com/multiple-select@1.7.0/dist/multiple-select.min.css">
     @stack('styles')
 </head>
 
