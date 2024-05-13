@@ -16,7 +16,7 @@ class PatientController extends Controller
 {
     public function index()
     {
-        $patient_list = DB::table('patient_details')->where('status', 'pending')->orderBy('patient_id', 'desc')->get();
+        $patient_list = DB::table('patient_details')->where('status', 'pending')->whereNull('deleted_at')->orderBy('patient_id', 'desc')->get();
         $mainCategories = MainCategory::latest()->get();
         $subCategories = DB::table('sub_categories')
             ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
@@ -135,5 +135,24 @@ class PatientController extends Controller
             return $this->respondWithAjax($e, 'updating', 'Patient Details');
         }
 
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        try
+        {
+            DB::beginTransaction();
+            $data['deleted_by'] = Auth::user()->id;
+            $data['deleted_at'] = date('Y-m-d H:i:s');
+
+            DB::table('patient_details')->where('patient_id', $id)->update($data);
+            DB::commit();
+
+            return response()->json(['success'=> 'Patient Details deleted successfully!']);
+        }
+        catch(\Exception $e)
+        {
+            return $this->respondWithAjax($e, 'deleting', 'Patient Details');
+        }
     }
 }

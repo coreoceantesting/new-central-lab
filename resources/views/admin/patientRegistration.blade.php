@@ -226,7 +226,7 @@
                                             <td>{{ $list->aadhar_no }}</td>
                                             <td>
                                                 <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $list->patient_id }}"><i data-feather="edit"></i></button>
-                                                {{-- <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $list->patient_id }}"><i data-feather="trash-2"></i> </button> --}}
+                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $list->patient_id }}"><i data-feather="trash-2"></i> </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -381,7 +381,7 @@
     $("#buttons-datatables").on("click", ".rem-element", function(e) {
         e.preventDefault();
         swal({
-            title: "Are you sure to delete this Lab?",
+            title: "Are you sure to delete this Patient Details?",
             // text: "Make sure if you have filled Vendor details before proceeding further",
             icon: "info",
             buttons: ["Cancel", "Confirm"]
@@ -391,7 +391,7 @@
             if (justTransfer)
             {
                 var model_id = $(this).attr("data-id");
-                var url = "{{ route('labs.destroy', ":model_id") }}";
+                var url = "{{ route('delete.patient', ":model_id") }}";
 
                 $.ajax({
                     url: url.replace(':model_id', model_id),
