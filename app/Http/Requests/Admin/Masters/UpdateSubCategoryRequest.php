@@ -26,6 +26,7 @@ class UpdateSubCategoryRequest extends FormRequest
             'units' => 'required',
             'bioreferal' => 'required',
             'main_category' => 'required',
+            'method' => 'required',
         ];
     }
 }

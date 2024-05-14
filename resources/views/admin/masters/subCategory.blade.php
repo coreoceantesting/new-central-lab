@@ -22,6 +22,16 @@
                                     <span class="text-danger is-invalid sub_category_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
+                                    <label class="col-form-label" for="method">Method Name<span class="text-danger">*</span></label>
+                                    <select class="form-control" name="method" id="method">
+                                        <option value="">Select Method</option>
+                                        @foreach ($method_list as $list)
+                                            <option value="{{ $list->method_id }}">{{ $list->method_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger is-invalid method_err"></span>
+                                </div>
+                                <div class="col-md-4">
                                     <label class="col-form-label" for="units">Units <span class="text-danger">*</span></label>
                                     <input class="form-control" id="units" name="units" type="text" placeholder="Enter Units">
                                     <span class="text-danger is-invalid units_err"></span>
@@ -71,6 +81,16 @@
                                     <label class="col-form-label" for="sub_category_name">Sub Category Name <span class="text-danger">*</span></label>
                                     <input class="form-control" id="sub_category_name" name="sub_category_name" type="text" placeholder="Enter Sub Category Name">
                                     <span class="text-danger is-invalid sub_category_name_err"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="method">Method Name<span class="text-danger">*</span></label>
+                                    <select class="form-control" name="method" id="method">
+                                        <option value="">Select Method</option>
+                                        @foreach ($method_list as $list)
+                                            <option value="{{ $list->method_id }}">{{ $list->method_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger is-invalid method_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="units">Units <span class="text-danger">*</span></label>

@@ -10,5 +10,5 @@ use Illuminate\Support\Facades\Auth;
 class SubCategory extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['sub_category_name', 'units', 'bioreferal', 'main_category'];
+    protected $fillable = ['sub_category_name', 'units', 'bioreferal', 'main_category', 'method'];
 }

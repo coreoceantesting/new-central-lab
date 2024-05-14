@@ -26,8 +26,9 @@ class SubCategoryController extends Controller
         ->whereNull('sub_categories.deleted_at')
         ->latest()
         ->get();
+        $method_list = [];
 
-        return view('admin.masters.subCategory')->with(['main_category'=> $main_category, 'category_list'=> $category_list]);
+        return view('admin.masters.subCategory')->with(['main_category'=> $main_category, 'category_list'=> $category_list, 'method_list' => $method_list]);
     }
 
     /**
@@ -51,6 +52,7 @@ class SubCategoryController extends Controller
             $data['units'] = $input['units'];
             $data['bioreferal'] = $input['bioreferal'];
             $data['main_category'] = $input['main_category'];
+            $data['method'] = $input['method'];
             $data['created_by'] = Auth::user()->id;
             $data['created_at'] = date('Y-m-d H:i:s');
             DB::table('sub_categories')->insert($data);
@@ -104,6 +106,7 @@ class SubCategoryController extends Controller
             $data['units'] = $input['units'];
             $data['bioreferal'] = $input['bioreferal'];
             $data['main_category'] = $input['main_category'];
+            $data['method'] = $input['method'];
             $data['updated_by'] = Auth::user()->id;
             $data['updated_at'] = date('Y-m-d H:i:s');
 
