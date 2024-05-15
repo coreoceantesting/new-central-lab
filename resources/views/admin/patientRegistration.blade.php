@@ -234,6 +234,7 @@
                                         <th>Patient Name</th>
                                         <th>Patient Mobile No</th>
                                         <th>Patient AadharCard No</th>
+                                        <th>Patient Age</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -244,6 +245,7 @@
                                             <td>{{ $list->first_name }} {{ $list->middle_name }} {{ $list->last_name }}</td>
                                             <td>{{ $list->mob_no }}</td>
                                             <td>{{ $list->aadhar_no }}</td>
+                                            <td>{{ $list->age }}</td>
                                             <td>
                                                 <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $list->patient_id }}"><i data-feather="edit"></i></button>
                                                 <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $list->patient_id }}"><i data-feather="trash-2"></i> </button>
