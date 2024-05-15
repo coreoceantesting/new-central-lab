@@ -26,6 +26,15 @@
                                     <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Lab Initial">
                                     <span class="text-danger is-invalid initial_err"></span>
                                 </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="type">Type <span class="text-danger">*</span></label>
+                                    <select class="form-control" name="type" id="type">
+                                        <option value="">Select Type</option>
+                                        <option value="Quantitative">Quantitative</option>
+                                        <option value="Cumulative">Cumulative</option>
+                                    </select>
+                                    <span class="text-danger is-invalid type_err"></span>
+                                </div>
                             </div>
 
                         </div>
@@ -62,6 +71,15 @@
                                     <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Lab Initial">
                                     <span class="text-danger is-invalid initial_err"></span>
                                 </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="type">Type <span class="text-danger">*</span></label>
+                                    <select class="form-control" name="type" id="type">
+                                        <option value="">Select Type</option>
+                                        <option value="Quantitative">Quantitative</option>
+                                        <option value="Cumulative">Cumulative</option>
+                                    </select>
+                                    <span class="text-danger is-invalid type_err"></span>
+                                </div>
                             </div>
 
                         </div>
@@ -96,6 +114,7 @@
                                         <th>Sr.NO</th>
                                         <th>Category Name</th>
                                         <th>Category Initial</th>
+                                        <th>Type</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -105,6 +124,7 @@
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $category->main_category_name }}</td>
                                             <td>{{ $category->initial }}</td>
+                                            <td>{{ $category->type }}</td>
                                             <td>
                                                 <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $category->id }}"><i data-feather="edit"></i></button>
                                                 <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $category->id }}"><i data-feather="trash-2"></i> </button>

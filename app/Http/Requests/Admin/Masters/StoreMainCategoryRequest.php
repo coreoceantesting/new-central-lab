@@ -24,6 +24,7 @@ class StoreMainCategoryRequest extends FormRequest
         return [
             'main_category_name' => 'required',
             'initial' => 'required',
+            'type' => 'required',
         ];
     }
 }
