@@ -76,6 +76,9 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     Route::put('patient-update/{id}', [App\Http\Controllers\PatientController::class, 'update'])->name('update.patient');
     Route::delete('patient-delete/{id}', [App\Http\Controllers\PatientController::class, 'destroy'])->name('delete.patient');
 
+    // pending for receive
+    Route::get('pending-for-receive-list', [App\Http\Controllers\PatientController::class, 'pending_for_receive_list'])->name('pending_for_receive.patient');
+
 });
 
 

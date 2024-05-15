@@ -97,6 +97,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('pending_for_receive.patient') }}" >
+                        <i class="ri-user-line"></i>
+                        <span data-key="t-dashboards">Pending For Receive</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>

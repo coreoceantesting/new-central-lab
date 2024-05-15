@@ -161,4 +161,18 @@ class PatientController extends Controller
             return $this->respondWithAjax($e, 'deleting', 'Patient Details');
         }
     }
+
+    public function pending_for_receive_list()
+    {
+        $patient_list = DB::table('patient_details')->where('status', 'pending')->whereNull('deleted_at')->orderBy('patient_id', 'desc')->get();
+        $mainCategories = MainCategory::latest()->get();
+        $subCategories = DB::table('sub_categories')
+            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
+            ->select('sub_categories.*', 'main_categories.main_category_name')
+            ->whereNull('sub_categories.deleted_at')
+            ->get();
+        $lab_list = Lab::latest()->get();
+            // dd($mainCategories, $subCategories);
+        return view('admin.pendingForReceive',compact('patient_list', 'lab_list', 'subCategories', 'mainCategories'));
+    }
 }
