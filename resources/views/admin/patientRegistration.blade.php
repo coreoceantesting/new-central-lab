@@ -18,9 +18,19 @@
                             <div class="mb-3 row">
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="patient_name">Patient Full Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="patient_name" name="patient_name" type="text" placeholder="Enter Patient FullName">
-                                    <span class="text-danger is-invalid patient_name_err"></span>
+                                    <label class="col-form-label" for="first_name">First Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Enter Patient First Name">
+                                    <span class="text-danger is-invalid first_name_err"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="middle_name">Middle Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="middle_name" name="middle_name" type="text" placeholder="Enter Patient Middle Name">
+                                    <span class="text-danger is-invalid middle_name_err"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="last_name">Last Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="last_name" name="last_name" type="text" placeholder="Enter Patient Last Name">
+                                    <span class="text-danger is-invalid last_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="mob_no">Mobile No <span class="text-danger">*</span></label>
@@ -47,7 +57,7 @@
                                     <span class="text-danger is-invalid gender_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="address">Address <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="address">Address</label>
                                     <textarea class="form-control" name="address" id="address" cols="30" rows="2" placeholder="Enter Address"></textarea>
                                     <span class="text-danger is-invalid address_err"></span>
                                 </div>
@@ -119,9 +129,19 @@
                             <div class="mb-3 row">
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="patient_name">Patient Full Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="patient_name" name="patient_name" type="text" placeholder="Enter Patient FullName">
-                                    <span class="text-danger is-invalid patient_name_err"></span>
+                                    <label class="col-form-label" for="first_name">First Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Enter Patient First Name">
+                                    <span class="text-danger is-invalid first_name_err"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="middle_name">Middle Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="middle_name" name="middle_name" type="text" placeholder="Enter Patient Middle Name">
+                                    <span class="text-danger is-invalid middle_name_err"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="last_name">Last Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="last_name" name="last_name" type="text" placeholder="Enter Patient Last Name">
+                                    <span class="text-danger is-invalid last_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="mob_no">Mobile No <span class="text-danger">*</span></label>
@@ -148,7 +168,7 @@
                                     <span class="text-danger is-invalid gender_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="address">Address <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="address">Address</label>
                                     <textarea class="form-control" name="address" id="address" cols="30" rows="2" placeholder="Enter Address"></textarea>
                                     <span class="text-danger is-invalid address_err"></span>
                                 </div>
@@ -221,7 +241,7 @@
                                     @foreach ($patient_list as $index => $list)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
-                                            <td>{{ $list->patient_name }}</td>
+                                            <td>{{ $list->first_name }} {{ $list->middle_name }} {{ $list->last_name }}</td>
                                             <td>{{ $list->mob_no }}</td>
                                             <td>{{ $list->aadhar_no }}</td>
                                             <td>
@@ -304,7 +324,9 @@
                 if (!data.error)
                 {
                     $("#editForm input[name='edit_model_id']").val(data.details.patient_id);
-                    $("#editForm input[name='patient_name']").val(data.details.patient_name);
+                    $("#editForm input[name='first_name']").val(data.details.first_name);
+                    $("#editForm input[name='middle_name']").val(data.details.middle_name);
+                    $("#editForm input[name='last_name']").val(data.details.last_name);
                     $("#editForm input[name='mob_no']").val(data.details.mob_no);
                     $("#editForm input[name='aadhar_no']").val(data.details.aadhar_no);
                     $("#editForm input[name='age']").val(data.details.age);

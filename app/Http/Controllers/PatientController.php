@@ -35,8 +35,12 @@ class PatientController extends Controller
             DB::beginTransaction();
             $input = $request->validated();
             $selectedTests = implode(',', $input['tests']);
+            $patient_uniqe_id = $input['first_name'].'_'.$input['last_name'].'_'.rand(1000, 9999);
 
-            $data['patient_name'] = $input['patient_name'];
+            $data['patient_uniqe_id'] = $patient_uniqe_id;
+            $data['first_name'] = $input['first_name'];
+            $data['middle_name'] = $input['middle_name'];
+            $data['last_name'] = $input['last_name'];
             $data['mob_no'] = $input['mob_no'];
             $data['aadhar_no'] = $input['aadhar_no'];
             $data['age'] = $input['age'];
@@ -112,7 +116,9 @@ class PatientController extends Controller
             $input = $request->validated();
             $selectedTests = implode(',', $input['tests']);
 
-            $data['patient_name'] = $input['patient_name'];
+            $data['first_name'] = $input['first_name'];
+            $data['middle_name'] = $input['middle_name'];
+            $data['last_name'] = $input['last_name'];
             $data['mob_no'] = $input['mob_no'];
             $data['aadhar_no'] = $input['aadhar_no'];
             $data['age'] = $input['age'];

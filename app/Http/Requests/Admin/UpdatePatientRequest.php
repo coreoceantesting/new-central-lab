@@ -22,12 +22,14 @@ class UpdatePatientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_name' => 'required',
+            'first_name' => 'required',
+            'middle_name' => 'required',
+            'last_name' => 'required',
             'mob_no' => 'required|min:10|max:10',
             'aadhar_no' => 'required|min:12|max:12',
             'age' => 'required',
             'gender' => 'required',
-            'address' => 'required',
+            'address' => 'nullable',
             'tests' => 'required|array',
             'lab' => 'required',
             'refering_doctor_name' => 'required',
