@@ -54,6 +54,7 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     Route::resource('labs', App\Http\Controllers\Admin\Masters\LabController::class );
     Route::resource('maincategories', App\Http\Controllers\Admin\Masters\MainCategoryController::class );
     Route::resource('subcategories', App\Http\Controllers\Admin\Masters\SubCategoryController::class );
+    Route::resource('methods', App\Http\Controllers\Admin\Masters\MethodController::class );
 
 
 

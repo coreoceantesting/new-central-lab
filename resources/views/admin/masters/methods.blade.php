@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Sub Category</x-slot>
-    <x-slot name="heading">Sub Category</x-slot>
+    <x-slot name="title">Methods</x-slot>
+    <x-slot name="heading">Methods</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -12,44 +12,19 @@
                         @csrf
 
                         <div class="card-header">
-                            <h4 class="card-title">Add Sub Category</h4>
+                            <h4 class="card-title">Add Method</h4>
                         </div>
                         <div class="card-body">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="sub_category_name">Sub Category Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="sub_category_name" name="sub_category_name" type="text" placeholder="Enter Sub Category Name">
-                                    <span class="text-danger is-invalid sub_category_name_err"></span>
+                                    <label class="col-form-label" for="method_name">Method Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="method_name" name="method_name" type="text" placeholder="Enter Method Name">
+                                    <span class="text-danger is-invalid method_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="method">Method Name<span class="text-danger">*</span></label>
-                                    <select class="form-control" name="method" id="method">
-                                        <option value="">Select Method</option>
-                                        @foreach ($method_list as $list)
-                                            <option value="{{ $list->id }}">{{ $list->method_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="text-danger is-invalid method_err"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="col-form-label" for="units">Units <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="units" name="units" type="text" placeholder="Enter Units">
-                                    <span class="text-danger is-invalid units_err"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="col-form-label" for="bioreferal">BIO.REF INTERVAL <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="bioreferal" name="bioreferal" type="text" placeholder="Enter BIO.REF Interval">
-                                    <span class="text-danger is-invalid bioreferal_err"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="col-form-label" for="main_category">Main Category<span class="text-danger">*</span></label>
-                                    <select class="form-control" name="main_category" id="main_category">
-                                        <option value="">Select Main Category</option>
-                                        @foreach ($main_category as $list)
-                                            <option value="{{ $list->id }}">{{ $list->main_category_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="text-danger is-invalid main_category_err"></span>
+                                    <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Method Initial">
+                                    <span class="text-danger is-invalid initial_err"></span>
                                 </div>
                             </div>
 
@@ -72,47 +47,23 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Edit Main Category</h4>
+                            <h4 class="card-title">Edit Method</h4>
                         </div>
                         <div class="card-body py-2">
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
                             <div class="mb-3 row">
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="sub_category_name">Sub Category Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="sub_category_name" name="sub_category_name" type="text" placeholder="Enter Sub Category Name">
-                                    <span class="text-danger is-invalid sub_category_name_err"></span>
+                                    <label class="col-form-label" for="method_name">method Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="method_name" name="method_name" type="text" placeholder="Enter Method Name">
+                                    <span class="text-danger is-invalid method_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="method">Method Name<span class="text-danger">*</span></label>
-                                    <select class="form-control" name="method" id="method">
-                                        <option value="">Select Method</option>
-                                        @foreach ($method_list as $list)
-                                            <option value="{{ $list->id }}">{{ $list->method_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="text-danger is-invalid method_err"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="col-form-label" for="units">Units <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="units" name="units" type="text" placeholder="Enter Units">
-                                    <span class="text-danger is-invalid units_err"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="col-form-label" for="bioreferal">BIO.REF INTERVAL <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="bioreferal" name="bioreferal" type="text" placeholder="Enter BIO.REF Interval">
-                                    <span class="text-danger is-invalid bioreferal_err"></span>
-                                </div>
-                                <div class="col-md-4">
-                                    <label class="col-form-label" for="main_category">Main Category<span class="text-danger">*</span></label>
-                                    <select class="form-control" name="main_category" id="main_category">
-                                        <option value="">Select Main Category</option>
-                                        @foreach ($main_category as $list)
-                                            <option value="{{ $list->id }}">{{ $list->main_category_name }}</option>
-                                        @endforeach
-                                    </select>
-                                    <span class="text-danger is-invalid main_category_err"></span>
+                                    <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Method Initial">
+                                    <span class="text-danger is-invalid initial_err"></span>
                                 </div>
                             </div>
+
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-primary" id="editSubmit">Submit</button>
@@ -143,26 +94,20 @@
                                 <thead>
                                     <tr>
                                         <th>Sr.NO</th>
-                                        <th>Sub Category Name</th>
-                                        <th>Main Category Name</th>
                                         <th>Method Name</th>
-                                        <th>Units</th>
-                                        <th>BIO.REF INTERVAL</th>
+                                        <th>Method Initial</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($category_list as $index => $category)
+                                    @foreach ($methods as $index => $method)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
-                                            <td>{{ $category->sub_category_name }}</td>
-                                            <td>{{ $category->main_category_name }}</td>
-                                            <td>{{ $category->method_name }}</td>
-                                            <td>{{ $category->units }}</td>
-                                            <td>{{ $category->bioreferal }}</td>
+                                            <td>{{ $method->method_name }}</td>
+                                            <td>{{ $method->initial }}</td>
                                             <td>
-                                                <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $category->id }}"><i data-feather="edit"></i></button>
-                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $category->id }}"><i data-feather="trash-2"></i> </button>
+                                                <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $method->id }}"><i data-feather="edit"></i></button>
+                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $method->id }}"><i data-feather="trash-2"></i> </button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -187,7 +132,7 @@
 
         var formdata = new FormData(this);
         $.ajax({
-            url: '{{ route('subcategories.store') }}',
+            url: '{{ route('methods.store') }}',
             type: 'POST',
             data: formdata,
             contentType: false,
@@ -198,7 +143,7 @@
                 if (!data.error2)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('subcategories.index') }}';
+                            window.location.href = '{{ route('methods.index') }}';
                         });
                 else
                     swal("Error!", data.error2, "error");
@@ -225,7 +170,7 @@
     $("#buttons-datatables").on("click", ".edit-element", function(e) {
         e.preventDefault();
         var model_id = $(this).attr("data-id");
-        var url = "{{ route('subcategories.edit', ":model_id") }}";
+        var url = "{{ route('methods.edit', ":model_id") }}";
 
         $.ajax({
             url: url.replace(':model_id', model_id),
@@ -235,15 +180,11 @@
             },
             success: function(data, textStatus, jqXHR) {
                 editFormBehaviour();
-                console.log(data);
                 if (!data.error)
                 {
-                    $("#editForm input[name='edit_model_id']").val(data.subcategory.id);
-                    $("#editForm input[name='sub_category_name']").val(data.subcategory.sub_category_name);
-                    $("#editForm input[name='units']").val(data.subcategory.units);
-                    $("#editForm input[name='bioreferal']").val(data.subcategory.bioreferal);
-                    $("#editForm select[name='main_category']").val(data.subcategory.main_category);
-                    $("#editForm select[name='method']").val(data.subcategory.method);
+                    $("#editForm input[name='edit_model_id']").val(data.method.id);
+                    $("#editForm input[name='method_name']").val(data.method.method_name);
+                    $("#editForm input[name='initial']").val(data.method.initial);
                 }
                 else
                 {
@@ -267,7 +208,7 @@
             var formdata = new FormData(this);
             formdata.append('_method', 'PUT');
             var model_id = $('#edit_model_id').val();
-            var url = "{{ route('subcategories.update', ":model_id") }}";
+            var url = "{{ route('methods.update', ":model_id") }}";
             //
             $.ajax({
                 url: url.replace(':model_id', model_id),
@@ -281,7 +222,7 @@
                     if (!data.error2)
                         swal("Successful!", data.success, "success")
                             .then((action) => {
-                                window.location.href = '{{ route('subcategories.index') }}';
+                                window.location.href = '{{ route('methods.index') }}';
                             });
                     else
                         swal("Error!", data.error2, "error");
@@ -309,7 +250,7 @@
     $("#buttons-datatables").on("click", ".rem-element", function(e) {
         e.preventDefault();
         swal({
-            title: "Are you sure to delete this Category?",
+            title: "Are you sure to delete this Method?",
             // text: "Make sure if you have filled Vendor details before proceeding further",
             icon: "info",
             buttons: ["Cancel", "Confirm"]
@@ -319,7 +260,7 @@
             if (justTransfer)
             {
                 var model_id = $(this).attr("data-id");
-                var url = "{{ route('subcategories.destroy', ":model_id") }}";
+                var url = "{{ route('methods.destroy', ":model_id") }}";
 
                 $.ajax({
                     url: url.replace(':model_id', model_id),

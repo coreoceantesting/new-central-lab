@@ -59,6 +59,9 @@
                             <li class="nav-item">
                                 <a href="{{ route('subcategories.index') }}" class="nav-link" data-key="t-horizontal">Sub Categories</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('methods.index') }}" class="nav-link" data-key="t-horizontal">Method</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
