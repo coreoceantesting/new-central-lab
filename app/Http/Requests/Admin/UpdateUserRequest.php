@@ -24,6 +24,7 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'role' => 'required',
+            'lab' => 'nullable',
             'name' => 'required',
             'email' => 'required|email',
             'mobile' => 'required|digits:10',

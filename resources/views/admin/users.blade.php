@@ -49,6 +49,17 @@
                             </div>
 
                             <div class="col-md-4 mt-3">
+                                <label class="col-form-label" for="lab">Select Lab <span class="text-danger">(required if role is doctor)*</span></label>
+                                <select class="form-control" id="lab" name="lab">
+                                    <option value="">--Select Lab--</option>
+                                    @foreach ($labs as $lab)
+                                        <option value="{{ $lab->id }}">{{ $lab->lab_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid lab_err"></span>
+                            </div>
+
+                            <div class="col-md-4 mt-3">
                                 <label class="col-form-label" for="password">Password <span class="text-danger">*</span></label>
                                 <input class="form-control" id="password" name="password" type="password" placeholder="********">
                                 <span class="text-danger is-invalid password_err"></span>
@@ -116,6 +127,17 @@
                                     @endforeach
                                 </select>
                                 <span class="text-danger is-invalid role_err"></span>
+                            </div>
+
+                            <div class="col-md-4 mt-3">
+                                <label class="col-form-label" for="lab">Select Lab<span class="text-danger">(required if role is doctor)*</span></label>
+                                <select class="form-control" id="lab" name="lab">
+                                    <option value="">--Select Lab--</option>
+                                    @foreach ($labs as $lab)
+                                        <option value="{{ $lab->id }}">{{ $lab->lab_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid lab_err"></span>
                             </div>
 
                         </div>
@@ -452,6 +474,7 @@
                     $("#editForm input[name='name']").val(data.user.name);
                     $("#editForm input[name='email']").val(data.user.email);
                     $("#editForm input[name='mobile']").val(data.user.mobile);
+                    $("#editForm select[name='lab']").val(data.user.lab);
                     $("#editForm select[name='ward_id']").html(data.wardHtml);
                 } else {
                     swal("Error!", data.error, "error");
