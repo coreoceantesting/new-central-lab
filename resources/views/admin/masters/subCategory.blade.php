@@ -37,7 +37,7 @@
                                     <span class="text-danger is-invalid units_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="bioreferal">BIO.REF INTERVAL <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="bioreferal">Biological Reference Interval <span class="text-danger">*</span></label>
                                     <input class="form-control" id="bioreferal" name="bioreferal" type="text" placeholder="Enter BIO.REF Interval">
                                     <span class="text-danger is-invalid bioreferal_err"></span>
                                 </div>
@@ -98,7 +98,7 @@
                                     <span class="text-danger is-invalid units_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="bioreferal">BIO.REF INTERVAL <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="bioreferal">Biological Reference Interval <span class="text-danger">*</span></label>
                                     <input class="form-control" id="bioreferal" name="bioreferal" type="text" placeholder="Enter BIO.REF Interval">
                                     <span class="text-danger is-invalid bioreferal_err"></span>
                                 </div>
@@ -147,7 +147,7 @@
                                         <th>Main Category Name</th>
                                         <th>Method Name</th>
                                         <th>Units</th>
-                                        <th>BIO.REF INTERVAL</th>
+                                        <th>Biological Reference Interval</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
