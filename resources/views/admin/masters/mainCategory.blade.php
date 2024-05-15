@@ -35,6 +35,11 @@
                                     </select>
                                     <span class="text-danger is-invalid type_err"></span>
                                 </div>
+                                <div class="col-md-8">
+                                    <label class="col-form-label" for="interpretation">Interpretation<span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="interpretation" name="interpretation"></textarea>
+                                    <span class="text-danger is-invalid interpretation_err"></span>
+                                </div>
                             </div>
 
                         </div>
@@ -79,6 +84,11 @@
                                         <option value="Cumulative">Cumulative</option>
                                     </select>
                                     <span class="text-danger is-invalid type_err"></span>
+                                </div>
+                                <div class="col-md-8">
+                                    <label class="col-form-label" for="interpretation">Interpretation<span class="text-danger">*</span></label>
+                                    <textarea class="form-control" id="interpretation" name="interpretation"></textarea>
+                                    <span class="text-danger is-invalid interpretation_err"></span>
                                 </div>
                             </div>
 
@@ -144,6 +154,21 @@
 </x-admin.layout>
 
 
+{{-- ckeditor --}}
+<script src="https://cdn.ckeditor.com/ckeditor5/35.1.0/classic/ckeditor.js"></script>
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#interpretation' ) )
+        .then( editor => {
+            console.log( editor );
+        } )
+        .catch( error => {
+            console.error( error );
+        } );
+
+
+</script>
+
 {{-- Add --}}
 <script>
     $("#addForm").submit(function(e) {
@@ -200,11 +225,22 @@
             },
             success: function(data, textStatus, jqXHR) {
                 editFormBehaviour();
-                console.log(data);
                 if (!data.error)
                 {
                     $("#editForm input[name='edit_model_id']").val(data.maincategory.id);
                     $("#editForm input[name='main_category_name']").val(data.maincategory.main_category_name);
+                    $("#editForm select[name='type']").val(data.maincategory.type);
+                    // Initialize CKEditor for interpretation textarea
+                    ClassicEditor
+                        .create(document.querySelector('#editForm #interpretation'), {
+                            // CKEditor configuration options
+                        })
+                        .then(editor => {
+                            editor.setData(data.maincategory.interpretation); // Set initial data
+                        })
+                        .catch(error => {
+                            console.error(error);
+                        });
                     $("#editForm input[name='initial']").val(data.maincategory.initial);
                 }
                 else

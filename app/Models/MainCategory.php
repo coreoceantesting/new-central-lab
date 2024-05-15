@@ -10,5 +10,5 @@ use Illuminate\Support\Facades\Auth;
 class MainCategory extends Model
 {
     use HasFactory, SoftDeletes;
-    protected $fillable = ['main_category_name', 'initial', 'type'];
+    protected $fillable = ['main_category_name', 'initial', 'type', 'interpretation'];
 }

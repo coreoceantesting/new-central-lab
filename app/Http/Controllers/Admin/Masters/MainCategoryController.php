@@ -43,6 +43,7 @@ class MainCategoryController extends Controller
             $data['main_category_name'] = $input['main_category_name'];
             $data['initial'] = $input['initial'];
             $data['type'] = $input['type'];
+            $data['interpretation'] = $input['interpretation'];
             $data['created_by'] = Auth::user()->id;
             $data['created_at'] = date('Y-m-d H:i:s');
             DB::table('main_categories')->insert($data);
@@ -95,6 +96,7 @@ class MainCategoryController extends Controller
             $data['main_category_name'] = $input['main_category_name'];
             $data['initial'] = $input['initial'];
             $data['type'] = $input['type'];
+            $data['interpretation'] = $input['interpretation'];
             $data['updated_by'] = Auth::user()->id;
             $data['updated_at'] = date('Y-m-d H:i:s');
 

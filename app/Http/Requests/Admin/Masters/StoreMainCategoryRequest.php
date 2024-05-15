@@ -25,6 +25,7 @@ class StoreMainCategoryRequest extends FormRequest
             'main_category_name' => 'required',
             'initial' => 'required',
             'type' => 'required',
+            'interpretation' => 'required',
         ];
     }
 }
