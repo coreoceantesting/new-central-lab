@@ -16,7 +16,7 @@ class PatientController extends Controller
 {
     public function index()
     {
-        $patient_list = DB::table('patient_details')->where('status', 'pending')->whereNull('deleted_at')->orderBy('patient_id', 'desc')->get();
+        $patient_list = DB::table('patient_details')->whereNull('deleted_at')->orderBy('patient_id', 'desc')->get();
         $mainCategories = MainCategory::latest()->get();
         $subCategories = DB::table('sub_categories')
             ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
@@ -175,4 +175,108 @@ class PatientController extends Controller
             // dd($mainCategories, $subCategories);
         return view('admin.pendingForReceive',compact('patient_list', 'lab_list', 'subCategories', 'mainCategories'));
     }
+
+    public function rejected_sample_list()
+    {
+        $patient_list = DB::table('patient_details')->where('status', 'rejected')->whereNull('deleted_at')->orderBy('patient_id', 'desc')->get();
+
+            // dd($mainCategories, $subCategories);
+        return view('admin.rejectedSampleList',compact('patient_list'));
+    }
+
+    public function received_sample_list()
+    {
+        $patient_list = DB::table('patient_details')
+        ->where('status', 'pending')
+        ->orwhere('status', 'received')
+        ->where('patient_status', 'pending')
+        ->whereNull('deleted_at')
+        ->orderBy('patient_id', 'desc')
+        ->get();
+
+            // dd($mainCategories, $subCategories);
+        return view('admin.receivedSampleList',compact('patient_list'));
+    }
+
+    public function update_status_received(Request $request, $id)
+    {
+        try
+        {
+            DB::beginTransaction();
+
+            DB::table('patient_details')->where('patient_id', $id)->update([
+                'status' => "received",
+                'received_by' => Auth::user()->id,
+                'received_at'=> date('Y-m-d H:i:s')
+            ]);
+            DB::commit();
+
+            return response()->json(['success'=> 'Patient status updated successfully!']);
+        }
+        catch(\Exception $e)
+        {
+            return $this->respondWithAjax($e, 'updating', 'Patient status');
+        }
+
+    }
+
+    public function approved_status(Request $request, $id)
+    {
+        try
+        {
+            DB::beginTransaction();
+
+            DB::table('patient_details')->where('patient_id', $id)->update([
+                'patient_status' => "approved",
+                // 'received_by' => Auth::user()->id,
+                // 'received_at'=> date('Y-m-d H:i:s')
+            ]);
+            DB::commit();
+
+            return response()->json(['success'=> 'Approved successfully!']);
+        }
+        catch(\Exception $e)
+        {
+            return $this->respondWithAjax($e, 'updating', 'Approved');
+        }
+
+    }
+
+    public function reject_status(Request $request, $id)
+    {
+        try
+        {
+            DB::beginTransaction();
+
+            DB::table('patient_details')->where('patient_id', $id)->update([
+                'patient_status' => "rejected",
+                'status' => "rejected",
+                'remark' => $request->input('remark')
+                // 'received_by' => Auth::user()->id,
+                // 'received_at'=> date('Y-m-d H:i:s')
+            ]);
+            DB::commit();
+
+            return response()->json(['success'=> 'Rejected successfully!']);
+        }
+        catch(\Exception $e)
+        {
+            return $this->respondWithAjax($e, 'updating', 'Rejected');
+        }
+
+    }
+
+    public function approved_sample_list()
+    {
+        $patient_list = DB::table('patient_details')
+        ->where('patient_status', 'approved')
+        ->whereNull('deleted_at')
+        ->orderBy('patient_id', 'desc')
+        ->get();
+
+            // dd($mainCategories, $subCategories);
+        return view('admin.approvedSampleList',compact('patient_list'));
+    }
+
+
 }

@@ -99,8 +99,29 @@
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('pending_for_receive.patient') }}" >
-                        <i class="ri-user-line"></i>
+                        <i class="ri-file-list-line"></i>
                         <span data-key="t-dashboards">Pending For Receive</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('rejected_sample_list') }}" >
+                        <i class="ri-list-check"></i>
+                        <span data-key="t-dashboards">Rejected Sample List</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('received_sample_list') }}" >
+                        <i class="ri-file-list-line"></i>
+                        <span data-key="t-dashboards">Received Sample List</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('approved_sample_list') }}" >
+                        <i class="ri-list-check"></i>
+                        <span data-key="t-dashboards">Approved Sample List</span>
                     </a>
                 </li>
 
