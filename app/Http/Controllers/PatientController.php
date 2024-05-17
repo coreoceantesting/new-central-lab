@@ -193,9 +193,16 @@ class PatientController extends Controller
         ->whereNull('deleted_at')
         ->orderBy('patient_id', 'desc')
         ->get();
+        $mainCategories = MainCategory::latest()->get();
+        $subCategories = DB::table('sub_categories')
+            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
+            ->select('sub_categories.*', 'main_categories.main_category_name')
+            ->whereNull('sub_categories.deleted_at')
+            ->get();
+        $lab_list = Lab::latest()->get();
 
             // dd($mainCategories, $subCategories);
-        return view('admin.receivedSampleList',compact('patient_list'));
+        return view('admin.receivedSampleList',compact('patient_list', 'mainCategories', 'subCategories', 'lab_list'));
     }
 
     public function update_status_received(Request $request, $id)
@@ -276,6 +283,51 @@ class PatientController extends Controller
 
             // dd($mainCategories, $subCategories);
         return view('admin.approvedSampleList',compact('patient_list'));
+    }
+
+    public function view(Request $request, $id)
+    {
+        $details = DB::table('patient_details')->where('patient_id', $id)->first();
+        $selected_tests = explode(',', $details->tests);
+        $mainCategories = MainCategory::latest()->get();
+        $subCategories = DB::table('sub_categories')
+            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
+            ->select('sub_categories.*', 'main_categories.main_category_name')
+            ->whereNull('sub_categories.deleted_at')
+            ->get();
+
+        $html = '<label class="col-form-label" for="tests">Select Test <span class="text-danger">*</span></label>';
+        $html .= '<select class="form-control multiple-select new" name="tests[]" id="tests" multiple>';
+
+        foreach($mainCategories as $mainCategory) {
+            $html .= '<optgroup label="'. $mainCategory->main_category_name .'">';
+            foreach($subCategories as $subCategory) {
+                if($subCategory->main_category === $mainCategory->id) {
+                    $html .= '<option disabled value="'. $subCategory->id .'"';
+                    if(in_array($subCategory->id, $selected_tests)) {
+                        $html .= ' selected';
+                    }
+                    $html .= '>'. $subCategory->sub_category_name .'</option>';
+                }
+            }
+            $html .= '</optgroup>';
+        }
+
+        $html .= '</select>';
+        $html .= '<span class="text-danger is-invalid gender_err"></span>';
+        if ($details)
+        {
+            $response = [
+                'result' => 1,
+                'details' => $details,
+                'html' => $html,
+            ];
+        }
+        else
+        {
+            $response = ['result' => 0];
+        }
+        return $response;
     }
 
 

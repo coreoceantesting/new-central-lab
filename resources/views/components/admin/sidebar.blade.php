@@ -47,9 +47,9 @@
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarLayouts">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
+                            {{-- <li class="nav-item">
                                 <a href="{{ route('wards.index') }}" class="nav-link" data-key="t-horizontal">Wards</a>
-                            </li>
+                            </li> --}}
                             <li class="nav-item">
                                 <a href="{{ route('labs.index') }}" class="nav-link" data-key="t-horizontal">Labs</a>
                             </li>
@@ -57,10 +57,10 @@
                                 <a href="{{ route('maincategories.index') }}" class="nav-link" data-key="t-horizontal">Main Categories</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('subcategories.index') }}" class="nav-link" data-key="t-horizontal">Sub Categories</a>
+                                <a href="{{ route('methods.index') }}" class="nav-link" data-key="t-horizontal">Method</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('methods.index') }}" class="nav-link" data-key="t-horizontal">Method</a>
+                                <a href="{{ route('subcategories.index') }}" class="nav-link" data-key="t-horizontal">Sub Categories</a>
                             </li>
                         </ul>
                     </div>

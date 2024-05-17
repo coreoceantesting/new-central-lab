@@ -3,7 +3,11 @@
     <x-slot name="heading">Patient Registration</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
-
+        <style>
+            .ms-choice>span{
+                position: relative !important;
+            }
+        </style>
         <!-- Add Form -->
         <div class="row" id="addContainer" style="display:none;">
             <div class="col-sm-12">
@@ -266,6 +270,19 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://unpkg.com/multiple-select@1.7.0/dist/multiple-select.min.js"></script>
+
+{{-- Current Date & Time --}}
+<script>
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = (now.getMonth() + 1).toString().padStart(2, '0');
+    const day = now.getDate().toString().padStart(2, '0');
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+
+    const formattedDateTime = `${year}-${month}-${day}T${hours}:${minutes}`;
+    document.getElementById('date').value = formattedDateTime;
+</script>
 
 {{-- Add --}}
 <script>

@@ -49,7 +49,7 @@
                             </div>
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="lab">Select Lab <span class="text-danger">(required if role is doctor)*</span></label>
+                                <label class="col-form-label" for="lab">Select Lab <span class="text-danger">(required if role is doctor & Lab Technician)*</span></label>
                                 <select class="form-control" id="lab" name="lab">
                                     <option value="">--Select Lab--</option>
                                     @foreach ($labs as $lab)
@@ -130,7 +130,7 @@
                             </div>
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="lab">Select Lab<span class="text-danger">(required if role is doctor)*</span></label>
+                                <label class="col-form-label" for="lab">Select Lab<span class="text-danger">(required if role is Doctor & Lab Technician)*</span></label>
                                 <select class="form-control" id="lab" name="lab">
                                     <option value="">--Select Lab--</option>
                                     @foreach ($labs as $lab)

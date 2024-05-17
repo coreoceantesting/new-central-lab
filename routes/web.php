@@ -73,6 +73,7 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     Route::get('patient-registration', [App\Http\Controllers\PatientController::class, 'index'])->name('register.patient');
     Route::post('patient-store', [App\Http\Controllers\PatientController::class, 'store'])->name('store.patient');
     Route::get('patient-edit/{id}', [App\Http\Controllers\PatientController::class, 'edit'])->name('edit.patient');
+    Route::get('patient-view/{id}', [App\Http\Controllers\PatientController::class, 'view'])->name('view.patient');
     Route::put('patient-update/{id}', [App\Http\Controllers\PatientController::class, 'update'])->name('update.patient');
     Route::delete('patient-delete/{id}', [App\Http\Controllers\PatientController::class, 'destroy'])->name('delete.patient');
 
