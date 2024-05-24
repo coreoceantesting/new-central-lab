@@ -11,7 +11,6 @@ use App\Models\SubCategory;
 use App\Models\Lab;
 use App\Http\Requests\Admin\StorePatientRequest;
 use App\Http\Requests\Admin\UpdatePatientRequest;
-// test config with cpanel using git
 
 class PatientController extends Controller
 {
