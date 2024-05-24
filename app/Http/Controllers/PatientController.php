@@ -11,7 +11,7 @@ use App\Models\SubCategory;
 use App\Models\Lab;
 use App\Http\Requests\Admin\StorePatientRequest;
 use App\Http\Requests\Admin\UpdatePatientRequest;
-
+ 
 class PatientController extends Controller
 {
     public function index()
