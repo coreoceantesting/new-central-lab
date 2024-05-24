@@ -39,7 +39,7 @@
                     </a>
                 </li>
 
-
+                @canany(['masters.all'])
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                         <i class="ri-layout-3-line"></i>
@@ -65,6 +65,7 @@
                         </ul>
                     </div>
                 </li>
+                @endcan
 
 
                 @canany(['users.view', 'roles.view'])
