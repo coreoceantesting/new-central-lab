@@ -419,8 +419,26 @@ class PatientController extends Controller
     public function view_patient_parameter(Request $request, $id)
     {
         $patient_detail = DB::table('patient_details')->where('patient_id', $id)->first();
+        $method_list = Method::latest()->get();
 
-        return view('admin.viewPatientParameter', compact('patient_detail'));
+        $test_report = DB::table('test_result')
+            ->join('sub_categories', 'test_result.test_id', '=', 'sub_categories.id')
+            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
+            ->join('methods', 'test_result.method_id', '=', 'methods.id')
+            ->select('test_result.*', 'methods.method_name', 'sub_categories.sub_category_name', 'sub_categories.units', 'sub_categories.bioreferal','main_categories.main_category_name', 'main_categories.interpretation')
+            ->where('test_result.patient_id', $id)
+            ->get();
+
+        // Organize tests by main test category
+        $organizedTests = [];
+        foreach ($test_report as $test) {
+            $mainCategory = $test->main_category_name;
+            $organizedTests[$mainCategory]['tests'][] = $test;
+            $organizedTests[$mainCategory]['interpretation'] = $test->interpretation;
+        }
+
+        // dd($organizedTests);
+        return view('admin.viewPatientParameter', compact('patient_detail', 'organizedTests', 'method_list'));
     }
 
 }

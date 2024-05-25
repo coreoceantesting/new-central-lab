@@ -33,6 +33,39 @@
                                 </tr>
                             </thead>
                         </table>
+                        <div class="table-responsive">
+                            @foreach ($organizedTests as $mainCategory => $subTests)
+                                <h3 style="text-align: center; padding-top: 15px; text-decoration: underline;">{{ $mainCategory }}</h3>
+                                <table class="table table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th>TEST NAME</th>
+                                            <th>Method</th>
+                                            <th>Type</th>
+                                            <th>RESULT</th>
+                                            <th>UNITS</th>
+                                            <th>BIOLOGICAL REFERANCE INTERVAL</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($subTests['tests'] as $test)
+                                            <tr>
+                                                <td>{{ $test->sub_category_name }}</td>
+                                                <td>{{ $test->method_name }}</td>
+                                                <td>{{ $test->type }}</td>
+                                                <td>{{ $test->result }}</td>
+                                                <td>{{ $test->units }}</td>
+                                                <td>{{ $test->bioreferal }}</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                {!! $subTests['interpretation'] !!}
+                            @endforeach
+                        </div>
+                        <div class="card-footer text-center">
+                            <a class="btn btn-primary" href="{{ route('first_verification_list') }}">Back</a>
+                        </div>
                     </div>
                 </div>
             </div>
