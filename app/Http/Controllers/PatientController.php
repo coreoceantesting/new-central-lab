@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\MainCategory;
 use App\Models\SubCategory;
 use App\Models\Lab;
+use App\Models\Method;
 use App\Http\Requests\Admin\StorePatientRequest;
 use App\Http\Requests\Admin\UpdatePatientRequest;
 
@@ -276,6 +277,7 @@ class PatientController extends Controller
     public function approved_sample_list()
     {
         $patient_list = DB::table('patient_details')
+        ->where('status', 'received')
         ->where('patient_status', 'approved')
         ->whereNull('deleted_at')
         ->orderBy('patient_id', 'desc')
@@ -330,5 +332,95 @@ class PatientController extends Controller
         return $response;
     }
 
+    public function put_parameter(Request $request, $id)
+    {
+        $patient_detail = DB::table('patient_details')->where('patient_id', $id)->first();
+
+        $selected_tests = explode(',', $patient_detail->tests);
+        $method_list = Method::latest()->get();
+
+        // Fetch both main and subtests
+        $tests = DB::table('sub_categories')
+            ->join('main_categories','sub_categories.main_category','=','main_categories.id')
+            ->join('methods','sub_categories.method','=','methods.id')
+            ->whereIn('sub_categories.id', $selected_tests)
+            ->get(['sub_categories.*','methods.method_name','main_categories.main_category_name','main_categories.type', 'main_categories.interpretation']);
+
+        // Organize tests by main test category
+        $organizedTests = [];
+        foreach ($tests as $test) {
+            $mainCategory = $test->main_category_name;
+            $organizedTests[$mainCategory]['tests'][] = $test;
+            $organizedTests[$mainCategory]['interpretation'] = $test->interpretation;
+        }
+
+        // dd($organizedTests);
+
+        return view('admin.putParameter', compact('patient_detail', 'organizedTests', 'method_list'));
+    }
+
+    public function storeResults(Request $request, $id)
+    {
+        $patient_details = DB::table('patient_details')->where('patient_id', $id)->first();
+
+        // Validation
+        $request->validate([
+            'results.*.*.test_id' => 'required|exists:sub_categories,id',
+            'results.*.*.result' => 'required',
+        ]);
+
+        // Store in the database
+        foreach ($request->results as $mainIndex => $mainResults) {
+            foreach ($mainResults as $result) {
+                $testId = $result['test_id'];
+                $resultValue = $result['result'];
+
+                // Get method and type from the form
+                $methodId = $request->input("method_$testId");
+                $type = $request->input("type_$testId");
+
+                DB::table('test_result')->insert([
+                    'patient_id' => $id,
+                    'test_id' => $testId,
+                    'result' => $resultValue,
+                    'method_id' => $methodId,
+                    'type' => $type,
+                    'generated_date' => now(),
+                    'created_by' => Auth::user()->id,
+                    'created_at' => now(),
+                ]);
+            }
+        }
+
+        // Update patient details status
+        DB::table('patient_details')->where('patient_id', $id)->update([
+            'status' => 'parameter_submitted',
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Test results have been stored successfully!',
+        ]);
+    }
+
+    public function first_verification_list()
+    {
+        $patient_list = DB::table('patient_details')
+        ->where('status', 'parameter_submitted')
+        ->where('patient_status', 'approved')
+        ->whereNull('deleted_at')
+        ->orderBy('patient_id', 'desc')
+        ->get();
+
+            // dd($mainCategories, $subCategories);
+        return view('admin.firstVerificationList',compact('patient_list'));
+    }
+
+    public function view_patient_parameter(Request $request, $id)
+    {
+        $patient_detail = DB::table('patient_details')->where('patient_id', $id)->first();
+
+        return view('admin.viewPatientParameter', compact('patient_detail'));
+    }
 
 }

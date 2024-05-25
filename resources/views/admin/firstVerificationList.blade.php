@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Approved Sample List</x-slot>
-    <x-slot name="heading">Approved Sample List</x-slot>
+    <x-slot name="title">Patient Sample List</x-slot>
+    <x-slot name="heading">Patient Sample List</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
         {{-- Patient listing --}}
@@ -12,7 +12,7 @@
                             <div class="col-sm-6">
                                 <div class="">
                                     {{-- <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button> --}}
-                                    <h4 class="card-title">Approved Sample List</h4>
+                                    <h4 class="card-title">Patient Sample List</h4>
                                     <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button>
                                 </div>
                             </div>
@@ -40,8 +40,7 @@
                                             <td>{{ $list->aadhar_no }}</td>
                                             <td>{{ $list->age }}</td>
                                             <td>
-                                                <a href="{{ route('enter.patientParameter', $list->patient_id) }}" class="btn btn-primary text-dark px-2 py-1" title="Test Parameter">Enter Test Parameter</a>
-                                                {{-- <button class="btn btn-primary text-dark px-2 py-1" title="Test Parameter" data-id="{{ $list->patient_id }}">Enter Test Parameter</button> --}}
+                                                <a href="{{ route('view.patientParameter', $list->patient_id) }}" class="btn btn-primary text-dark px-2 py-1" title="Test Parameter">View</a>
                                             </td>
                                         </tr>
                                     @endforeach

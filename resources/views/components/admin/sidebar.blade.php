@@ -126,6 +126,13 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('first_verification_list') }}" >
+                        <i class="ri-list-check"></i>
+                        <span data-key="t-dashboards">First Verification List</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>

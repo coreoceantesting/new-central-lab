@@ -90,6 +90,15 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
 
     // approved sample list
     Route::get('approved-sample-list', [App\Http\Controllers\PatientController::class, 'approved_sample_list'])->name('approved_sample_list');
+
+    // enter parameter
+    Route::get('add-parameter/{id}', [App\Http\Controllers\PatientController::class, 'put_parameter'])->name('enter.patientParameter');
+    Route::post('/store-results/{id}', [App\Http\Controllers\PatientController::class, 'storeResults'])->name('store.results');
+
+    // first verification list
+    Route::get('first-verification-list', [App\Http\Controllers\PatientController::class, 'first_verification_list'])->name('first_verification_list');
+
+    Route::get('view-patient-parameter/{id}', [App\Http\Controllers\PatientController::class, 'view_patient_parameter'])->name('view.patientParameter');
 });
 
 
