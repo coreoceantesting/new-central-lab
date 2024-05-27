@@ -91,68 +91,86 @@
                 </li>
                 @endcan
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('register.patient') }}" >
-                        <i class="ri-user-line"></i>
-                        <span data-key="t-dashboards">Patient Registration</span>
-                    </a>
-                </li>
+                @canany(['patient.Registration'])
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('register.patient') }}" >
+                            <i class="ri-user-line"></i>
+                            <span data-key="t-dashboards">Patient Registration</span>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('pending_for_receive.patient') }}" >
-                        <i class="ri-file-list-line"></i>
-                        <span data-key="t-dashboards">Pending For Receive</span>
-                    </a>
-                </li>
+                @canany(['list.PendingForReceive'])
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('pending_for_receive.patient') }}" >
+                            <i class="ri-file-list-line"></i>
+                            <span data-key="t-dashboards">Pending For Receive</span>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('rejected_sample_list') }}" >
-                        <i class="ri-list-check"></i>
-                        <span data-key="t-dashboards">Rejected Sample List</span>
-                    </a>
-                </li>
+                @canany(['list.RejectedSample'])
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('rejected_sample_list') }}" >
+                            <i class="ri-list-check"></i>
+                            <span data-key="t-dashboards">Rejected Sample List</span>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('received_sample_list') }}" >
-                        <i class="ri-file-list-line"></i>
-                        <span data-key="t-dashboards">Received Sample List</span>
-                    </a>
-                </li>
+                @canany(['list.ReceivedSample'])
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('received_sample_list') }}" >
+                            <i class="ri-file-list-line"></i>
+                            <span data-key="t-dashboards">Received Sample List</span>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('approved_sample_list') }}" >
-                        <i class="ri-list-check"></i>
-                        <span data-key="t-dashboards">Approved Sample List</span>
-                    </a>
-                </li>
+                @canany(['list.ApprovedSample'])
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('approved_sample_list') }}" >
+                            <i class="ri-list-check"></i>
+                            <span data-key="t-dashboards">Approved Sample List</span>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('first_verification_list') }}" >
-                        <i class="ri-list-check"></i>
-                        <span data-key="t-dashboards">First Verification List</span>
-                    </a>
-                </li>
+                @canany(['list.FirstVerification'])
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('first_verification_list') }}" >
+                            <i class="ri-list-check"></i>
+                            <span data-key="t-dashboards">First Verification List</span>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('second_verification_list') }}" >
-                        <i class="ri-list-check"></i>
-                        <span data-key="t-dashboards">Second Verification List</span>
-                    </a>
-                </li>
+                @canany(['list.SecondVerification'])
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('second_verification_list') }}" >
+                            <i class="ri-list-check"></i>
+                            <span data-key="t-dashboards">Second Verification List</span>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('doctor_rejected_list') }}" >
-                        <i class="ri-list-check"></i>
-                        <span data-key="t-dashboards">Doctor Rejected List</span>
-                    </a>
-                </li>
+                @canany(['list.DoctorRejected'])
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('doctor_rejected_list') }}" >
+                            <i class="ri-list-check"></i>
+                            <span data-key="t-dashboards">Doctor Rejected List</span>
+                        </a>
+                    </li>
+                @endcan
 
-                <li class="nav-item">
-                    <a class="nav-link menu-link" href="{{ route('generated_report_list') }}" >
-                        <i class="ri-list-check"></i>
-                        <span data-key="t-dashboards">Generated Report List</span>
-                    </a>
-                </li>
+                @canany(['list.GenratedReport'])
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="{{ route('generated_report_list') }}" >
+                            <i class="ri-list-check"></i>
+                            <span data-key="t-dashboards">Generated Report List</span>
+                        </a>
+                    </li>
+                @endcan
 
             </ul>
         </div>
