@@ -133,6 +133,27 @@
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('second_verification_list') }}" >
+                        <i class="ri-list-check"></i>
+                        <span data-key="t-dashboards">Second Verification List</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('doctor_rejected_list') }}" >
+                        <i class="ri-list-check"></i>
+                        <span data-key="t-dashboards">Doctor Rejected List</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('generated_report_list') }}" >
+                        <i class="ri-list-check"></i>
+                        <span data-key="t-dashboards">Generated Report List</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
     </div>

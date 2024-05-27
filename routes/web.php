@@ -97,8 +97,21 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
 
     // first verification list
     Route::get('first-verification-list', [App\Http\Controllers\PatientController::class, 'first_verification_list'])->name('first_verification_list');
-
     Route::get('view-patient-parameter/{id}', [App\Http\Controllers\PatientController::class, 'view_patient_parameter'])->name('view.patientParameter');
+    Route::put('first-doctor-approve-status/{id}', [App\Http\Controllers\PatientController::class, 'first_doctor_approved_status'])->name('firstDoctor.approve.status');
+    Route::put('first-doctor-reject-status/{id}', [App\Http\Controllers\PatientController::class, 'first_doctor_reject_status'])->name('firstDoctor.reject.status');
+
+    // second verification list
+    Route::get('second-verification-list', [App\Http\Controllers\PatientController::class, 'second_verification_list'])->name('second_verification_list');
+    Route::put('second-doctor-approve-status/{id}', [App\Http\Controllers\PatientController::class, 'second_doctor_approved_status'])->name('secondDoctor.approve.status');
+    Route::put('second-doctor-reject-status/{id}', [App\Http\Controllers\PatientController::class, 'second_doctor_reject_status'])->name('secondDoctor.reject.status');
+
+    // doctor rejected list
+    Route::get('doctor-rejected-list', [App\Http\Controllers\PatientController::class, 'doctor_rejected_list'])->name('doctor_rejected_list');
+
+    // generated report list
+    Route::get('generated-report-list', [App\Http\Controllers\PatientController::class, 'generated_report_list'])->name('generated_report_list');
+
 });
 
 

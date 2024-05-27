@@ -179,7 +179,13 @@ class PatientController extends Controller
 
     public function rejected_sample_list()
     {
-        $patient_list = DB::table('patient_details')->where('status', 'rejected')->whereNull('deleted_at')->orderBy('patient_id', 'desc')->get();
+        $patient_list = DB::table('patient_details')
+        ->where('status', 'rejected')
+        ->orWhere('patient_status', 'rejected')
+        ->orWhere('first_approval_status', 'rejected')
+        ->whereNull('deleted_at')
+        ->orderBy('patient_id', 'desc')
+        ->get();
 
             // dd($mainCategories, $subCategories);
         return view('admin.rejectedSampleList',compact('patient_list'));
@@ -408,6 +414,7 @@ class PatientController extends Controller
         $patient_list = DB::table('patient_details')
         ->where('status', 'parameter_submitted')
         ->where('patient_status', 'approved')
+        ->where('first_approval_status', 'pending')
         ->whereNull('deleted_at')
         ->orderBy('patient_id', 'desc')
         ->get();
@@ -439,6 +446,141 @@ class PatientController extends Controller
 
         // dd($organizedTests);
         return view('admin.viewPatientParameter', compact('patient_detail', 'organizedTests', 'method_list'));
+    }
+
+    public function first_doctor_approved_status(Request $request, $id)
+    {
+        try
+        {
+            DB::beginTransaction();
+
+            DB::table('patient_details')->where('patient_id', $id)->update([
+                'first_approval_status' => "approved",
+                'first_approval_by' => Auth::user()->id,
+                'first_approval_at'=> date('Y-m-d H:i:s')
+            ]);
+            DB::commit();
+
+            return response()->json(['success'=> 'Approved successfully!']);
+        }
+        catch(\Exception $e)
+        {
+            return $this->respondWithAjax($e, 'updating', 'Approved');
+        }
+
+    }
+
+    public function first_doctor_reject_status(Request $request, $id)
+    {
+        try
+        {
+            DB::beginTransaction();
+
+            DB::table('patient_details')->where('patient_id', $id)->update([
+                'first_approval_status' => "rejected",
+                'first_approval_remark' => $request->input('remark'),
+                'first_approval_by' => Auth::user()->id,
+                'first_approval_at'=> date('Y-m-d H:i:s')
+            ]);
+            DB::commit();
+
+            return response()->json(['success'=> 'Rejected successfully!']);
+        }
+        catch(\Exception $e)
+        {
+            return $this->respondWithAjax($e, 'updating', 'Rejected');
+        }
+
+    }
+
+    public function second_verification_list()
+    {
+        $patient_list = DB::table('patient_details')
+        ->where('patient_status', 'approved')
+        ->where('status', 'parameter_submitted')
+        ->where('first_approval_status', 'approved')
+        ->where('second_approval_status', 'pending')
+        ->whereNull('deleted_at')
+        ->orderBy('patient_id', 'desc')
+        ->get();
+
+            // dd($mainCategories, $subCategories);
+        return view('admin.secondVerificationList',compact('patient_list'));
+    }
+
+    public function second_doctor_approved_status(Request $request, $id)
+    {
+        try
+        {
+            DB::beginTransaction();
+
+            DB::table('patient_details')->where('patient_id', $id)->update([
+                'second_approval_status' => "approved",
+                'second_approval_by' => Auth::user()->id,
+                'second_approval_at'=> date('Y-m-d H:i:s')
+            ]);
+            DB::commit();
+
+            return response()->json(['success'=> 'Approved successfully!']);
+        }
+        catch(\Exception $e)
+        {
+            return $this->respondWithAjax($e, 'updating', 'Approved');
+        }
+
+    }
+
+    public function second_doctor_reject_status(Request $request, $id)
+    {
+        try
+        {
+            DB::beginTransaction();
+
+            DB::table('patient_details')->where('patient_id', $id)->update([
+                'second_approval_status' => "rejected",
+                'second_approval_remark' => $request->input('remarkNew'),
+                'second_approval_by' => Auth::user()->id,
+                'second_approval_at'=> date('Y-m-d H:i:s')
+            ]);
+            DB::commit();
+
+            return response()->json(['success'=> 'Rejected successfully!']);
+        }
+        catch(\Exception $e)
+        {
+            return $this->respondWithAjax($e, 'updating', 'Rejected');
+        }
+
+    }
+
+    public function doctor_rejected_list()
+    {
+        $patient_list = DB::table('patient_details')
+        ->where('status', 'parameter_submitted')
+        ->Where('patient_status', 'approved')
+        ->Where('first_approval_status', 'approved')
+        ->Where('second_approval_status', 'rejected')
+        ->whereNull('deleted_at')
+        ->orderBy('patient_id', 'desc')
+        ->get();
+
+            // dd($mainCategories, $subCategories);
+        return view('admin.doctorRejectedList',compact('patient_list'));
+    }
+
+    public function generated_report_list()
+    {
+        $patient_list = DB::table('patient_details')
+        ->where('status', 'parameter_submitted')
+        ->Where('patient_status', 'approved')
+        ->Where('first_approval_status', 'approved')
+        ->Where('second_approval_status', 'approved')
+        ->whereNull('deleted_at')
+        ->orderBy('patient_id', 'desc')
+        ->get();
+
+            // dd($mainCategories, $subCategories);
+        return view('admin.generatedReportList',compact('patient_list'));
     }
 
 }
