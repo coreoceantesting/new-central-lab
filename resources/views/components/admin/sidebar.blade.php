@@ -41,11 +41,11 @@
 
                 @canany(['masters.all'])
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                    <a class="nav-link menu-link" href="#sidebarLayouts1" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                         <i class="ri-layout-3-line"></i>
                         <span data-key="t-layouts">Masters</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarLayouts">
+                    <div class="collapse menu-dropdown" id="sidebarLayouts1">
                         <ul class="nav nav-sm flex-column">
                             {{-- <li class="nav-item">
                                 <a href="{{ route('wards.index') }}" class="nav-link" data-key="t-horizontal">Wards</a>
@@ -70,11 +70,11 @@
 
                 @canany(['users.view', 'roles.view'])
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                    <a class="nav-link menu-link" href="#sidebarLayouts2" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
                         <i class="bx bx-user-circle"></i>
                         <span data-key="t-layouts">User Management</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarLayouts">
+                    <div class="collapse menu-dropdown" id="sidebarLayouts2">
                         <ul class="nav nav-sm flex-column">
                             @can('users.view')
                                 <li class="nav-item">
