@@ -22,12 +22,12 @@ class SubCategoryController extends Controller
     {
         $main_category = MainCategory::latest()->get();
         $category_list = DB::table('sub_categories')
-        ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
-        ->join('methods', 'sub_categories.method', '=', 'methods.id')
-        ->select('sub_categories.*','main_categories.main_category_name', 'methods.method_name')
-        ->whereNull('sub_categories.deleted_at')
-        ->latest()
-        ->get();
+                        ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
+                        ->join('methods', 'sub_categories.method', '=', 'methods.id')
+                        ->select('sub_categories.*','main_categories.main_category_name', 'methods.method_name')
+                        ->whereNull('sub_categories.deleted_at')
+                        ->latest()
+                        ->get();
         $method_list = Method::latest()->get();
 
         return view('admin.masters.subCategory')->with(['main_category'=> $main_category, 'category_list'=> $category_list, 'method_list' => $method_list]);

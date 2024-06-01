@@ -32,9 +32,19 @@
                                     <span class="text-danger is-invalid method_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="units">Units <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="units">Units</label>
                                     <input class="form-control" id="units" name="units" type="text" placeholder="Enter Units">
                                     <span class="text-danger is-invalid units_err"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="bioreferal">Reference Interval Type<span class="text-danger">*</span></label>
+                                    <input class="form-control" id="bioreferal" name="bioreferal" type="text" placeholder="Enter BIO.REF Interval">
+                                    <select class="form-control" name="interval_type" id="interval_type">
+                                        <option value="">Select Interval Type</option>
+                                        <option value="1">Quantitative</option>
+                                        <option value="2">Cumulative</option>
+                                    </select>
+                                    <span class="text-danger is-invalid bioreferal_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="bioreferal">Biological Reference Interval <span class="text-danger">*</span></label>
@@ -93,7 +103,7 @@
                                     <span class="text-danger is-invalid method_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="units">Units <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="units">Units </label>
                                     <input class="form-control" id="units" name="units" type="text" placeholder="Enter Units">
                                     <span class="text-danger is-invalid units_err"></span>
                                 </div>

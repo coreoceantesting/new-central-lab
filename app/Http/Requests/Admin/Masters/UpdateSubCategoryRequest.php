@@ -23,7 +23,7 @@ class UpdateSubCategoryRequest extends FormRequest
     {
         return [
             'sub_category_name' => 'required',
-            'units' => 'required',
+            'units' => 'nullable',
             'bioreferal' => 'required',
             'main_category' => 'required',
             'method' => 'required',
