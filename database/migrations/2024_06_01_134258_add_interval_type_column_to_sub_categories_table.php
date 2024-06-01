@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('sub_categories', function (Blueprint $table) {
-            //
+            $table->unsignedTinyInteger('interval_type')->after('units')->nullable();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('sub_categories', function (Blueprint $table) {
-            //
+            $table->dropColumn('interval_type');
         });
     }
 };
