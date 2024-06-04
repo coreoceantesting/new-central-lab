@@ -112,6 +112,10 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     // generated report list
     Route::get('generated-report-list', [App\Http\Controllers\PatientController::class, 'generated_report_list'])->name('generated_report_list');
 
+    // testpdf
+
+Route::get('/fun', [App\Http\Controllers\FunController::class, 'document']);
+
 });
 
 
