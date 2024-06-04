@@ -12,6 +12,7 @@ use App\Models\Lab;
 use App\Models\Method;
 use App\Http\Requests\Admin\StorePatientRequest;
 use App\Http\Requests\Admin\UpdatePatientRequest;
+use \Mpdf\Mpdf as PDF;
 
 class PatientController extends Controller
 {
@@ -582,5 +583,41 @@ class PatientController extends Controller
             // dd($mainCategories, $subCategories);
         return view('admin.generatedReportList',compact('patient_list'));
     }
+
+    public function testReportPdf()
+    {
+        // Data to be passed to the view
+        $data = [
+            'title' => 'TheCodingJack',
+            'content' => 'Write something, just for fun!'
+        ];
+
+        // Render the view to a string
+        $html = view('testpdf', $data)->render();
+
+        // Create the mPDF document
+        $document = new PDF([
+            'mode' => 'utf-8',
+            'orientation' => 'L',
+            'margin_header' => '3',
+            'margin_top' => '20',
+            'margin_bottom' => '20',
+            'margin_footer' => '2',
+        ]);
+
+        // Write the rendered HTML content to the PDF
+        $document->WriteHTML($html);
+
+        // Set headers for the PDF response
+        $headers = [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="test.pdf"'
+        ];
+
+        // Output the PDF content directly to the browser
+        return response($document->Output('test.pdf', 'S'), 200, $headers);
+    }
+
+
 
 }
