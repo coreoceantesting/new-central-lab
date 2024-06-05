@@ -598,11 +598,13 @@ class PatientController extends Controller
         // Create the mPDF document
         $document = new PDF([
             'mode' => 'utf-8',
-            'orientation' => 'L',
-            'margin_header' => '3',
-            'margin_top' => '20',
-            'margin_bottom' => '20',
-            'margin_footer' => '2',
+            'formate' => 'A4',
+            'margin_header' => '1',
+            'margin_top' => '3',
+            'margin_bottom' => '1',
+            'margin_footer' => '0',
+            'margin_left' => '5',
+            'margin_right' => '5',
         ]);
 
         // Write the rendered HTML content to the PDF
@@ -615,7 +617,7 @@ class PatientController extends Controller
         ];
 
         // Output the PDF content directly to the browser
-        return response($document->Output('test.pdf', 'S'), 200, $headers);
+        return response($document->Output('report.pdf', 'S'), 200, $headers);
     }
 
 
