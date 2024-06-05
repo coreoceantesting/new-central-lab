@@ -24,7 +24,10 @@ class StoreSubCategoryRequest extends FormRequest
         return [
             'sub_category_name' => 'required',
             'units' => 'nullable',
-            'bioreferal' => 'required',
+            'interval_type' => 'required',
+            'bioreferal' => 'required_if:interval_type,2',
+            'from_range' => 'required_if:interval_type,1',
+            'to_range' => 'required_if:interval_type,1',
             'main_category' => 'required',
             'method' => 'required',
         ];

@@ -37,16 +37,25 @@
                                     <span class="text-danger is-invalid units_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="bioreferal">Reference Interval Type<span class="text-danger">*</span></label>
-                                    <input class="form-control" id="bioreferal" name="bioreferal" type="text" placeholder="Enter BIO.REF Interval">
+                                    <label class="col-form-label" for="interval_type">Reference Interval Type<span class="text-danger">*</span></label>
                                     <select class="form-control" name="interval_type" id="interval_type">
                                         <option value="">Select Interval Type</option>
                                         <option value="1">Quantitative</option>
                                         <option value="2">Cumulative</option>
                                     </select>
-                                    <span class="text-danger is-invalid bioreferal_err"></span>
+                                    <span class="text-danger is-invalid interval_type_err"></span>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 d-none">
+                                    <label class="col-form-label" for="from_range">From Range <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="from_range" name="from_range" type="text" placeholder="Enter from range">
+                                    <span class="text-danger is-invalid from_range_err"></span>
+                                </div>
+                                <div class="col-md-4 d-none">
+                                    <label class="col-form-label" for="to_range">To Range <span class="text-danger">*</span></label>
+                                    <input class="form-control" id="to_range" name="to_range" type="text" placeholder="Enter to range">
+                                    <span class="text-danger is-invalid to_range_err"></span>
+                                </div>
+                                <div class="col-md-4 d-none">
                                     <label class="col-form-label" for="bioreferal">Biological Reference Interval <span class="text-danger">*</span></label>
                                     <input class="form-control" id="bioreferal" name="bioreferal" type="text" placeholder="Enter BIO.REF Interval">
                                     <span class="text-danger is-invalid bioreferal_err"></span>
@@ -188,6 +197,26 @@
 
 </x-admin.layout>
 
+<script>
+    $('#interval_type').change(function(e){
+        // e.preventDefault();
+        var selectedVal = $(this).val();
+
+        if(selectedVal == 1)
+        {
+            $('#from_range').closest('.col-md-4').removeClass('d-none');
+            $('#to_range').closest('.col-md-4').removeClass('d-none');
+            $('#bioreferal').closest('.col-md-4').addClass('d-none');
+        }
+        else
+        {
+            $('#from_range').closest('.col-md-4').addClass('d-none');
+            $('#to_range').closest('.col-md-4').addClass('d-none');
+            $('#bioreferal').closest('.col-md-4').removeClass('d-none');
+        }
+    });
+</script>
+
 
 {{-- Add --}}
 <script>
@@ -251,9 +280,23 @@
                     $("#editForm input[name='edit_model_id']").val(data.subcategory.id);
                     $("#editForm input[name='sub_category_name']").val(data.subcategory.sub_category_name);
                     $("#editForm input[name='units']").val(data.subcategory.units);
-                    $("#editForm input[name='bioreferal']").val(data.subcategory.bioreferal);
                     $("#editForm select[name='main_category']").val(data.subcategory.main_category);
                     $("#editForm select[name='method']").val(data.subcategory.method);
+                    if(data.subcategory.interval_type == 1)
+                    {
+                        $("#editForm input[name='from_range']").removeClass("d-none");
+                        $("#editForm input[name='from_range']").val(data.subcategory.from_range);
+                        $("#editForm input[name='to_range']").removeClass("d-none");
+                        $("#editForm input[name='to_range']").val(data.subcategory.to_range);
+                        $("#editForm input[name='bioreferal']").addClass("d-none");
+                    }
+                    else
+                    {
+                        $("#editForm input[name='from_range']").addClass("d-none");
+                        $("#editForm input[name='to_range']").addClass("d-none");
+                        $("#editForm input[name='bioreferal']").removeClass("d-none");
+                        $("#editForm input[name='bioreferal']").val(data.subcategory.bioreferal);
+                    }
                 }
                 else
                 {

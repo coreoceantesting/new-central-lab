@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::table('sub_categories', function (Blueprint $table) {
             $table->unsignedTinyInteger('interval_type')->after('units')->nullable();
+            $table->string('from_range')->after('interval_type')->nullable();
+            $table->string('to_range')->after('from_range')->nullable();
         });
     }
 
@@ -23,6 +25,8 @@ return new class extends Migration
     {
         Schema::table('sub_categories', function (Blueprint $table) {
             $table->dropColumn('interval_type');
+            $table->dropColumn('from_range');
+            $table->dropColumn('to_range');
         });
     }
 };
