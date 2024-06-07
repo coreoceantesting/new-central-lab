@@ -230,7 +230,7 @@
                             <table id="buttons-datatables" class="table table-bordered nowrap align-middle" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Sr.NO</th>
+                                        <th>Sr.No</th>
                                         <th>Patient Name</th>
                                         <th>Patient Mobile No</th>
                                         <th>Patient AadharCard No</th>
@@ -247,7 +247,7 @@
                                             <td>{{ $list->aadhar_no }}</td>
                                             <td>{{ $list->age }}</td>
                                             <td>
-                                                {{-- <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $list->patient_id }}">Barcode</button> --}}
+                                                <a href="{{ route('') }}" class="btn text-secondary px-2 py-1"  title="View Details">View Details</a>
                                                 {{-- <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $list->patient_id }}"><i data-feather="trash-2"></i> </button> --}}
                                                 {!! DNS1D::getBarcodeHTML("$list->first_name $list->last_name", 'C39') !!}
                                             </td>

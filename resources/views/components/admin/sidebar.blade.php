@@ -57,10 +57,10 @@
                                 <a href="{{ route('maincategories.index') }}" class="nav-link" data-key="t-horizontal">Main Categories</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('methods.index') }}" class="nav-link" data-key="t-horizontal">Method</a>
+                                <a href="{{ route('subcategories.index') }}" class="nav-link" data-key="t-horizontal">Sub Categories</a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('subcategories.index') }}" class="nav-link" data-key="t-horizontal">Sub Categories</a>
+                                <a href="{{ route('methods.index') }}" class="nav-link" data-key="t-horizontal">Method</a>
                             </li>
                         </ul>
                     </div>
@@ -100,25 +100,56 @@
                     </li>
                 @endcan
 
-                @canany(['list.PendingForReceive'])
+
+                @canany(['list.PendingForReceive', 'list.RejectedSample'])
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ route('pending_for_receive.patient') }}" >
-                            <i class="ri-file-list-line"></i>
-                            <span data-key="t-dashboards">Pending For Receive</span>
+                        <a class="nav-link menu-link" href="#sidebarLayouts3" data-bs-toggle="collapse" role="button">
+                            <i class="bx bx-file-find"></i>
+                            <span data-key="t-layouts">Sample Sent To Lab</span>
                         </a>
+                        <div class="collapse menu-dropdown" id="sidebarLayouts3">
+                            <ul class="nav nav-sm flex-column">
+                                @can('list.PendingForReceive')
+                                    <li class="nav-item">
+                                        <a href="{{ route('pending_for_receive.patient') }}" class="nav-link" data-key="t-dashboards">Pending to receive</a>
+                                    </li>
+                                @endcan
+                                @can('list.RejectedSample')
+                                    <li class="nav-item">
+                                        <a href="{{ route('rejected_sample_list') }}" class="nav-link" data-key="t-dashboards">Rejected sample list</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </div>
                     </li>
                 @endcan
 
-                @canany(['list.RejectedSample'])
+
+                @canany(['list.ReceivedSample', 'list.ApprovedSample'])
                     <li class="nav-item">
-                        <a class="nav-link menu-link" href="{{ route('rejected_sample_list') }}" >
-                            <i class="ri-list-check"></i>
-                            <span data-key="t-dashboards">Rejected Sample List</span>
+                        <a class="nav-link menu-link" href="#sidebarLayouts4" data-bs-toggle="collapse" role="button">
+                            <i class="bx bx-scatter-chart"></i>
+                            <span data-key="t-layouts">Laboratories</span>
                         </a>
+                        <div class="collapse menu-dropdown" id="sidebarLayouts4">
+                            <ul class="nav nav-sm flex-column">
+                                @can('list.ReceivedSample')
+                                    <li class="nav-item">
+                                        <a href="{{ route('received_sample_list') }}" class="nav-link" data-key="t-dashboards">Receive Sample List</a>
+                                    </li>
+                                @endcan
+                                @can('list.ApprovedSample')
+                                    <li class="nav-item">
+                                        <a href="{{ route('approved_sample_list') }}" class="nav-link" data-key="t-dashboards">In-process sample list</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </div>
                     </li>
                 @endcan
 
-                @canany(['list.ReceivedSample'])
+
+                {{-- @canany(['list.ReceivedSample'])
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="{{ route('received_sample_list') }}" >
                             <i class="ri-file-list-line"></i>
@@ -134,7 +165,7 @@
                             <span data-key="t-dashboards">Approved Sample List</span>
                         </a>
                     </li>
-                @endcan
+                @endcan --}}
 
                 @canany(['list.FirstVerification'])
                     <li class="nav-item">

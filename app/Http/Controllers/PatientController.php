@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -168,26 +168,27 @@ class PatientController extends Controller
         $patient_list = DB::table('patient_details')->where('status', 'pending')->whereNull('deleted_at')->orderBy('patient_id', 'desc')->get();
         $mainCategories = MainCategory::latest()->get();
         $subCategories = DB::table('sub_categories')
-            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
-            ->select('sub_categories.*', 'main_categories.main_category_name')
-            ->whereNull('sub_categories.deleted_at')
-            ->get();
+                        ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
+                        ->select('sub_categories.*', 'main_categories.main_category_name')
+                        ->whereNull('sub_categories.deleted_at')
+                        ->get();
+
         $lab_list = Lab::latest()->get();
-            // dd($mainCategories, $subCategories);
-        return view('admin.pendingForReceive',compact('patient_list', 'lab_list', 'subCategories', 'mainCategories'));
+
+        return view('admin.pendingForReceive', compact('patient_list', 'lab_list', 'subCategories', 'mainCategories'));
     }
 
     public function rejected_sample_list()
     {
         $patient_list = DB::table('patient_details')
-        ->where('status', 'rejected')
-        ->orWhere('patient_status', 'rejected')
-        ->orWhere('first_approval_status', 'rejected')
-        ->whereNull('deleted_at')
-        ->orderBy('patient_id', 'desc')
-        ->get();
+                    ->where('status', 'rejected')
+                    ->orWhere('patient_status', 'rejected')
+                    ->orWhere('first_approval_status', 'rejected')
+                    ->whereNull('deleted_at')
+                    ->orderBy('patient_id', 'desc')
+                    ->get();
 
-            // dd($mainCategories, $subCategories);
+
         return view('admin.rejectedSampleList',compact('patient_list'));
     }
 
@@ -582,5 +583,15 @@ class PatientController extends Controller
             // dd($mainCategories, $subCategories);
         return view('admin.generatedReportList',compact('patient_list'));
     }
+
+
+    public function patientDetails(Request $request, $patient)
+    {
+        $patient = '';
+    }
+
+
+
+
 
 }

@@ -23,16 +23,16 @@ class StorePatientRequest extends FormRequest
     {
         return [
             'first_name' => 'required',
-            'middle_name' => 'required',
+            'middle_name' => 'nullable',
             'last_name' => 'required',
             'mob_no' => 'required|min:10|max:10',
-            'aadhar_no' => 'required|min:12|max:12',
+            'aadhar_no' => 'nullable|sometimes|min:12|max:12',
             'age' => 'required',
             'gender' => 'required',
             'address' => 'nullable',
             'tests' => 'required|array',
             'lab' => 'required',
-            'refering_doctor_name' => 'required',
+            'refering_doctor_name' => 'nullable',
             'date' => 'required',
         ];
     }

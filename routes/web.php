@@ -79,6 +79,8 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
 
     // pending for receive
     Route::get('pending-for-receive-list', [App\Http\Controllers\PatientController::class, 'pending_for_receive_list'])->name('pending_for_receive.patient');
+    Route::get('patient-details/{patient}', [App\Http\Controllers\PatientController::class, 'patientDetails'])->name('patient.details');
+
 
     // rejected List
     Route::get('rejeted-sample-list', [App\Http\Controllers\PatientController::class, 'rejected_sample_list'])->name('rejected_sample_list');

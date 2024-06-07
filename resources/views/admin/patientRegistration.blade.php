@@ -27,7 +27,7 @@
                                     <span class="text-danger is-invalid first_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="middle_name">Middle Name <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="middle_name">Middle Name </label>
                                     <input class="form-control" id="middle_name" name="middle_name" type="text" placeholder="Enter Patient Middle Name">
                                     <span class="text-danger is-invalid middle_name_err"></span>
                                 </div>
@@ -42,7 +42,7 @@
                                     <span class="text-danger is-invalid mob_no_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="aadhar_no">Aadhar Card Number <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="aadhar_no">Aadhar Card Number </label>
                                     <input class="form-control" id="aadhar_no" name="aadhar_no" type="number" placeholder="Enter Aadhar Card No">
                                     <span class="text-danger is-invalid aadhar_no_err"></span>
                                 </div>
@@ -94,13 +94,13 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="refering_doctor_name">Refering Doctor Name <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="refering_doctor_name">Refering Doctor Name </label>
                                     <input class="form-control" id="refering_doctor_name" name="refering_doctor_name" type="text" placeholder="Enter Doctor Name">
                                     <span class="text-danger is-invalid refering_doctor_name_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="date">Date <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="date">Sample Collection Date & Time <span class="text-danger">*</span></label>
                                     <input class="form-control" id="date" name="date" type="datetime-local">
                                     <span class="text-danger is-invalid date_err"></span>
                                 </div>
@@ -138,7 +138,7 @@
                                     <span class="text-danger is-invalid first_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="middle_name">Middle Name <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="middle_name">Middle Name </label>
                                     <input class="form-control" id="middle_name" name="middle_name" type="text" placeholder="Enter Patient Middle Name">
                                     <span class="text-danger is-invalid middle_name_err"></span>
                                 </div>
@@ -153,7 +153,7 @@
                                     <span class="text-danger is-invalid mob_no_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="aadhar_no">Aadhar Card Number <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="aadhar_no">Aadhar Card Number </label>
                                     <input class="form-control" id="aadhar_no" name="aadhar_no" type="number" placeholder="Enter Aadhar Card No">
                                     <span class="text-danger is-invalid aadhar_no_err"></span>
                                 </div>
@@ -192,13 +192,13 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="refering_doctor_name">Refering Doctor Name <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="refering_doctor_name">Refering Doctor Name </label>
                                     <input class="form-control" id="refering_doctor_name" name="refering_doctor_name" type="text" placeholder="Enter Doctor Name">
                                     <span class="text-danger is-invalid refering_doctor_name_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="date">Date <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="date">Sample Collection Date & Time <span class="text-danger">*</span></label>
                                     <input class="form-control" id="date" name="date" type="datetime-local">
                                     <span class="text-danger is-invalid date_err"></span>
                                 </div>
