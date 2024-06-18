@@ -447,8 +447,8 @@
         });
     });
 </script>
-<script>
+{{-- <script>
     $(function () {
       $('.multiple-select').multipleSelect()
     })
-</script>
+</script> --}}

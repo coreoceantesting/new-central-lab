@@ -166,12 +166,14 @@ class PatientController extends Controller
     public function pending_for_receive_list()
     {
         $patient_list = DB::table('patient_details')->where('status', 'pending')->whereNull('deleted_at')->orderBy('patient_id', 'desc')->get();
+
         $mainCategories = MainCategory::latest()->get();
+
         $subCategories = DB::table('sub_categories')
-                        ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
-                        ->select('sub_categories.*', 'main_categories.main_category_name')
-                        ->whereNull('sub_categories.deleted_at')
-                        ->get();
+                            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
+                            ->select('sub_categories.*', 'main_categories.main_category_name')
+                            ->whereNull('sub_categories.deleted_at')
+                            ->get();
 
         $lab_list = Lab::latest()->get();
 
@@ -430,12 +432,12 @@ class PatientController extends Controller
         $method_list = Method::latest()->get();
 
         $test_report = DB::table('test_result')
-            ->join('sub_categories', 'test_result.test_id', '=', 'sub_categories.id')
-            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
-            ->join('methods', 'test_result.method_id', '=', 'methods.id')
-            ->select('test_result.*', 'methods.method_name', 'sub_categories.sub_category_name', 'sub_categories.units', 'sub_categories.bioreferal','main_categories.main_category_name', 'main_categories.interpretation')
-            ->where('test_result.patient_id', $id)
-            ->get();
+                    ->join('sub_categories', 'test_result.test_id', '=', 'sub_categories.id')
+                    ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
+                    ->join('methods', 'test_result.method_id', '=', 'methods.id')
+                    ->select('test_result.*', 'methods.method_name', 'sub_categories.sub_category_name', 'sub_categories.units', 'sub_categories.bioreferal','main_categories.main_category_name', 'main_categories.interpretation')
+                    ->where('test_result.patient_id', $id)
+                    ->get();
 
         // Organize tests by main test category
         $organizedTests = [];
@@ -587,7 +589,15 @@ class PatientController extends Controller
 
     public function patientDetails(Request $request, $patient)
     {
-        $patient = '';
+        $patientDetail = DB::table('patient_details')
+                            ->where('patient_id', $patient)
+                            ->whereNull('deleted_at')
+                            ->orderBy('patient_id', 'desc')
+                            ->first();
+
+        dd($patientDetail);
+
+        return view('admin.patient-details')->with(['patientDetail' => $patientDetail]);
     }
 
 
