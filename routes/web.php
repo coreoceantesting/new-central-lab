@@ -116,7 +116,7 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
 
     // testpdf
 
-    Route::get('/testpdf', [App\Http\Controllers\PatientController::class, 'testReportPdf']);
+    Route::get('/testreport', [App\Http\Controllers\PatientController::class, 'testReportPdf']);
 
 });
 

@@ -40,7 +40,7 @@
                                             <td>{{ $list->aadhar_no }}</td>
                                             <td>{{ $list->age }}</td>
                                             <td>
-                                                <a href="{{ route('view.patientParameter', $list->patient_id) }}" class="btn btn-primary text-dark px-2 py-1" title="Test Parameter">View</a>
+                                                <a href="{{ url('/testreport') }}" class="btn btn-primary text-dark px-2 py-1" title="Test Parameter">View</a>
                                             </td>
                                         </tr>
                                     @endforeach
