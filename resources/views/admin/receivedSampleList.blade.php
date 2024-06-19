@@ -15,7 +15,7 @@
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Edit Patient Details</h4>
+                            <h4 class="card-title">View Patient Details</h4>
                         </div>
                         <div class="card-body py-2">
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
