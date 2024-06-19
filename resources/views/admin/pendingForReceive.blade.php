@@ -247,7 +247,8 @@
                                             <td>{{ $list->aadhar_no }}</td>
                                             <td>{{ $list->age }}</td>
                                             <td>
-                                                <a href="{{ route('patient.details', $list->patient_id) }}" target="_blank" class="btn btn-secondary px-2 py-1"  title="View Details">View Details</a>
+                                                {{-- <a href="{{ route('patient.details', $list->patient_id) }}" target="_blank" class="btn btn-secondary px-2 py-1"  title="View Details">View Details</a> --}}
+                                                <a href="#" target="_blank" class="btn btn-secondary px-2 py-1"  title="View Details">View Details</a>
                                                 {{-- <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $list->patient_id }}"><i data-feather="trash-2"></i> </button> --}}
                                                 {{-- {!! DNS1D::getBarcodeHTML("$list->first_name $list->last_name", 'C39') !!} --}}
                                             </td>
