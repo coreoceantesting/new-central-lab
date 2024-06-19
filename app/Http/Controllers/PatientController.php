@@ -598,7 +598,7 @@ class PatientController extends Controller
 
         // dd($patientDetail);
 
-        return view('admin.patient-details')->with(['patientDetail' => $patientDetail]);
+        return view('admin.patient-detail')->with(['patientDetail' => $patientDetail]);
     }
 
 
