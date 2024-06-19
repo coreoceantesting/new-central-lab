@@ -595,7 +595,7 @@ class PatientController extends Controller
                             ->orderBy('patient_id', 'desc')
                             ->first();
 
-        dd($patientDetail);
+        // dd($patientDetail);
 
         return view('admin.patient-details')->with(['patientDetail' => $patientDetail]);
     }
