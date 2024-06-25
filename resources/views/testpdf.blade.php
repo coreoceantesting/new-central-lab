@@ -226,7 +226,10 @@
         <br> --}}
         <strong style="text-decoration: underline">Interpretation Guidance :- </strong>
         <ul>
-            <li style="font-size:12px">{{  $test_detail?->test_name?->MainCategory?->interpretation }}</li>
+            <li style="font-size:12px">
+                {{-- {{  $test_detail?->test_name?->MainCategory?->interpretation }} --}}
+                {!! $test_detail?->test_name?->MainCategory?->interpretation !!}
+            </li>
             {{-- <li style="font-size:12px">This page has 9 different Microsoft Excel sample datasets that you can download, to use for testing, Excel training and demos, and other learning activities. See the data descriptions below, and choose the file that will work best for you.</li> --}}
         </ul>
 

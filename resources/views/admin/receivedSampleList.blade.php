@@ -95,10 +95,10 @@
                             </div>
 
                         </div>
-                        <div class="card-footer">
+                        {{-- <div class="card-footer">
                             <button class="btn btn-primary" id="editSubmit">Submit</button>
                             <button type="reset" class="btn btn-warning">Reset</button>
-                        </div>
+                        </div> --}}
                     </div>
                 </form>
             </div>
