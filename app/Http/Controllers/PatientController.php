@@ -12,6 +12,8 @@ use App\Models\Lab;
 use App\Models\Method;
 use App\Http\Requests\Admin\StorePatientRequest;
 use App\Http\Requests\Admin\UpdatePatientRequest;
+use App\Models\PatientDetail;
+use App\Models\TestResult;
 use \Mpdf\Mpdf as PDF;
 
 class PatientController extends Controller
@@ -605,13 +607,19 @@ class PatientController extends Controller
 
 
 
-    public function testReportPdf()
+    public function testReportPdf($id)
     {
+
         // Data to be passed to the view
-        $data = [
-            'title' => 'TheCodingJack',
-            'content' => 'Write something, just for fun!'
-        ];
+        $data['patient_details'] = PatientDetail::with('labName')->where('patient_id', $id)->first();
+
+        // Fetch test results grouped by main category
+        $data['patient_report'] = TestResult::with(['test_name.MainCategory', 'method'])
+                                            ->where('patient_id', $id)
+                                            ->get()
+                                            ->groupBy(function ($item) {
+                                                return $item->test_name->MainCategory->main_category_name;
+                                            });
 
         // Render the view to a string
         $html = view('testpdf', $data)->render();

@@ -11,4 +11,9 @@ class SubCategory extends Model
 {
     use HasFactory, SoftDeletes;
     protected $fillable = ['sub_category_name', 'units', 'bioreferal', 'main_category', 'method'];
+
+    public function MainCategory()
+    {
+        return $this->belongsTo(MainCategory::class, 'main_category', 'id');
+    }
 }
