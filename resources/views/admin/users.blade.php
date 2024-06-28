@@ -70,8 +70,15 @@
                                 <input class="form-control" id="confirm_password" name="confirm_password" type="password" placeholder="********">
                                 <span class="text-danger is-invalid confirm_password_err"></span>
                             </div>
-                        </div>
 
+                        </div>
+                        <div class="row mt-3" id="reference-doctor-container"></div>
+
+                        <!-- Add More button container -->
+                        <div class="col-md-4 mt-3" id="add-reference-doctor-btn-container" style="display:none;">
+                            <button type="button" class="btn btn-primary" id="add-reference-doctor-btn">Add More</button>
+                        </div>
+                        
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary" id="addSubmit">Submit</button>
@@ -141,6 +148,13 @@
                             </div>
 
                         </div>
+                        <div class="row mt-3">
+                            <label class="col-form-label">Reference Doctors</label>
+                            <div id="edit-reference-doctor-container">
+                                <!-- Reference doctor fields will be appended here -->
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-primary mt-2" id="edit-add-reference-doctor-btn">Add Reference Doctor</button>
 
                     </div>
                     <div class="card-footer">
@@ -476,6 +490,24 @@
                     $("#editForm input[name='mobile']").val(data.user.mobile);
                     $("#editForm select[name='lab']").val(data.user.lab);
                     $("#editForm select[name='ward_id']").html(data.wardHtml);
+
+                    $("#editForm #reference-doctor-container").empty();
+
+                    // Populate existing reference doctor names
+                    if (data.referenceDoctors.length > 0) {
+                        $.each(data.referenceDoctors, function(index, doctor) {
+                            var fieldHTML = `
+                                <div class="col-md-4 reference-doctor-field mt-3">
+                                    <label class="col-form-label" for="reference_doctor_name_${index}">Reference Doctor Name <span class="text-danger">*</span></label>
+                                    <input class="form-control" name="reference_doctor_names[]" type="text" placeholder="Enter Reference Doctor Name" value="${doctor.reference_doctor_name}" required>
+                                    <button type="button" class="btn btn-danger remove-reference-doctor-btn mt-2">Remove</button>
+                                    <span class="text-danger is-invalid reference_doctor_name_err"></span>
+                                </div>
+                            `;
+                            $("#edit-reference-doctor-container").append(fieldHTML);
+                        });
+                    }
+
                 } else {
                     swal("Error!", data.error, "error");
                 }
@@ -484,6 +516,24 @@
                 swal("Error!", "Some thing went wrong", "error");
             },
         });
+    });
+
+    // Add More Reference Doctor Button Click Handler
+    $(document).on('click', '#edit-add-reference-doctor-btn', function() {
+        var fieldHTML = `
+                <div class="col-md-4 reference-doctor-field mt-3">
+                    <label class="col-form-label" for="reference_doctor_names">Reference Doctor Name <span class="text-danger">*</span></label>
+                    <input class="form-control" name="reference_doctor_names[]" type="text" placeholder="Enter Reference Doctor Name" required>
+                    <button type="button" class="btn btn-danger remove-reference-doctor-btn mt-2">Remove</button>
+                    <span class="text-danger is-invalid reference_doctor_names_err"></span>
+                </div>
+            `;
+            $('#edit-reference-doctor-container').append(fieldHTML);
+    });
+
+    // Remove Reference Doctor Button Click Handler
+    $(document).on('click', '.removeDoctor', function() {
+        $(this).closest('.form-group').remove();
     });
 </script>
 
@@ -625,4 +675,48 @@
         }
 
     });
+</script>
+
+{{-- add more refrence doctor name --}}
+
+<script>
+    $(document).ready(function() {
+        // Function to add a reference doctor's name input field
+        function addReferenceDoctorField() {
+            var fieldHTML = `
+                <div class="col-md-4 reference-doctor-field mt-3">
+                    <label class="col-form-label" for="reference_doctor_name">Reference Doctor Name <span class="text-danger">*</span></label>
+                    <input class="form-control" name="reference_doctor_name[]" type="text" placeholder="Enter Reference Doctor Name" required>
+                    <button type="button" class="btn btn-danger remove-reference-doctor-btn mt-2">Remove</button>
+                    <span class="text-danger is-invalid reference_doctor_name_err"></span>
+                </div>
+            `;
+            $('#reference-doctor-container').append(fieldHTML);
+        }
+
+        // Handle change event on role dropdown
+        $('#role').change(function() {
+            var selectedRole = $(this).val();
+            if (selectedRole == 3) { // Assuming 'HealthPost' is the value for the health post role
+                $('#reference-doctor-container').empty(); // Clear any existing fields
+                addReferenceDoctorField(); // Add the first field
+                $('#add-reference-doctor-btn-container').show(); // Show the 'Add More' button container
+            } else {
+                $('#reference-doctor-container').empty(); // Clear any existing fields
+                $('#add-reference-doctor-btn-container').hide(); // Hide the 'Add More' button container
+            }
+        });
+
+        // Handle click event on 'Add More' button
+        $('#add-reference-doctor-btn').click(function() {
+            addReferenceDoctorField();
+        });
+
+        // Handle click event on 'Remove' button
+        $(document).on('click', '.remove-reference-doctor-btn', function() {
+            $(this).closest('.reference-doctor-field').remove();
+        });
+    });
+
+
 </script>

@@ -52,6 +52,16 @@ class UserController extends Controller
             $input['password'] = Hash::make($input['password']);
             $user = User::create( Arr::only( $input, Auth::user()->getFillable() ) );
             DB::table('model_has_roles')->insert(['role_id'=> $input['role'], 'model_type'=> 'App\Models\User', 'model_id'=> $user->id]);
+            
+            // Check if role is 'HealthPost' and store reference doctor names
+            if ($input['role'] == '3' && isset($input['reference_doctor_name'])) {
+                foreach ($input['reference_doctor_name'] as $doctorName) {
+                    DB::table('reference_doctors')->insert([
+                        'user_id' => $user->id,
+                        'reference_doctor_name' => $doctorName,
+                    ]);
+                }
+            }
             DB::commit();
             return response()->json(['success'=> 'User created successfully!']);
         }
@@ -76,6 +86,7 @@ class UserController extends Controller
     {
         $roles = Role::whereNot('name', 'like', '%super%')->get();
         $user->loadMissing('roles');
+        $referenceDoctors = DB::table('reference_doctors')->where('user_id', $user->id)->get();
 
         if ($user)
         {
@@ -93,6 +104,7 @@ class UserController extends Controller
                 'result' => 1,
                 'user' => $user,
                 'roleHtml' => $roleHtml,
+                'referenceDoctors' => $referenceDoctors,
             ];
         }
         else
@@ -114,6 +126,17 @@ class UserController extends Controller
             $user->update( Arr::only( $input, Auth::user()->getFillable() ) );
             $user->roles()->detach();
             DB::table('model_has_roles')->insert(['role_id'=> $input['role'], 'model_type'=> 'App\Models\User', 'model_id'=> $user->id]);
+            // dd(isset($input['reference_doctor_names']));
+            DB::table('reference_doctors')->where('user_id', $user->id)->delete();
+            // Check if role is 'HealthPost' and store reference doctor names
+            if ($input['role'] == '3' && isset($input['reference_doctor_names'])) {
+                foreach ($input['reference_doctor_names'] as $doctorName) {
+                    DB::table('reference_doctors')->insert([
+                        'user_id' => $user->id,
+                        'reference_doctor_name' => $doctorName,
+                    ]);
+                }
+            }
             DB::commit();
 
             return response()->json(['success'=> 'User updated successfully!']);
