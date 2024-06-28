@@ -26,6 +26,14 @@ class StoreMainCategoryRequest extends FormRequest
             'initial' => 'required',
             'type' => 'required',
             'interpretation' => 'required',
+            'lab_id' => 'required',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'lab_id.required' => 'Please Select Lab'
         ];
     }
 }

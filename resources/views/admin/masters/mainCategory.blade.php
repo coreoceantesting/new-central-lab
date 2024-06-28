@@ -35,6 +35,16 @@
                                     </select>
                                     <span class="text-danger is-invalid type_err"></span>
                                 </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="lab_id">Lab<span class="text-danger">*</span></label>
+                                    <select class="form-control" name="lab_id" id="lab_id">
+                                        <option value="">Select Lab</option>
+                                        @foreach ($lab_list as $list)
+                                            <option value="{{ $list->id }}">{{ $list->lab_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger is-invalid lab_id_err"></span>
+                                </div>
                                 <div class="col-md-8">
                                     <label class="col-form-label" for="interpretation">Interpretation<span class="text-danger">*</span></label>
                                     <textarea class="form-control" id="interpretation" name="interpretation"></textarea>
@@ -85,6 +95,16 @@
                                     </select>
                                     <span class="text-danger is-invalid type_err"></span>
                                 </div>
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="lab_id">Lab<span class="text-danger">*</span></label>
+                                    <select class="form-control" name="lab_id" id="lab_id">
+                                        <option value="">Select Lab</option>
+                                        @foreach ($lab_list as $list)
+                                            <option value="{{ $list->id }}">{{ $list->lab_name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <span class="text-danger is-invalid lab_id_err"></span>
+                                </div>
                                 <div class="col-md-8">
                                     <label class="col-form-label" for="interpretation">Interpretation<span class="text-danger">*</span></label>
                                     <textarea class="form-control" id="interpretation" name="interpretation"></textarea>
@@ -123,6 +143,7 @@
                                     <tr>
                                         <th>Sr.NO</th>
                                         <th>Category Name</th>
+                                        <th>Lab Name</th>
                                         <th>Category Initial</th>
                                         <th>Type</th>
                                         <th>Action</th>
@@ -133,6 +154,7 @@
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $category->main_category_name }}</td>
+                                            <td>{{ $category->lab_name }}</td>
                                             <td>{{ $category->initial }}</td>
                                             <td>{{ $category->type }}</td>
                                             <td>
@@ -230,6 +252,7 @@
                     $("#editForm input[name='edit_model_id']").val(data.maincategory.id);
                     $("#editForm input[name='main_category_name']").val(data.maincategory.main_category_name);
                     $("#editForm select[name='type']").val(data.maincategory.type);
+                    $("#editForm select[name='lab_id']").val(data.maincategory.lab_id);
                     // Initialize CKEditor for interpretation textarea
                     ClassicEditor
                         .create(document.querySelector('#editForm #interpretation'), {

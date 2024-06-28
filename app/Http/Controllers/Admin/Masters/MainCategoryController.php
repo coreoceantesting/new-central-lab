@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Masters;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\MainCategory;
+use App\Models\Lab;
 use App\Http\Requests\Admin\Masters\StoreMainCategoryRequest;
 use App\Http\Requests\Admin\Masters\UpdateMainCategoryRequest;
 use Illuminate\Support\Arr;
@@ -18,9 +19,13 @@ class MainCategoryController extends Controller
      */
     public function index()
     {
-        $main_category = MainCategory::latest()->get();
+        $main_category = MainCategory::join('labs', 'main_categories.lab_id', '=', 'labs.id')
+        ->select('main_categories.*', 'labs.lab_name')
+        ->latest()
+        ->get();
+        $lab_list = Lab::latest()->get();
 
-        return view('admin.masters.mainCategory')->with(['main_category'=> $main_category]);
+        return view('admin.masters.mainCategory')->with(['main_category'=> $main_category, 'lab_list' => $lab_list]);
     }
 
     /**
@@ -44,6 +49,7 @@ class MainCategoryController extends Controller
             $data['initial'] = $input['initial'];
             $data['type'] = $input['type'];
             $data['interpretation'] = $input['interpretation'];
+            $data['lab_id'] = $input['lab_id'];
             $data['created_by'] = Auth::user()->id;
             $data['created_at'] = date('Y-m-d H:i:s');
             DB::table('main_categories')->insert($data);
@@ -97,6 +103,7 @@ class MainCategoryController extends Controller
             $data['initial'] = $input['initial'];
             $data['type'] = $input['type'];
             $data['interpretation'] = $input['interpretation'];
+            $data['lab_id'] = $input['lab_id'];
             $data['updated_by'] = Auth::user()->id;
             $data['updated_at'] = date('Y-m-d H:i:s');
 

@@ -21,11 +21,25 @@ class UpdateMainCategoryRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        $rules = [
             'main_category_name' => 'required',
             'initial' => 'required',
             'type' => 'required',
-            'interpretation' => 'required',
+            'lab_id' => 'required',
+        ];
+    
+        // Conditionally include 'interpretation' in validation if present in the request
+        if ($this->getMethod() == 'POST' || $this->input('interpretation')) {
+            $rules['interpretation'] = 'required';
+        }
+    
+        return $rules;
+    }
+
+    public function messages()
+    {
+        return [
+            'lab_id.required' => 'Please Select Lab'
         ];
     }
 }
