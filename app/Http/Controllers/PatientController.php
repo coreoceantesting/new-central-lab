@@ -28,8 +28,12 @@ class PatientController extends Controller
             ->whereNull('sub_categories.deleted_at')
             ->get();
         $lab_list = Lab::latest()->get();
-            // dd($mainCategories, $subCategories);
-        return view('admin.patientRegistration',compact('patient_list', 'lab_list', 'subCategories', 'mainCategories'));
+        $referance_doc_list = [];
+        if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
+        {
+            $referance_doc_list = DB::table('reference_doctors')->where('user_id', Auth::id())->get();
+        }
+        return view('admin.patientRegistration',compact('patient_list', 'lab_list', 'subCategories', 'mainCategories','referance_doc_list'));
     }
 
     // public function store(StorePatientRequest $request)
@@ -83,6 +87,7 @@ class PatientController extends Controller
             DB::beginTransaction();
             $input = $request->validated();
             $selectedTests = $input['tests'];
+            $selectedDoctors = implode(',', $input['refering_doctor_name']) ;
             $patient_unique_id = $input['first_name'].'_'.$input['last_name'].'_'.rand(1000, 9999);
 
             $lab_id = [];
@@ -123,7 +128,7 @@ class PatientController extends Controller
                     'tests' => $combination['tests'],
                     'main_category_id' => $combination['main_category_id'],
                     'lab' => $combination['lab_id'],
-                    'refering_doctor_name' => $input['refering_doctor_name'],
+                    'refering_doctor_name' => $selectedDoctors,
                     'date' => $input['date'],
                     'created_by' => Auth::user()->id,
                     'created_at' => now(), // Use Laravel helper for current time
@@ -193,7 +198,7 @@ class PatientController extends Controller
         {
             DB::beginTransaction();
             $input = $request->validated();
-            // $selectedTests = implode(',', $input['tests']);
+            $selectedDoctor = implode(',', $input['refering_doctor_name']);
 
             $data['first_name'] = $input['first_name'];
             $data['middle_name'] = $input['middle_name'];
@@ -205,7 +210,7 @@ class PatientController extends Controller
             $data['address'] = $input['address'];
             // $data['tests'] = $selectedTests;
             // $data['lab'] = $input['lab'];
-            $data['refering_doctor_name'] = $input['refering_doctor_name'];
+            $data['refering_doctor_name'] = $selectedDoctor;
             $data['date'] = $input['date'];
             $data['updated_by'] = Auth::user()->id;
             $data['updated_at'] = date('Y-m-d H:i:s');

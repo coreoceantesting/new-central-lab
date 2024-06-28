@@ -90,9 +90,20 @@
                                     <span class="text-danger is-invalid lab_err"></span>
                                 </div>
 
-                                <div class="col-md-4">
+                                {{-- <div class="col-md-4">
                                     <label class="col-form-label" for="refering_doctor_name">Refering Doctor Name </label>
                                     <input class="form-control" id="refering_doctor_name" name="refering_doctor_name" type="text" placeholder="Enter Doctor Name">
+                                    <span class="text-danger is-invalid refering_doctor_name_err"></span>
+                                </div> --}}
+
+                                <div class="col-md-4">
+                                    <label class="col-form-label" for="refering_doctor_name">Refering Doctor Name </label>
+                                    {{-- <input class="form-control" id="refering_doctor_name" name="refering_doctor_name" type="text" placeholder="Enter Doctor Name"> --}}
+                                    <select class="form-control multiple-select" name="refering_doctor_name[]" id="refering_doctor_name" multiple>
+                                        @foreach ($referance_doc_list as $item)
+                                            <option value="{{ $item->reference_doctor_name }}">{{ $item->reference_doctor_name }}</option>    
+                                        @endforeach
+                                    </select>
                                     <span class="text-danger is-invalid refering_doctor_name_err"></span>
                                 </div>
 
