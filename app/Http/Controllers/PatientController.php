@@ -32,37 +32,112 @@ class PatientController extends Controller
         return view('admin.patientRegistration',compact('patient_list', 'lab_list', 'subCategories', 'mainCategories'));
     }
 
+    // public function store(StorePatientRequest $request)
+    // {
+    //     try
+    //     {
+    //         DB::beginTransaction();
+    //         $input = $request->validated();
+    //         $selectedTests = $input['tests'];
+    //         $patient_uniqe_id = $input['first_name'].'_'.$input['last_name'].'_'.rand(1000, 9999);
+    //         $lab_id = [];
+    //         $subCategoryArr = [];
+    //         foreach ($selectedTests as $testId) {
+    //             $mainCategoryId = SubCategory::find($testId)->main_category;
+    //             $lab_id[][$mainCategoryId] = MainCategory::find($mainCategoryId)->lab_id;
+    //             $subCategoryArr[][$mainCategoryId] = $testId;
+                
+    //         }
+    //         $unique_lab = array_unique($lab_id);  
+    //         foreach($unique_lab as $key=> $lab){                            
+    //             $data['patient_uniqe_id'] = $patient_uniqe_id;
+    //             $data['first_name'] = $input['first_name'];
+    //             $data['middle_name'] = $input['middle_name'];
+    //             $data['last_name'] = $input['last_name'];
+    //             $data['mob_no'] = $input['mob_no'];
+    //             $data['aadhar_no'] = $input['aadhar_no'];
+    //             $data['age'] = $input['age'];
+    //             $data['gender'] = $input['gender'];
+    //             $data['address'] = $input['address'];
+    //             $data['tests'] = ($key == $subCategoryArr[$key]) ? implode(',',$subCategoryArr) : '';
+    //             $data['main_test'] = $key;
+    //             $data['lab'] = $lab;
+    //             $data['refering_doctor_name'] = $input['refering_doctor_name'];
+    //             $data['date'] = $input['date'];
+    //             $data['created_by'] = Auth::user()->id;
+    //             $data['created_at'] = date('Y-m-d H:i:s');
+    //             DB::table('patient_details')->insert($data);
+    //         }
+    //         DB::commit();
+    //         return response()->json(['success'=> 'Patient Details Store successfully!']);
+    //     }
+    //     catch(\Exception $e)
+    //     {
+    //         return $this->respondWithAjax($e, 'creating', 'Patient Details');
+    //     }
+    // }
+
     public function store(StorePatientRequest $request)
     {
-        try
-        {
+        try {
             DB::beginTransaction();
             $input = $request->validated();
-            $selectedTests = implode(',', $input['tests']);
-            $patient_uniqe_id = $input['first_name'].'_'.$input['last_name'].'_'.rand(1000, 9999);
+            $selectedTests = $input['tests'];
+            $patient_unique_id = $input['first_name'].'_'.$input['last_name'].'_'.rand(1000, 9999);
 
-            $data['patient_uniqe_id'] = $patient_uniqe_id;
-            $data['first_name'] = $input['first_name'];
-            $data['middle_name'] = $input['middle_name'];
-            $data['last_name'] = $input['last_name'];
-            $data['mob_no'] = $input['mob_no'];
-            $data['aadhar_no'] = $input['aadhar_no'];
-            $data['age'] = $input['age'];
-            $data['gender'] = $input['gender'];
-            $data['address'] = $input['address'];
-            $data['tests'] = $selectedTests;
-            $data['lab'] = $input['lab'];
-            $data['refering_doctor_name'] = $input['refering_doctor_name'];
-            $data['date'] = $input['date'];
-            $data['created_by'] = Auth::user()->id;
-            $data['created_at'] = date('Y-m-d H:i:s');
-            DB::table('patient_details')->insert($data);
+            $lab_id = [];
+            $subCategoryArr = [];
+
+            // Fetch main category and lab for each selected test
+            foreach ($selectedTests as $testId) {
+                $mainCategoryId = SubCategory::find($testId)->main_category;
+                $labId = MainCategory::find($mainCategoryId)->lab_id;
+
+                // Store lab IDs and corresponding main category test IDs
+                $lab_id[$mainCategoryId] = $labId;
+                $subCategoryArr[$mainCategoryId][] = $testId;
+            }
+
+            // Ensure unique combination of main category and lab
+            $unique_combinations = [];
+            foreach ($lab_id as $mainCategoryId => $lab) {
+                $unique_combinations["$mainCategoryId-$lab"] = [
+                    'main_category_id' => $mainCategoryId,
+                    'lab_id' => $lab,
+                    'tests' => implode(',', $subCategoryArr[$mainCategoryId]),
+                ];
+            }
+
+            // Insert patient details for each unique combination
+            foreach ($unique_combinations as $combination) {
+                $data = [
+                    'patient_uniqe_id' => $patient_unique_id,
+                    'first_name' => $input['first_name'],
+                    'middle_name' => $input['middle_name'],
+                    'last_name' => $input['last_name'],
+                    'mob_no' => $input['mob_no'],
+                    'aadhar_no' => $input['aadhar_no'],
+                    'age' => $input['age'],
+                    'gender' => $input['gender'],
+                    'address' => $input['address'],
+                    'tests' => $combination['tests'],
+                    'main_category_id' => $combination['main_category_id'],
+                    'lab' => $combination['lab_id'],
+                    'refering_doctor_name' => $input['refering_doctor_name'],
+                    'date' => $input['date'],
+                    'created_by' => Auth::user()->id,
+                    'created_at' => now(), // Use Laravel helper for current time
+                ];
+
+                // Insert data into patient_details table
+                PatientDetail::create($data);
+            }
+
             DB::commit();
 
-            return response()->json(['success'=> 'Patient Details Store successfully!']);
-        }
-        catch(\Exception $e)
-        {
+            return response()->json(['success' => 'Patient Details stored successfully!']);
+        } catch (\Exception $e) {
+            DB::rollback();
             return $this->respondWithAjax($e, 'creating', 'Patient Details');
         }
     }
@@ -79,7 +154,7 @@ class PatientController extends Controller
             ->get();
 
         $html = '<label class="col-form-label" for="tests">Select Test <span class="text-danger">*</span></label>';
-        $html .= '<select class="form-control multiple-select new" name="tests[]" id="tests" multiple>';
+        $html .= '<select class="form-control multiple-select new" name="tests[]" id="tests" multiple disabled>';
 
         foreach($mainCategories as $mainCategory) {
             $html .= '<optgroup label="'. $mainCategory->main_category_name .'">';
@@ -118,7 +193,7 @@ class PatientController extends Controller
         {
             DB::beginTransaction();
             $input = $request->validated();
-            $selectedTests = implode(',', $input['tests']);
+            // $selectedTests = implode(',', $input['tests']);
 
             $data['first_name'] = $input['first_name'];
             $data['middle_name'] = $input['middle_name'];
@@ -128,8 +203,8 @@ class PatientController extends Controller
             $data['age'] = $input['age'];
             $data['gender'] = $input['gender'];
             $data['address'] = $input['address'];
-            $data['tests'] = $selectedTests;
-            $data['lab'] = $input['lab'];
+            // $data['tests'] = $selectedTests;
+            // $data['lab'] = $input['lab'];
             $data['refering_doctor_name'] = $input['refering_doctor_name'];
             $data['date'] = $input['date'];
             $data['updated_by'] = Auth::user()->id;
@@ -647,6 +722,16 @@ class PatientController extends Controller
 
         // Output the PDF content directly to the browser
         return response($document->Output('report.pdf', 'S'), 200, $headers);
+    }
+
+    public function getLabs(Request $request)
+    {
+        $testIds = $request->input('testIds');
+        $mainCategoryIds = SubCategory::whereIn('id', $testIds)->pluck('main_category')->toArray();
+        $labIds = MainCategory::whereIn('id', $mainCategoryIds)->pluck('lab_id')->toArray();
+        $labs = Lab::whereIn('id', $labIds)->get();
+
+        return response()->json(['labs' => $labs]);
     }
 
 

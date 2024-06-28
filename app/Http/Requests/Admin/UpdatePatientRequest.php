@@ -30,8 +30,8 @@ class UpdatePatientRequest extends FormRequest
             'age' => 'required',
             'gender' => 'required',
             'address' => 'nullable',
-            'tests' => 'required|array',
-            'lab' => 'required',
+            // 'tests' => 'required|array',
+            // 'lab' => 'required',
             'refering_doctor_name' => 'nullable',
             'date' => 'required',
         ];

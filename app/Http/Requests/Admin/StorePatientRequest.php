@@ -31,7 +31,7 @@ class StorePatientRequest extends FormRequest
             'gender' => 'required',
             'address' => 'nullable',
             'tests' => 'required|array',
-            'lab' => 'required',
+            // 'lab' => 'required',
             'refering_doctor_name' => 'nullable',
             'date' => 'required',
         ];

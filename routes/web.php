@@ -117,6 +117,7 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     // testpdf
 
     Route::get('/testreport/{id}', [App\Http\Controllers\PatientController::class, 'testReportPdf']);
+    Route::post('/get-labs', [App\Http\Controllers\PatientController::class, 'getLabs'])->name('get.labs');
 
 });
 
