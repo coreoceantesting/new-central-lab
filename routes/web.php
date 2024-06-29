@@ -119,6 +119,8 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     Route::get('/testreport/{id}', [App\Http\Controllers\PatientController::class, 'testReportPdf']);
     Route::post('/get-labs', [App\Http\Controllers\PatientController::class, 'getLabs'])->name('get.labs');
 
+    Route::post('/send-sms', [App\Http\Controllers\SendSMSController::class, 'sendSms'])->name('send.sms');
+
 });
 
 

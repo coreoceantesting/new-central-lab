@@ -51,6 +51,7 @@
                                             <td>{{ $list->age }}</td>
                                             <td>
                                                 <a href="{{ url('/testreport',$list->patient_id) }}" target="blank" class="btn btn-primary text-dark px-2 py-1" title="Test Parameter">View</a>
+                                                <button class="btn btn-warning text-dark px-2 py-1 sendsms" data-id="{{ $list->patient_id }}" title="Send SMS">Send SMS</button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -65,6 +66,34 @@
 
 
 </x-admin.layout>
+
+<script>
+    $(document).ready(function() {
+        $('.sendsms').on('click', function() {
+            var patientId = $(this).data('id');
+
+            $.ajax({
+                url: "{{ route('send.sms') }}", // Define this route in your web.php
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    patient_id: patientId
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert('SMS sent successfully!');
+                    } else {
+                        alert('Failed to send SMS.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                    alert('An error occurred while sending the SMS.');
+                }
+            });
+        });
+    });
+</script>
 
 
 
