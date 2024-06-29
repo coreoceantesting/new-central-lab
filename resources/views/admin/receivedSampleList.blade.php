@@ -177,7 +177,23 @@
                             <div class="mb-3 row">
                                 <label class="col-sm-3 col-form-label" for="name">Remark : </label>
                                 <div class="col-sm-9">
-                                    <textarea name="remark" id="remark" cols="30" rows="5"></textarea>
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="check1" name="remark[]" value="Incomplete TRF">
+                                        <label class="form-check-label" for="check1">Incomplete TRF</label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="check2" name="remark[]" value="Wrong Tube Collection">
+                                        <label class="form-check-label" for="check2">Wrong Tube Collection</label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="check3" name="remark[]" value="Insuffient Sample">
+                                        <label class="form-check-label" for="check3">Insuffient Sample</label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="check4" name="remark[]" value="Clot Sample">
+                                        <label class="form-check-label" for="check4">Clot Sample</label>
+                                      </div>
+                                    {{-- <textarea name="remark" id="remark" cols="30" rows="5"></textarea> --}}
                                     <span class="text-danger is-invalid remark_err"></span>
                                 </div>
                             </div>

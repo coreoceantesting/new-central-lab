@@ -151,6 +151,12 @@ class PatientController extends Controller
     {
         $details = DB::table('patient_details')->where('patient_id', $id)->first();
         $selected_tests = explode(',', $details->tests);
+        $selected_doc = explode(',', $details->refering_doctor_name);
+        $referance_doc_list = [];
+        if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
+        {
+            $referance_doc_list = DB::table('reference_doctors')->where('user_id', Auth::id())->get();
+        } 
         $mainCategories = MainCategory::latest()->get();
         $subCategories = DB::table('sub_categories')
             ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
@@ -177,12 +183,27 @@ class PatientController extends Controller
 
         $html .= '</select>';
         $html .= '<span class="text-danger is-invalid gender_err"></span>';
+
+        $htmlnew = '<label class="col-form-label" for="refering_doctor_name">Refering Doctor Name </label>';
+        $htmlnew .= '<select class="form-control multiple-select" name="refering_doctor_name[]" id="refering_doctor_name" multiple>';
+            foreach($referance_doc_list as $list){
+                $htmlnew .= '<option value="'. $list->reference_doctor_name .'"';
+                if(in_array($list->reference_doctor_name, $selected_doc)) {
+                    $htmlnew .= ' selected';
+                }
+                $htmlnew .= '>'. $list->reference_doctor_name .'</option>';
+            }
+        $htmlnew .= '</select>';
+        $htmlnew .= '<span class="text-danger is-invalid refering_doctor_name_err"></span>';
+
+
         if ($details)
         {
             $response = [
                 'result' => 1,
                 'details' => $details,
                 'html' => $html,
+                'htmlnew' => $htmlnew,
             ];
         }
         else
@@ -348,10 +369,13 @@ class PatientController extends Controller
         {
             DB::beginTransaction();
 
+            $remarks = $request->input('remark');
+            $remarksString = implode(', ', $remarks);
+
             DB::table('patient_details')->where('patient_id', $id)->update([
                 'patient_status' => "rejected",
                 'status' => "rejected",
-                'remark' => $request->input('remark')
+                'remark' => $remarksString
                 // 'received_by' => Auth::user()->id,
                 // 'received_at'=> date('Y-m-d H:i:s')
             ]);
@@ -561,10 +585,13 @@ class PatientController extends Controller
         try
         {
             DB::beginTransaction();
+            $remarks = $request->input('remark');
+            $remarksString = implode(', ', $remarks);
 
             DB::table('patient_details')->where('patient_id', $id)->update([
                 'first_approval_status' => "rejected",
-                'first_approval_remark' => $request->input('remark'),
+                'first_approval_remark' => $remarksString,
+                'remark' => $remarksString,
                 'first_approval_by' => Auth::user()->id,
                 'first_approval_at'=> date('Y-m-d H:i:s')
             ]);
@@ -622,9 +649,13 @@ class PatientController extends Controller
         {
             DB::beginTransaction();
 
+            $remarks = $request->input('remarkNew');
+            $remarksString = implode(', ', $remarks);
+
             DB::table('patient_details')->where('patient_id', $id)->update([
                 'second_approval_status' => "rejected",
-                'second_approval_remark' => $request->input('remarkNew'),
+                'second_approval_remark' => $remarksString,
+                'remark' => $remarksString,
                 'second_approval_by' => Auth::user()->id,
                 'second_approval_at'=> date('Y-m-d H:i:s')
             ]);

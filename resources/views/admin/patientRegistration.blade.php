@@ -83,7 +83,7 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="lab">Select Lab <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="lab">Labs <span class="text-danger">*</span></label>
                                     <div id='labnames'>
 
                                     </div>
@@ -191,7 +191,7 @@
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="lab">Select Lab <span class="text-danger">*</span></label>
                                     <select class="form-control" name="lab" id="lab" disabled>
-                                        <option value="">Select Lab</option>
+                                        <option value="">Lab</option>
                                         @foreach ($lab_list as $list)
                                             <option value="{{ $list->id}}">{{ $list->lab_name }}</option>
                                         @endforeach
@@ -199,10 +199,14 @@
                                     <span class="text-danger is-invalid gender_err"></span>
                                 </div>
 
-                                <div class="col-md-4">
+                                {{-- <div class="col-md-4">
                                     <label class="col-form-label" for="refering_doctor_name">Refering Doctor Name </label>
                                     <input class="form-control" id="refering_doctor_name" name="refering_doctor_name" type="text" placeholder="Enter Doctor Name">
                                     <span class="text-danger is-invalid refering_doctor_name_err"></span>
+                                </div> --}}
+
+                                <div class="col-md-4 edit_doctor_list">
+
                                 </div>
 
                                 <div class="col-md-4">
@@ -396,6 +400,7 @@
                     $("#editForm textarea[name='address']").val(data.details.address);
                     // $("#editForm select[name='tests']").val(data.details.tests);
                     $('.edit_test').html(data.html);
+                    $('.edit_doctor_list').html(data.htmlnew);
                     $('.multiple-select').multipleSelect()
                     $("#editForm select[name='lab']").val(data.details.lab);
                     $("#editForm input[name='refering_doctor_name']").val(data.details.refering_doctor_name);
