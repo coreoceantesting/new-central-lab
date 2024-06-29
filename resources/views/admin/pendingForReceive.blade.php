@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Patient Registration</x-slot>
-    <x-slot name="heading">Patient Registration</x-slot>
+    <x-slot name="title">Pending Sample List</x-slot>
+    <x-slot name="heading">Pending Sample List</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
