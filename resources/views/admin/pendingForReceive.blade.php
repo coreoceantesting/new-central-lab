@@ -115,14 +115,14 @@
 
 
 
-        {{-- Edit Form --}}
+        {{-- View Form --}}
         <div class="row" id="editContainer" style="display:none;">
             <div class="col">
                 <form class="form-horizontal form-bordered" method="post" id="editForm">
                     @csrf
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Edit Patient Details</h4>
+                            <h4 class="card-title">View Patient Details</h4>
                         </div>
                         <div class="card-body py-2">
                             <input type="hidden" id="edit_model_id" name="edit_model_id" value="">
@@ -130,46 +130,46 @@
 
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="first_name">First Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Enter Patient First Name">
+                                    <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Enter Patient First Name" readonly>
                                     <span class="text-danger is-invalid first_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="middle_name">Middle Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="middle_name" name="middle_name" type="text" placeholder="Enter Patient Middle Name">
+                                    <input class="form-control" id="middle_name" name="middle_name" type="text" placeholder="Enter Patient Middle Name" readonly>
                                     <span class="text-danger is-invalid middle_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="last_name">Last Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="last_name" name="last_name" type="text" placeholder="Enter Patient Last Name">
+                                    <input class="form-control" id="last_name" name="last_name" type="text" placeholder="Enter Patient Last Name" readonly>
                                     <span class="text-danger is-invalid last_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="mob_no">Mobile No <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="mob_no" name="mob_no" type="number" placeholder="Enter Mobile No">
+                                    <input class="form-control" id="mob_no" name="mob_no" type="number" placeholder="Enter Mobile No" readonly>
                                     <span class="text-danger is-invalid mob_no_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="aadhar_no">Aadhar Card Number <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="aadhar_no" name="aadhar_no" type="number" placeholder="Enter Aadhar Card No">
+                                    <input class="form-control" id="aadhar_no" name="aadhar_no" type="number" placeholder="Enter Aadhar Card No" readonly>
                                     <span class="text-danger is-invalid aadhar_no_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="age">Age <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="age" name="age" type="number" placeholder="Enter Age">
+                                    <input class="form-control" id="age" name="age" type="number" placeholder="Enter Age" readonly>
                                     <span class="text-danger is-invalid age_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="gender">Select Gender <span class="text-danger">*</span></label>
                                     <select class="form-control" name="gender" id="gender">
-                                        <option value="">Select Gender</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
+                                        <option value="" disabled>Select Gender</option>
+                                        <option value="Male" disabled>Male</option>
+                                        <option value="Female" disabled>Female</option>
                                     </select>
                                     <span class="text-danger is-invalid gender_err"></span>
                                 </div>
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="address">Address</label>
-                                    <textarea class="form-control" name="address" id="address" cols="30" rows="2" placeholder="Enter Address"></textarea>
+                                    <textarea class="form-control" name="address" id="address" cols="30" rows="2" placeholder="Enter Address" readonly></textarea>
                                     <span class="text-danger is-invalid address_err"></span>
                                 </div>
                                 <div class="col-md-4 edit_test">
@@ -179,9 +179,9 @@
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="lab">Select Lab <span class="text-danger">*</span></label>
                                     <select class="form-control" name="lab" id="lab">
-                                        <option value="">Select Lab</option>
+                                        <option value="" disabled>Select Lab</option>
                                         @foreach ($lab_list as $list)
-                                            <option value="{{ $list->id}}">{{ $list->lab_name }}</option>
+                                            <option value="{{ $list->id}}" disabled>{{ $list->lab_name }}</option>
                                         @endforeach
                                     </select>
                                     <span class="text-danger is-invalid gender_err"></span>
@@ -189,23 +189,23 @@
 
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="refering_doctor_name">Refering Doctor Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="refering_doctor_name" name="refering_doctor_name" type="text" placeholder="Enter Doctor Name">
+                                    <input class="form-control" id="refering_doctor_name" name="refering_doctor_name" type="text" placeholder="Enter Doctor Name" readonly>
                                     <span class="text-danger is-invalid refering_doctor_name_err"></span>
                                 </div>
 
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="date">Date <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="date" name="date" type="datetime-local">
+                                    <input class="form-control" id="date" name="date" type="datetime-local" readonly>
                                     <span class="text-danger is-invalid date_err"></span>
                                 </div>
 
                             </div>
 
                         </div>
-                        <div class="card-footer">
+                        {{-- <div class="card-footer">
                             <button class="btn btn-primary" id="editSubmit">Submit</button>
                             <button type="reset" class="btn btn-warning">Reset</button>
-                        </div>
+                        </div> --}}
                     </div>
                 </form>
             </div>
@@ -259,7 +259,8 @@
                                             <td>{{ $list->age }}</td>
                                             <td>
                                                 {{-- <a href="{{ route('patient.details', $list->patient_id) }}" target="_blank" class="btn btn-secondary px-2 py-1"  title="View Details">View Details</a> --}}
-                                                <a href="#" class="btn btn-secondary px-2 py-1"  title="View Details">View Details</a>
+                                                {{-- <a href="#" class="btn btn-secondary px-2 py-1"  title="View Details">View Details</a> --}}
+                                                <button class="edit-element btn btn-primary text-dark px-2 py-1" title="View Details" data-id="{{ $list->patient_id }}"><i data-feather="eye"></i></button>
                                                 {{-- <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $list->patient_id }}"><i data-feather="trash-2"></i> </button> --}}
                                                 {{-- {!! DNS1D::getBarcodeHTML("$list->first_name $list->last_name", 'C39') !!} --}}
                                             </td>
@@ -321,12 +322,12 @@
 </script>
 
 
-<!-- Edit -->
+<!-- View -->
 <script>
     $("#buttons-datatables").on("click", ".edit-element", function(e) {
         e.preventDefault();
         var model_id = $(this).attr("data-id");
-        var url = "{{ route('edit.patient', ":model_id") }}";
+        var url = "{{ route('view.patient', ":model_id") }}";
 
         $.ajax({
             url: url.replace(':model_id', model_id),
