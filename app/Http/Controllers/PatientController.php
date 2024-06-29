@@ -542,7 +542,7 @@ class PatientController extends Controller
                     ->join('sub_categories', 'test_result.test_id', '=', 'sub_categories.id')
                     ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
                     ->join('methods', 'test_result.method_id', '=', 'methods.id')
-                    ->select('test_result.*', 'methods.method_name', 'sub_categories.sub_category_name', 'sub_categories.units', 'sub_categories.bioreferal','main_categories.main_category_name', 'main_categories.interpretation')
+                    ->select('test_result.*', 'methods.method_name', 'sub_categories.sub_category_name', 'sub_categories.units', 'sub_categories.bioreferal','sub_categories.from_range', 'sub_categories.to_range' ,'main_categories.main_category_name', 'main_categories.interpretation')
                     ->where('test_result.patient_id', $id)
                     ->get();
 

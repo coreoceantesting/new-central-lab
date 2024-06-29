@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Patient Sample List</x-slot>
-    <x-slot name="heading">Patient Sample List</x-slot>
+    <x-slot name="title">Rejected Sample List</x-slot>
+    <x-slot name="heading">Rejected Sample List</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
         {{-- Patient listing --}}

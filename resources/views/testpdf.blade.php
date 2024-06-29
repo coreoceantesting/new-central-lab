@@ -38,7 +38,7 @@
         .test-result { width: 100%; border-collapse: collapse; margin-top: 4px; margin-bottom: 2px; }
         .test-result th, .test-result td { border: 1px solid black; padding: 4px; text-align: center; }
         .test-result th { background-color: #fffbfb; font-weight: lighter;}
-        .test-result td { background-color: #38b4d6; }
+        /* .test-result td { background-color: #38b4d6; } */
         .test-result tr { border: 1px solid black; text-align: center; }
 
         .container {
@@ -92,10 +92,10 @@
     <table class="header-table">
         <tr>
             <td class="logo-left" style="border-right: 2px solid black;">
-                <img src="{{ public_path('admin/images/PMC LOGO.png') }}" alt="Left Logo" height="60">
+                <img src="{{ public_path('admin/images/PMC LOGO.png') }}" alt="Left Logo" height="80">
             </td>
-            <td class="logo-center" style="border-right: 2px solid black;">
-                <img src="{{ public_path('admin/images/MOLXPERT Infectious disease and Molecular Laboratory.png') }}" alt="Center Logo" height="60">
+            <td class="logo-center" style="border-right: 2px solid black;padding-top:2%">
+                <img src="{{ public_path('admin/images/MOLXPERT Infectious disease and Molecular Laboratory.png') }}" alt="Center Logo" height="55">
             </td>
             <td class="address-right">
                 <p>
@@ -170,7 +170,7 @@
     </table>
 
         <!-- Main Test Name Table -->
-        <h2 style="text-align: center;background-color:#1a75bc;color:white;padding:3px;margin-bottom:1px;">{{ $main_category_name }}</h2>
+        <h2 style="text-align: center;border:1px solid black;color:black;padding:3px;margin-bottom:1px;">{{ $main_category_name }}</h2>
         {{-- sample method --}}
         @foreach ($test_details as $test_detail)
         <table>
@@ -204,11 +204,28 @@
                 <th>Type</th>
             </tr>
             <tr>
-                <td><b>{{ $test_detail?->test_name?->sub_category_name }}</b></td>
-                <td><b>{{ $test_detail?->result }}</b></td>
-                <td><b>{{ $test_detail?->test_name?->units }}</b></td>
-                <td><b>{{ $test_detail?->test_name?->bioreferal }}</b></td>
-                <td><b>{{ $test_detail?->type }}</b></td>
+                <td>{{ $test_detail?->test_name?->sub_category_name }}</td>
+                <td>
+                    @if ($test_detail?->type == "Quantitative")
+                        @if ($test_detail?->result < $test_detail?->test_name?->from_range || $test_detail?->result > $test_detail?->test_name?->to_range)
+                            <b>{{ $test_detail?->result }}</b>
+                        @else
+                            {{ $test_detail?->result }}
+                        @endif
+                    @endif
+                    @if ($test_detail?->type == "Cumulative")
+                        {{ $test_detail?->result }}
+                    @endif
+                </td>
+                <td>{{ $test_detail?->test_name?->units }}</td>
+                <td>
+                    @if ($test_detail?->type == "Quantitative")
+                    {{ $test_detail?->test_name?->from_range }} - {{ $test_detail?->test_name?->to_range }}
+                    @else
+                    {{ $test_detail?->test_name?->bioreferal }}
+                    @endif
+                </td>
+                <td>{{ $test_detail?->type }}</td>
             </tr>
         </table>
         @endforeach

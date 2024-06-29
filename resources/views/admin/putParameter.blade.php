@@ -79,7 +79,11 @@
                                                         <input type="{{ $test->type == 'Cumulative' ? 'number' : 'text' }}" class="form-control result-input" name="results[{{ $loop->parent->index }}][{{ $loop->index }}][result]" required>
                                                     </td>
                                                     <td>{{ $test->units }}</td>
+                                                    @if ($test->type == "Quantitative")
+                                                    <td>{{ $test->from_range }} - {{ $test->to_range }}</td>
+                                                    @else
                                                     <td>{{ $test->bioreferal }}</td>
+                                                    @endif
                                                 </tr>
                                             @endforeach
                                         </tbody>
