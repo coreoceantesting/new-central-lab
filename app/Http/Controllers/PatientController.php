@@ -20,19 +20,29 @@ class PatientController extends Controller
 {
     public function index(Request $request)
     {
-        $query = DB::table('patient_details')->whereNull('deleted_at');
+        $query = DB::table('patient_details')
+            ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id') // Assuming 'lab' field in 'patient_details' references 'id' in 'labs' table
+            ->whereNull('patient_details.deleted_at');
 
         $fromDate = $request->input('fromdate');
         $toDate = $request->input('todate');
+        $lab = $request->input('labnew');
 
         if ($fromDate && $toDate) {
             $fromDateTime = $fromDate . ' 00:00:00';
             $toDateTime = $toDate . ' 23:59:59';
-            $query->whereBetween('date', [$fromDateTime, $toDateTime]);
+            $query->whereBetween('patient_details.date', [$fromDateTime, $toDateTime]);
         }
 
+        if ($lab) {
+            $query->where('patient_details.lab', $lab);
+        }
+
+        // Select desired fields from both tables
+        $query->select('patient_details.*', 'labs.lab_name'); // Adjust fields as per your requirement
+
         // Get the filtered or unfiltered patient list
-        $patient_list = $query->orderBy('patient_id', 'desc')->get();
+        $patient_list = $query->orderBy('patient_details.patient_id', 'desc')->get();
 
         $mainCategories = MainCategory::latest()->get();
         $subCategories = DB::table('sub_categories')
@@ -46,7 +56,7 @@ class PatientController extends Controller
         {
             $referance_doc_list = DB::table('reference_doctors')->where('user_id', Auth::id())->get();
         }
-        return view('admin.patientRegistration',compact('patient_list', 'fromDate', 'toDate', 'lab_list', 'subCategories', 'mainCategories','referance_doc_list'));
+        return view('admin.patientRegistration',compact('patient_list', 'lab', 'fromDate', 'toDate', 'lab_list', 'subCategories', 'mainCategories','referance_doc_list'));
     }
 
     // public function store(StorePatientRequest $request)

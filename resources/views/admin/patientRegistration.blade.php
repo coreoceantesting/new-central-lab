@@ -242,15 +242,25 @@
                             <div class="col-md-9">
                                 <form id="searchForm" class="row" method="GET" action="{{ route('register.patient') }}">
                                     @csrf
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <label for="fromdate">From Date</label>
                                         <input class="form-control" type="date" name="fromdate" id="fromdate" value="{{ $fromDate ?? '' }}"> 
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-3">
                                         <label for="todate">To Date</label>
                                         <input class="form-control" type="date" name="todate" id="todate" value="{{ $toDate ?? '' }}">
                                     </div>
-                                    <div class="col-md-4 d-flex align-items-end">
+                                    <div class="col-md-3">
+                                        <label for="todate">Select Lab</label>
+                                        <select class="form-control" name="labnew" id="labnew">
+                                            <option value="">Select Lab</option>
+                                            @foreach ($lab_list as $item)
+                                                <option value="{{ $item->id }}" @if(isset($lab) && $lab == $item->id) selected @endif>{{ $item->lab_name }}</option>    
+                                            @endforeach
+                                        </select>
+                                        {{-- <input class="form-control" type="date" name="todate" id="todate" value="{{ $toDate ?? '' }}"> --}}
+                                    </div>
+                                    <div class="col-md-3 d-flex align-items-end">
                                         <button type="submit" class="btn btn-primary ms-2">Search</button>
                                         <a href="{{ route('register.patient') }}" class="btn btn-primary ms-2">cancel</a>
                                     </div>
@@ -268,6 +278,7 @@
                                         <th>Patient Mobile No</th>
                                         <th>Patient AadharCard No</th>
                                         <th>Patient Age</th>
+                                        <th>Lab</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -279,6 +290,7 @@
                                             <td>{{ $list->mob_no }}</td>
                                             <td>{{ $list->aadhar_no }}</td>
                                             <td>{{ $list->age }}</td>
+                                            <td>{{ $list->lab_name }}</td>
                                             <td>
                                                 <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $list->patient_id }}"><i data-feather="edit"></i></button>
                                                 <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $list->patient_id }}"><i data-feather="trash-2"></i> </button>
