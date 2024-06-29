@@ -216,12 +216,23 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <div class="">
-                                    {{-- <button id="addToTable" class="btn btn-primary">Add <i class="fa fa-plus"></i></button> --}}
-                                    <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button>
-                                </div>
+                        <div class="row align-items-end">
+                            <div class="col-md-12">
+                                <form id="searchForm" class="row" method="GET" action="{{ route('pending_for_receive.patient') }}">
+                                    @csrf
+                                    <div class="col-md-4">
+                                        <label for="fromdate">From Date</label>
+                                        <input class="form-control" type="date" name="fromdate" id="fromdate" value="{{ $fromDate ?? '' }}"> 
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="todate">To Date</label>
+                                        <input class="form-control" type="date" name="todate" id="todate" value="{{ $toDate ?? '' }}">
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-end">
+                                        <button type="submit" class="btn btn-primary ms-2">Search</button>
+                                        <a href="{{ route('pending_for_receive.patient') }}" class="btn btn-primary ms-2">cancel</a>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>

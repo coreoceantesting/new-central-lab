@@ -18,9 +18,22 @@ use \Mpdf\Mpdf as PDF;
 
 class PatientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $patient_list = DB::table('patient_details')->whereNull('deleted_at')->orderBy('patient_id', 'desc')->get();
+        $query = DB::table('patient_details')->whereNull('deleted_at');
+
+        $fromDate = $request->input('fromdate');
+        $toDate = $request->input('todate');
+
+        if ($fromDate && $toDate) {
+            $fromDateTime = $fromDate . ' 00:00:00';
+            $toDateTime = $toDate . ' 23:59:59';
+            $query->whereBetween('date', [$fromDateTime, $toDateTime]);
+        }
+
+        // Get the filtered or unfiltered patient list
+        $patient_list = $query->orderBy('patient_id', 'desc')->get();
+
         $mainCategories = MainCategory::latest()->get();
         $subCategories = DB::table('sub_categories')
             ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
@@ -33,7 +46,7 @@ class PatientController extends Controller
         {
             $referance_doc_list = DB::table('reference_doctors')->where('user_id', Auth::id())->get();
         }
-        return view('admin.patientRegistration',compact('patient_list', 'lab_list', 'subCategories', 'mainCategories','referance_doc_list'));
+        return view('admin.patientRegistration',compact('patient_list', 'fromDate', 'toDate', 'lab_list', 'subCategories', 'mainCategories','referance_doc_list'));
     }
 
     // public function store(StorePatientRequest $request)
@@ -267,9 +280,20 @@ class PatientController extends Controller
         }
     }
 
-    public function pending_for_receive_list()
+    public function pending_for_receive_list(Request $request)
     {
-        $patient_list = DB::table('patient_details')->where('status', 'pending')->whereNull('deleted_at')->orderBy('patient_id', 'desc')->get();
+        $query = DB::table('patient_details')->where('status', 'pending')->whereNull('deleted_at');
+        $fromDate = $request->input('fromdate');
+        $toDate = $request->input('todate');
+
+        if ($fromDate && $toDate) {
+            $fromDateTime = $fromDate . ' 00:00:00';
+            $toDateTime = $toDate . ' 23:59:59';
+            $query->whereBetween('date', [$fromDateTime, $toDateTime]);
+        }
+
+        // Get the filtered or unfiltered patient list
+        $patient_list = $query->orderBy('patient_id', 'desc')->get();
 
         $mainCategories = MainCategory::latest()->get();
 
@@ -281,32 +305,67 @@ class PatientController extends Controller
 
         $lab_list = Lab::latest()->get();
 
-        return view('admin.pendingForReceive', compact('patient_list', 'lab_list', 'subCategories', 'mainCategories'));
+        return view('admin.pendingForReceive', compact('patient_list', 'lab_list', 'subCategories', 'mainCategories', 'fromDate', 'toDate'));
     }
 
-    public function rejected_sample_list()
+    public function rejected_sample_list(Request $request)
     {
-        $patient_list = DB::table('patient_details')
-                    ->where('status', 'rejected')
-                    ->orWhere('patient_status', 'rejected')
-                    ->orWhere('first_approval_status', 'rejected')
-                    ->whereNull('deleted_at')
-                    ->orderBy('patient_id', 'desc')
-                    ->get();
+        $query = DB::table('patient_details')->where('status', 'rejected')
+                ->orWhere('patient_status', 'rejected')
+                ->orWhere('first_approval_status', 'rejected')
+                ->whereNull('deleted_at');
+        $fromDate = $request->input('fromdate');
+        $toDate = $request->input('todate');
+
+        if ($fromDate && $toDate) {
+            $fromDateTime = $fromDate . ' 00:00:00';
+            $toDateTime = $toDate . ' 23:59:59';
+            $query->whereBetween('date', [$fromDateTime, $toDateTime]);
+        }
+
+        // Get the filtered or unfiltered patient list
+        $patient_list = $query->orderBy('patient_id', 'desc')->get();
+
+        // $patient_list = DB::table('patient_details')
+        //             ->where('status', 'rejected')
+        //             ->orWhere('patient_status', 'rejected')
+        //             ->orWhere('first_approval_status', 'rejected')
+        //             ->whereNull('deleted_at')
+        //             ->orderBy('patient_id', 'desc')
+        //             ->get();
 
 
-        return view('admin.rejectedSampleList',compact('patient_list'));
+        return view('admin.rejectedSampleList',compact('patient_list', 'fromDate', 'toDate'));
     }
 
-    public function received_sample_list()
+    public function received_sample_list(Request $request)
     {
-        $patient_list = DB::table('patient_details')
+        $query = DB::table('patient_details')
         ->where('status', 'pending')
         ->orwhere('status', 'received')
         ->where('patient_status', 'pending')
-        ->whereNull('deleted_at')
-        ->orderBy('patient_id', 'desc')
-        ->get();
+        ->whereNull('deleted_at');
+
+        $fromDate = $request->input('fromdate');
+        $toDate = $request->input('todate');
+
+        if ($fromDate && $toDate) {
+            $fromDateTime = $fromDate . ' 00:00:00';
+            $toDateTime = $toDate . ' 23:59:59';
+            $query->whereBetween('date', [$fromDateTime, $toDateTime]);
+        }
+
+        // Get the filtered or unfiltered patient list
+        $patient_list = $query->orderBy('patient_id', 'desc')->get();
+
+        // $patient_list = DB::table('patient_details')
+        // ->where('status', 'pending')
+        // ->orwhere('status', 'received')
+        // ->where('patient_status', 'pending')
+        // ->whereNull('deleted_at')
+        // ->orderBy('patient_id', 'desc')
+        // ->get();
+
         $mainCategories = MainCategory::latest()->get();
         $subCategories = DB::table('sub_categories')
             ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
@@ -316,7 +375,7 @@ class PatientController extends Controller
         $lab_list = Lab::latest()->get();
 
             // dd($mainCategories, $subCategories);
-        return view('admin.receivedSampleList',compact('patient_list', 'mainCategories', 'subCategories', 'lab_list'));
+        return view('admin.receivedSampleList',compact('patient_list', 'mainCategories', 'subCategories', 'lab_list' ,'fromDate', 'toDate'));
     }
 
     public function update_status_received(Request $request, $id)
@@ -390,17 +449,34 @@ class PatientController extends Controller
 
     }
 
-    public function approved_sample_list()
+    public function approved_sample_list(Request $request)
     {
-        $patient_list = DB::table('patient_details')
+        $query = DB::table('patient_details')
         ->where('status', 'received')
         ->where('patient_status', 'approved')
-        ->whereNull('deleted_at')
-        ->orderBy('patient_id', 'desc')
-        ->get();
+        ->whereNull('deleted_at');
+
+        $fromDate = $request->input('fromdate');
+        $toDate = $request->input('todate');
+
+        if ($fromDate && $toDate) {
+            $fromDateTime = $fromDate . ' 00:00:00';
+            $toDateTime = $toDate . ' 23:59:59';
+            $query->whereBetween('date', [$fromDateTime, $toDateTime]);
+        }
+
+        // Get the filtered or unfiltered patient list
+        $patient_list = $query->orderBy('patient_id', 'desc')->get();
+
+        // $patient_list = DB::table('patient_details')
+        // ->where('status', 'received')
+        // ->where('patient_status', 'approved')
+        // ->whereNull('deleted_at')
+        // ->orderBy('patient_id', 'desc')
+        // ->get();
 
             // dd($mainCategories, $subCategories);
-        return view('admin.approvedSampleList',compact('patient_list'));
+        return view('admin.approvedSampleList',compact('patient_list', 'fromDate', 'toDate'));
     }
 
     public function view(Request $request, $id)
@@ -519,18 +595,37 @@ class PatientController extends Controller
         ]);
     }
 
-    public function first_verification_list()
+    public function first_verification_list(Request $request)
     {
-        $patient_list = DB::table('patient_details')
+
+        $query = DB::table('patient_details')
         ->where('status', 'parameter_submitted')
         ->where('patient_status', 'approved')
         ->where('first_approval_status', 'pending')
-        ->whereNull('deleted_at')
-        ->orderBy('patient_id', 'desc')
-        ->get();
+        ->whereNull('deleted_at');
+
+        $fromDate = $request->input('fromdate');
+        $toDate = $request->input('todate');
+
+        if ($fromDate && $toDate) {
+            $fromDateTime = $fromDate . ' 00:00:00';
+            $toDateTime = $toDate . ' 23:59:59';
+            $query->whereBetween('date', [$fromDateTime, $toDateTime]);
+        }
+
+        // Get the filtered or unfiltered patient list
+        $patient_list = $query->orderBy('patient_id', 'desc')->get();
+
+        // $patient_list = DB::table('patient_details')
+        // ->where('status', 'parameter_submitted')
+        // ->where('patient_status', 'approved')
+        // ->where('first_approval_status', 'pending')
+        // ->whereNull('deleted_at')
+        // ->orderBy('patient_id', 'desc')
+        // ->get();
 
             // dd($mainCategories, $subCategories);
-        return view('admin.firstVerificationList',compact('patient_list'));
+        return view('admin.firstVerificationList',compact('patient_list', 'fromDate', 'toDate'));
     }
 
     public function view_patient_parameter(Request $request, $id)
@@ -606,19 +701,39 @@ class PatientController extends Controller
 
     }
 
-    public function second_verification_list()
+    public function second_verification_list(Request $request)
     {
-        $patient_list = DB::table('patient_details')
+
+        $query = DB::table('patient_details')
         ->where('patient_status', 'approved')
         ->where('status', 'parameter_submitted')
         ->where('first_approval_status', 'approved')
         ->where('second_approval_status', 'pending')
-        ->whereNull('deleted_at')
-        ->orderBy('patient_id', 'desc')
-        ->get();
+        ->whereNull('deleted_at');
+
+        $fromDate = $request->input('fromdate');
+        $toDate = $request->input('todate');
+
+        if ($fromDate && $toDate) {
+            $fromDateTime = $fromDate . ' 00:00:00';
+            $toDateTime = $toDate . ' 23:59:59';
+            $query->whereBetween('date', [$fromDateTime, $toDateTime]);
+        }
+
+        // Get the filtered or unfiltered patient list
+        $patient_list = $query->orderBy('patient_id', 'desc')->get();
+
+        // $patient_list = DB::table('patient_details')
+        // ->where('patient_status', 'approved')
+        // ->where('status', 'parameter_submitted')
+        // ->where('first_approval_status', 'approved')
+        // ->where('second_approval_status', 'pending')
+        // ->whereNull('deleted_at')
+        // ->orderBy('patient_id', 'desc')
+        // ->get();
 
             // dd($mainCategories, $subCategories);
-        return view('admin.secondVerificationList',compact('patient_list'));
+        return view('admin.secondVerificationList',compact('patient_list', 'fromDate', 'toDate'));
     }
 
     public function second_doctor_approved_status(Request $request, $id)
@@ -670,34 +785,73 @@ class PatientController extends Controller
 
     }
 
-    public function doctor_rejected_list()
+    public function doctor_rejected_list(Request $request)
     {
-        $patient_list = DB::table('patient_details')
+
+        $query = DB::table('patient_details')
         ->where('status', 'parameter_submitted')
         ->Where('patient_status', 'approved')
         ->Where('first_approval_status', 'approved')
         ->Where('second_approval_status', 'rejected')
-        ->whereNull('deleted_at')
-        ->orderBy('patient_id', 'desc')
-        ->get();
+        ->whereNull('deleted_at');
+
+        $fromDate = $request->input('fromdate');
+        $toDate = $request->input('todate');
+
+        if ($fromDate && $toDate) {
+            $fromDateTime = $fromDate . ' 00:00:00';
+            $toDateTime = $toDate . ' 23:59:59';
+            $query->whereBetween('date', [$fromDateTime, $toDateTime]);
+        }
+
+        // Get the filtered or unfiltered patient list
+        $patient_list = $query->orderBy('patient_id', 'desc')->get();
+
+        // $patient_list = DB::table('patient_details')
+        // ->where('status', 'parameter_submitted')
+        // ->Where('patient_status', 'approved')
+        // ->Where('first_approval_status', 'approved')
+        // ->Where('second_approval_status', 'rejected')
+        // ->whereNull('deleted_at')
+        // ->orderBy('patient_id', 'desc')
+        // ->get();
 
             // dd($mainCategories, $subCategories);
-        return view('admin.doctorRejectedList',compact('patient_list'));
+        return view('admin.doctorRejectedList',compact('patient_list', 'fromDate', 'toDate'));
     }
 
-    public function generated_report_list()
+    public function generated_report_list(Request $request)
     {
-        $patient_list = DB::table('patient_details')
+        $query = DB::table('patient_details')
         ->where('status', 'parameter_submitted')
         ->Where('patient_status', 'approved')
         ->Where('first_approval_status', 'approved')
         ->Where('second_approval_status', 'approved')
-        ->whereNull('deleted_at')
-        ->orderBy('patient_id', 'desc')
-        ->get();
+        ->whereNull('deleted_at');
+
+        $fromDate = $request->input('fromdate');
+        $toDate = $request->input('todate');
+
+        if ($fromDate && $toDate) {
+            $fromDateTime = $fromDate . ' 00:00:00';
+            $toDateTime = $toDate . ' 23:59:59';
+            $query->whereBetween('date', [$fromDateTime, $toDateTime]);
+        }
+
+        // Get the filtered or unfiltered patient list
+        $patient_list = $query->orderBy('patient_id', 'desc')->get();
+        
+        // $patient_list = DB::table('patient_details')
+        // ->where('status', 'parameter_submitted')
+        // ->Where('patient_status', 'approved')
+        // ->Where('first_approval_status', 'approved')
+        // ->Where('second_approval_status', 'approved')
+        // ->whereNull('deleted_at')
+        // ->orderBy('patient_id', 'desc')
+        // ->get();
 
             // dd($mainCategories, $subCategories);
-        return view('admin.generatedReportList',compact('patient_list'));
+        return view('admin.generatedReportList',compact('patient_list', 'fromDate', 'toDate'));
     }
 
 
