@@ -557,21 +557,28 @@ class PatientController extends Controller
     public function approved_sample_list(Request $request)
     {
         $query = DB::table('patient_details')
-        ->where('status', 'received')
-        ->where('patient_status', 'approved')
-        ->whereNull('deleted_at');
+            ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id')
+            ->leftJoin('main_categories', 'patient_details.main_category_id', '=', 'main_categories.id')
+            ->where('patient_details.status', 'received')
+            ->where('patient_details.patient_status', 'approved')
+            ->whereNull('patient_details.deleted_at');
 
         $fromDate = $request->input('fromdate');
         $toDate = $request->input('todate');
+        $lab = $request->input('labnew');
 
         if ($fromDate && $toDate) {
             $fromDateTime = $fromDate . ' 00:00:00';
             $toDateTime = $toDate . ' 23:59:59';
-            $query->whereBetween('date', [$fromDateTime, $toDateTime]);
+            $query->whereBetween('patient_details.date', [$fromDateTime, $toDateTime]);
         }
 
-        // Get the filtered or unfiltered patient list
-        $patient_list = $query->orderBy('patient_id', 'desc')->get();
+        if ($lab) {
+            $query->where('patient_details.lab', $lab);
+        }
+        
+        $query->select('patient_details.*', 'labs.lab_name', 'main_categories.main_category_name');
+        $patient_list = $query->orderBy('patient_details.patient_id', 'desc')->get();
 
         // $patient_list = DB::table('patient_details')
         // ->where('status', 'received')

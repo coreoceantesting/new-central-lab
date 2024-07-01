@@ -190,6 +190,13 @@
                     </li>
                 @endcan
 
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('approved_sample_list') }}" >
+                        <i class="ri-dashboard-2-line"></i>
+                        <span data-key="t-dashboards">In-process Sample List</span>
+                    </a>
+                </li>
+
 
                 {{-- @canany(['list.ReceivedSample'])
                     <li class="nav-item">

@@ -28,7 +28,7 @@
                                 <tr>
                                     <th>Gender</th>
                                     <td>{{$patient_detail->gender}}</td>
-                                    <th>Refer Doctor Name</th>
+                                    <th>MO(Medical Officer) Name</th>
                                     <td>{{$patient_detail->refering_doctor_name}}</td>
                                 </tr>
                             </thead>
