@@ -87,6 +87,7 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     Route::get('rejeted-sample-list', [App\Http\Controllers\PatientController::class, 'rejected_sample_list'])->name('rejected_sample_list');
     // received sample
     Route::get('received-sample-list', [App\Http\Controllers\PatientController::class, 'received_sample_list'])->name('received_sample_list');
+    Route::get('pending-for-receive-sample-list', [App\Http\Controllers\PatientController::class, 'pending_for_received_sample_list'])->name('pending_for_received_sample_list');
     Route::put('patient-received/{id}', [App\Http\Controllers\PatientController::class, 'update_status_received'])->name('received.patient');
     Route::put('approve-status/{id}', [App\Http\Controllers\PatientController::class, 'approved_status'])->name('approve.status');
     Route::put('reject-status/{id}', [App\Http\Controllers\PatientController::class, 'reject_status'])->name('reject.status');

@@ -391,25 +391,77 @@ class PatientController extends Controller
         return view('admin.rejectedSampleList',compact('patient_list', 'fromDate', 'toDate'));
     }
 
-    public function received_sample_list(Request $request)
+    public function pending_for_received_sample_list(Request $request)
     {
         $query = DB::table('patient_details')
-        ->where('status', 'pending')
-        ->orwhere('status', 'received')
-        ->where('patient_status', 'pending')
-        ->whereNull('deleted_at');
+            ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id')
+            ->leftJoin('main_categories', 'patient_details.main_category_id', '=', 'main_categories.id') // Assuming 'lab' field in 'patient_details' references 'id' in 'labs' table
+            ->where('patient_details.status', 'pending')
+            ->where('patient_details.patient_status', 'pending')
+            ->whereNull('patient_details.deleted_at');
 
         $fromDate = $request->input('fromdate');
         $toDate = $request->input('todate');
+        $lab = $request->input('labnew');
 
         if ($fromDate && $toDate) {
             $fromDateTime = $fromDate . ' 00:00:00';
             $toDateTime = $toDate . ' 23:59:59';
-            $query->whereBetween('date', [$fromDateTime, $toDateTime]);
+            $query->whereBetween('patient_details.date', [$fromDateTime, $toDateTime]);
         }
 
-        // Get the filtered or unfiltered patient list
-        $patient_list = $query->orderBy('patient_id', 'desc')->get();
+        if ($lab) {
+            $query->where('patient_details.lab', $lab);
+        }
+        
+        $query->select('patient_details.*', 'labs.lab_name', 'main_categories.main_category_name');
+        $patient_list = $query->orderBy('patient_details.patient_id', 'desc')->get();
+
+        // $patient_list = DB::table('patient_details')
+        // ->where('status', 'pending')
+        // ->orwhere('status', 'received')
+        // ->where('patient_status', 'pending')
+        // ->whereNull('deleted_at')
+        // ->orderBy('patient_id', 'desc')
+        // ->get();
+
+        $mainCategories = MainCategory::latest()->get();
+        $subCategories = DB::table('sub_categories')
+            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
+            ->select('sub_categories.*', 'main_categories.main_category_name')
+            ->whereNull('sub_categories.deleted_at')
+            ->get();
+        $lab_list = Lab::latest()->get();
+
+            // dd($mainCategories, $subCategories);
+        return view('admin.pendingforreceivesamplelist',compact('patient_list', 'mainCategories', 'subCategories', 'lab_list' ,'fromDate', 'toDate'));
+    }
+
+    public function received_sample_list(Request $request)
+    {
+        $query = DB::table('patient_details')
+            ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id')
+            ->leftJoin('main_categories', 'patient_details.main_category_id', '=', 'main_categories.id') // Assuming 'lab' field in 'patient_details' references 'id' in 'labs' table
+            ->where('patient_details.status', 'received')
+            // ->where('patient_details.patient_status', 'pending')
+            ->whereNull('patient_details.deleted_at');
+
+        $fromDate = $request->input('fromdate');
+        $toDate = $request->input('todate');
+        $lab = $request->input('labnew');
+
+        if ($fromDate && $toDate) {
+            $fromDateTime = $fromDate . ' 00:00:00';
+            $toDateTime = $toDate . ' 23:59:59';
+            $query->whereBetween('patient_details.date', [$fromDateTime, $toDateTime]);
+        }
+
+        if ($lab) {
+            $query->where('patient_details.lab', $lab);
+        }
+        
+        $query->select('patient_details.*', 'labs.lab_name', 'main_categories.main_category_name');
+        $patient_list = $query->orderBy('patient_details.patient_id', 'desc')->get();
 
         // $patient_list = DB::table('patient_details')
         // ->where('status', 'pending')
@@ -461,8 +513,8 @@ class PatientController extends Controller
 
             DB::table('patient_details')->where('patient_id', $id)->update([
                 'patient_status' => "approved",
-                // 'received_by' => Auth::user()->id,
-                // 'received_at'=> date('Y-m-d H:i:s')
+                'patient_approval_by' => Auth::user()->name,
+                'patient_approval_at'=> date('Y-m-d H:i:s')
             ]);
             DB::commit();
 
@@ -487,9 +539,9 @@ class PatientController extends Controller
             DB::table('patient_details')->where('patient_id', $id)->update([
                 'patient_status' => "rejected",
                 'status' => "rejected",
-                'remark' => $remarksString
-                // 'received_by' => Auth::user()->id,
-                // 'received_at'=> date('Y-m-d H:i:s')
+                'remark' => $remarksString,
+                'patient_approval_by' => Auth::user()->name,
+                'patient_approval_at'=> date('Y-m-d H:i:s')
             ]);
             DB::commit();
 

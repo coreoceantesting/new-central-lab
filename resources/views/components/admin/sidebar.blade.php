@@ -145,18 +145,18 @@
                     <li class="nav-item">
                         <a class="nav-link menu-link" href="#sidebarLayouts4" data-bs-toggle="collapse" role="button">
                             <i class="bx bx-scatter-chart"></i>
-                            <span data-key="t-layouts">Laboratories</span>
+                            <span data-key="t-layouts">Receive sample</span>
                         </a>
                         <div class="collapse menu-dropdown" id="sidebarLayouts4">
                             <ul class="nav nav-sm flex-column">
                                 @can('list.ReceivedSample')
                                     <li class="nav-item">
-                                        <a href="{{ route('received_sample_list') }}" class="nav-link" data-key="t-dashboards">Receive Sample List</a>
+                                        <a href="{{ route('pending_for_received_sample_list') }}" class="nav-link" data-key="t-dashboards">Pending For Receive Sample</a>
                                     </li>
                                 @endcan
                                 @can('list.ApprovedSample')
                                     <li class="nav-item">
-                                        <a href="{{ route('approved_sample_list') }}" class="nav-link" data-key="t-dashboards">In-process sample list</a>
+                                        <a href="{{ route('received_sample_list') }}" class="nav-link" data-key="t-dashboards">Received Sample</a>
                                     </li>
                                 @endcan
                             </ul>
