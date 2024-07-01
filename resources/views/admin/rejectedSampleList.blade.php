@@ -35,9 +35,10 @@
                                     <tr>
                                         <th>Sr.NO</th>
                                         <th>Patient Name</th>
-                                        <th>Patient Mobile No</th>
-                                        <th>Patient AadharCard No</th>
                                         <th>Patient Age</th>
+                                        <th>Lab Name</th>
+                                        <th>Test Name</th>
+                                        <th>Sample Collection Details</th>
                                         <th>Status</th>
                                         <th>Remark</th>
                                     </tr>
@@ -47,9 +48,10 @@
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $list->first_name }} {{ $list->middle_name }} {{ $list->last_name }}</td>
-                                            <td>{{ $list->mob_no }}</td>
-                                            <td>{{ $list->aadhar_no }}</td>
                                             <td>{{ $list->age }}</td>
+                                            <td>{{ $list->lab_name }}</td>
+                                            <td>{{ $list->main_category_name }}</td>
+                                            <td>{{ $list->date }}</td>
                                             <td>{{ $list->status }}</td>
                                             <td>{{ $list->remark }}</td>
                                         </tr>
