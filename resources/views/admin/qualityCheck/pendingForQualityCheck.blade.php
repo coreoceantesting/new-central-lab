@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Pending For Receive Sample List</x-slot>
-    <x-slot name="heading">Pending For Receive Sample List</x-slot>
+    <x-slot name="title">Pending for Quality Check List</x-slot>
+    <x-slot name="heading">Pending for Quality Check List</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
         <style>
@@ -8,6 +8,7 @@
                 position: relative !important;
             }
         </style>
+
         {{-- View Form --}}
         <div class="row" id="editContainer" style="display:none;">
             <div class="col">
@@ -111,7 +112,7 @@
                     <div class="card-header">
                         <div class="row align-items-end">
                             <div class="col-md-12">
-                                <form id="searchForm" class="row" method="GET" action="{{ route('pending_for_received_sample_list') }}">
+                                <form id="searchForm" class="row" method="GET" action="{{ route('quality_check_list') }}">
                                     @csrf
                                     <div class="col-md-4">
                                         <label for="fromdate">From Date</label>
@@ -123,7 +124,7 @@
                                     </div>
                                     <div class="col-md-4 d-flex align-items-end">
                                         <button type="submit" class="btn btn-primary ms-2">Search</button>
-                                        <a href="{{ route('pending_for_received_sample_list') }}" class="btn btn-primary ms-2">cancel</a>
+                                        <a href="{{ route('quality_check_list') }}" class="btn btn-primary ms-2">cancel</a>
                                     </div>
                                 </form>
                             </div>
@@ -140,6 +141,7 @@
                                         <th>Lab Name</th>
                                         <th>Test Name</th>
                                         <th>Sample Collection Details</th>
+                                        <th>Received Details</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -153,11 +155,13 @@
                                             <td>{{ $list->lab_name }}</td>
                                             <td>{{ $list->main_category_name }}</td>
                                             <td>{{ $list->date }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($list->received_at)->format('Y-m-d H:i:s') }}</td>
                                             <td>{{ $list->status }}</td>
                                             <td>
                                                 <button class="edit-element btn btn-primary text-dark px-2 py-1" title="View Details" data-id="{{ $list->patient_id }}"><i data-feather="eye"></i></button>
-                                                @if ($list->status == 'pending')
-                                                <button class="received-element btn btn-primary text-dark px-2 py-1" title="Received" data-id="{{ $list->patient_id }}">Receive</button>
+                                                @if ($list->status == 'received')
+                                                    <button class="approved-element btn btn-success text-dark px-2 py-1" title="approve" data-id="{{ $list->patient_id }}">Approve</button>
+                                                    <button class="rejected-element btn btn-danger text-dark px-2 py-1" title="reject" data-id="{{ $list->patient_id }}">Reject</button>
                                                 @endif
                                             </td>
                                         </tr>
@@ -169,16 +173,68 @@
             </div>
         </div>
 
+        {{-- reject model --}}
+        <div class="modal fade" id="reject-status-modal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <form action="" id="statusRejectForm">
+                    @csrf
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Reject</h5>
+                            <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+
+                            <input type="hidden" id="patient_id" name="patient_id" value="">
+
+                            <div class="mb-3 row">
+                                <label class="col-sm-3 col-form-label" for="name">Remark : </label>
+                                <div class="col-sm-9">
+                                    <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="check1" name="remark[]" value="Incomplete TRF">
+                                        <label class="form-check-label" for="check1">Incomplete TRF</label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="check2" name="remark[]" value="Wrong Tube Collection">
+                                        <label class="form-check-label" for="check2">Wrong Tube Collection</label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="check3" name="remark[]" value="Insuffient Sample">
+                                        <label class="form-check-label" for="check3">Insuffient Sample</label>
+                                      </div>
+                                      <div class="form-check">
+                                        <input type="checkbox" class="form-check-input" id="check4" name="remark[]" value="Clot Sample">
+                                        <label class="form-check-label" for="check4">Clot Sample</label>
+                                      </div>
+                                    {{-- <textarea name="remark" id="remark" cols="30" rows="5"></textarea> --}}
+                                    <span class="text-danger is-invalid remark_err"></span>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Cancel</button>
+                            <button class="btn btn-primary" id="updateStatus" type="submit">Reject</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+
 </x-admin.layout>
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://unpkg.com/multiple-select@1.7.0/dist/multiple-select.min.js"></script>
-{{-- received update status --}}
+
+{{-- approved status --}}
 <script>
-    $("#buttons-datatables").on("click", ".received-element", function(e) {
+    $("#buttons-datatables").on("click", ".approved-element", function(e) {
         e.preventDefault();
         swal({
-            title: "Are you sure to Received this Patient Details?",
+            title: "Are you sure to approve this Patient Details?",
             // text: "Make sure if you have filled Vendor details before proceeding further",
             icon: "info",
             buttons: ["Cancel", "Confirm"]
@@ -188,7 +244,7 @@
             if (justTransfer)
             {
                 var model_id = $(this).attr("data-id");
-                var url = "{{ route('received.patient', ":model_id") }}";
+                var url = "{{ route('approve.status', ":model_id") }}";
 
                 $.ajax({
                     url: url.replace(':model_id', model_id),
@@ -217,6 +273,79 @@
                 });
             }
         });
+    });
+</script>
+
+<!-- Open reject status Modal-->
+<script>
+    $("#buttons-datatables").on("click", ".rejected-element", function(e) {
+        e.preventDefault();
+        var model_id = $(this).attr("data-id");
+        $('#patient_id').val(model_id);
+
+        $('#reject-status-modal').modal('show');
+    });
+</script>
+
+<!-- Update reject status -->
+<script>
+    $("#statusRejectForm").submit(function(e) {
+        e.preventDefault();
+        $("#updateStatus").prop('disabled', true);
+
+        var formdata = new FormData(this);
+        formdata.append('_method', 'PUT');
+        var model_id = $('#patient_id').val();
+        var url = "{{ route('reject.status', ':model_id') }}";
+
+        $.ajax({
+            url: url.replace(':model_id', model_id),
+            type: 'POST',
+            data: formdata,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                $("#updateStatus").prop('disabled', false);
+                if (!data.error2)
+                    swal("Successful!", data.success, "success")
+                    .then((action) => {
+                        $("#reject-status-modal").modal('hide');
+                        window.location.reload();
+                    });
+                else
+                    swal("Error!", data.error2, "error");
+            },
+            statusCode: {
+                422: function(responseObject, textStatus, jqXHR) {
+                    $("#updateStatus").prop('disabled', false);
+                    resetErrors();
+                    printErrMsg(responseObject.responseJSON.errors);
+                },
+                500: function(responseObject, textStatus, errorThrown) {
+                    $("#updateStatus").prop('disabled', false);
+                    swal("Error occured!", "Something went wrong please try again", "error");
+                }
+            }
+        });
+
+        function resetErrors() {
+            var form = document.getElementById('statusRejectForm');
+            var data = new FormData(form);
+            for (var [key, value] of data) {
+                $('.' + key + '_err').text('');
+                $('#' + key).removeClass('is-invalid');
+                $('#' + key).addClass('is-valid');
+            }
+        }
+
+        function printErrMsg(msg) {
+            $.each(msg, function(key, value) {
+                $('.' + key + '_err').text(value);
+                $('#' + key).addClass('is-invalid');
+                $('#' + key).removeClass('is-valid');
+            });
+        }
+
     });
 </script>
 

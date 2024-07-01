@@ -95,6 +95,11 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     // approved sample list
     Route::get('approved-sample-list', [App\Http\Controllers\PatientController::class, 'approved_sample_list'])->name('approved_sample_list');
 
+    // Sample Quality Verification
+    Route::get('quality-check-list', [App\Http\Controllers\ListingController::class, 'quality_check_list'])->name('quality_check_list');
+    Route::get('patient-approved-list', [App\Http\Controllers\ListingController::class, 'patient_approved_list'])->name('patient_approved_list');
+    Route::get('patient-rejected-list', [App\Http\Controllers\ListingController::class, 'patient_rejected_list'])->name('patient_rejected_list');
+
     // enter parameter
     Route::get('add-parameter/{id}', [App\Http\Controllers\PatientController::class, 'put_parameter'])->name('enter.patientParameter');
     Route::post('/store-results/{id}', [App\Http\Controllers\PatientController::class, 'storeResults'])->name('store.results');

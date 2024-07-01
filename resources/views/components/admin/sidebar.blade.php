@@ -164,6 +164,32 @@
                     </li>
                 @endcan
 
+                @canany(['list.ReceivedSample', 'list.ApprovedSample'])
+                    <li class="nav-item">
+                        <a class="nav-link menu-link" href="#sidebarLayouts12" data-bs-toggle="collapse" role="button">
+                            <i class="bx bx-scatter-chart"></i>
+                            <span data-key="t-layouts">Sample Quality Verification</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="sidebarLayouts12">
+                            <ul class="nav nav-sm flex-column">
+                                @can('list.ReceivedSample')
+                                    <li class="nav-item">
+                                        <a href="{{ route('quality_check_list') }}" class="nav-link" data-key="t-dashboards">Pending for Quality Check</a>
+                                    </li>
+                                @endcan
+                                @can('list.ApprovedSample')
+                                    <li class="nav-item">
+                                        <a href="{{ route('patient_approved_list') }}" class="nav-link" data-key="t-dashboards">Approved Sample</a>
+                                    </li>
+                                @endcan
+                                <li class="nav-item">
+                                    <a href="{{ route('patient_rejected_list') }}" class="nav-link" data-key="t-dashboards">Rejected Sample</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                @endcan
+
 
                 {{-- @canany(['list.ReceivedSample'])
                     <li class="nav-item">
