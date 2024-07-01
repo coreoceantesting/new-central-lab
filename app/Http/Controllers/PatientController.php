@@ -104,6 +104,23 @@ class PatientController extends Controller
     //     }
     // }
 
+    public function create()
+    {
+        $mainCategories = MainCategory::latest()->get();
+        $subCategories = DB::table('sub_categories')
+            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
+            ->select('sub_categories.*', 'main_categories.main_category_name')
+            ->whereNull('sub_categories.deleted_at')
+            ->get();
+        $lab_list = Lab::latest()->get();
+        $referance_doc_list = [];
+        if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
+        {
+            $referance_doc_list = DB::table('reference_doctors')->where('user_id', Auth::id())->get();
+        }
+        return view('admin.registerPatient',compact('lab_list', 'subCategories', 'mainCategories','referance_doc_list'));
+    }
+
     public function store(StorePatientRequest $request)
     {
         try {
@@ -207,7 +224,7 @@ class PatientController extends Controller
         $html .= '</select>';
         $html .= '<span class="text-danger is-invalid gender_err"></span>';
 
-        $htmlnew = '<label class="col-form-label" for="refering_doctor_name">Refering Doctor Name </label>';
+        $htmlnew = '<label class="col-form-label" for="refering_doctor_name">Health Post MO Name</label>';
         $htmlnew .= '<select class="form-control multiple-select" name="refering_doctor_name[]" id="refering_doctor_name" multiple>';
             foreach($referance_doc_list as $list){
                 $htmlnew .= '<option value="'. $list->reference_doctor_name .'"';

@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Patient Registration</x-slot>
-    <x-slot name="heading">Patient Registration</x-slot>
+    <x-slot name="title">Register Patient List</x-slot>
+    <x-slot name="heading">Register Patient List</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
         <style>
@@ -233,14 +233,8 @@
                 <div class="card">
                     <div class="card-header">
                         <div class="row align-items-end">
-                            <div class="col-md-3">
-                                <div class="d-flex">
-                                    <button id="addToTable" class="btn btn-primary me-2">Add <i class="fa fa-plus"></i></button>
-                                    <button id="btnCancel" class="btn btn-danger" style="display:none;">Cancel</button>
-                                </div>
-                            </div>
-                            <div class="col-md-9">
-                                <form id="searchForm" class="row" method="GET" action="{{ route('register.patient') }}">
+                            <div class="col-md-12">
+                                <form id="searchForm" class="row" method="GET" action="{{ route('register.patient.list') }}">
                                     @csrf
                                     <div class="col-md-3">
                                         <label for="fromdate">From Date</label>
@@ -262,7 +256,7 @@
                                     </div>
                                     <div class="col-md-3 d-flex align-items-end">
                                         <button type="submit" class="btn btn-primary ms-2">Search</button>
-                                        <a href="{{ route('register.patient') }}" class="btn btn-primary ms-2">cancel</a>
+                                        <a href="{{ route('register.patient.list') }}" class="btn btn-primary ms-2">cancel</a>
                                     </div>
                                 </form>
                             </div>
@@ -344,7 +338,7 @@
                 if (!data.error2)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('register.patient') }}';
+                            window.location.href = '{{ route('register.patient.list') }}';
                         });
                 else
                     swal("Error!", data.error2, "error");
@@ -471,7 +465,7 @@
                     if (!data.error2)
                         swal("Successful!", data.success, "success")
                             .then((action) => {
-                                window.location.href = '{{ route('register.patient') }}';
+                                window.location.href = '{{ route('register.patient.list') }}';
                             });
                     else
                         swal("Error!", data.error2, "error");

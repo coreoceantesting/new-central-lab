@@ -93,11 +93,27 @@
 
                 @canany(['patient.Registration'])
                     <li class="nav-item">
+                        <a class="nav-link menu-link" href="#sidebarLayoutsnew" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarLayouts">
+                            <i class="bx bx-user-circle"></i>
+                            <span data-key="t-layouts">Patient Registration</span>
+                        </a>
+                        <div class="collapse menu-dropdown" id="sidebarLayoutsnew">
+                            <ul class="nav nav-sm flex-column">
+                                <li class="nav-item">
+                                    <a href="{{ route('register.patient.create') }}" class="nav-link" data-key="t-horizontal">New Patient Registration</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('register.patient.list') }}" class="nav-link" data-key="t-horizontal">Registrared Patient List</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    {{-- <li class="nav-item">
                         <a class="nav-link menu-link" href="{{ route('register.patient') }}" >
                             <i class="ri-user-line"></i>
                             <span data-key="t-dashboards">Patient Registration</span>
                         </a>
-                    </li>
+                    </li> --}}
                 @endcan
 
 

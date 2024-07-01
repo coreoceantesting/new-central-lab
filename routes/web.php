@@ -70,7 +70,8 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     Route::resource('roles', App\Http\Controllers\Admin\RoleController::class );
 
     // patient registration
-    Route::get('patient-registration', [App\Http\Controllers\PatientController::class, 'index'])->name('register.patient');
+    Route::get('patient-registration-list', [App\Http\Controllers\PatientController::class, 'index'])->name('register.patient.list');
+    Route::get('register-patient', [App\Http\Controllers\PatientController::class, 'create'])->name('register.patient.create');
     Route::post('patient-store', [App\Http\Controllers\PatientController::class, 'store'])->name('store.patient');
     Route::get('patient-edit/{id}', [App\Http\Controllers\PatientController::class, 'edit'])->name('edit.patient');
     Route::get('patient-view/{id}', [App\Http\Controllers\PatientController::class, 'view'])->name('view.patient');
