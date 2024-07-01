@@ -314,18 +314,30 @@ class PatientController extends Controller
 
     public function pending_for_receive_list(Request $request)
     {
-        $query = DB::table('patient_details')->where('status', 'pending')->whereNull('deleted_at');
+        $query = DB::table('patient_details')
+            ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id')
+            ->leftJoin('main_categories', 'patient_details.main_category_id', '=', 'main_categories.id') // Assuming 'lab' field in 'patient_details' references 'id' in 'labs' table
+            ->whereNull('patient_details.deleted_at');
+
         $fromDate = $request->input('fromdate');
         $toDate = $request->input('todate');
+        $lab = $request->input('labnew');
 
         if ($fromDate && $toDate) {
             $fromDateTime = $fromDate . ' 00:00:00';
             $toDateTime = $toDate . ' 23:59:59';
-            $query->whereBetween('date', [$fromDateTime, $toDateTime]);
+            $query->whereBetween('patient_details.date', [$fromDateTime, $toDateTime]);
         }
 
+        if ($lab) {
+            $query->where('patient_details.lab', $lab);
+        }
+
+        // Select desired fields from both tables
+        $query->select('patient_details.*', 'labs.lab_name', 'main_categories.main_category_name'); // Adjust fields as per your requirement
+
         // Get the filtered or unfiltered patient list
-        $patient_list = $query->orderBy('patient_id', 'desc')->get();
+        $patient_list = $query->orderBy('patient_details.patient_id', 'desc')->get();
 
         $mainCategories = MainCategory::latest()->get();
 

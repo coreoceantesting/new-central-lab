@@ -127,7 +127,7 @@
                             <ul class="nav nav-sm flex-column">
                                 @can('list.PendingForReceive')
                                     <li class="nav-item">
-                                        <a href="{{ route('pending_for_receive.patient') }}" class="nav-link" data-key="t-dashboards">Pending to receive</a>
+                                        <a href="{{ route('pending_for_receive.patient') }}" class="nav-link" data-key="t-dashboards">Pending To Receive Sample List</a>
                                     </li>
                                 @endcan
                                 @can('list.RejectedSample')

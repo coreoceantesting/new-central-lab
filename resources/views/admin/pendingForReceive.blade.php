@@ -1,6 +1,6 @@
 <x-admin.layout>
-    <x-slot name="title">Pending Sample List</x-slot>
-    <x-slot name="heading">Pending Sample List</x-slot>
+    <x-slot name="title">Pending To Receive Sample List</x-slot>
+    <x-slot name="heading">Pending To Receive Sample List</x-slot>
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
 
@@ -243,9 +243,10 @@
                                     <tr>
                                         <th>Sr.No</th>
                                         <th>Patient Name</th>
-                                        <th>Patient Mobile No</th>
-                                        <th>Patient AadharCard No</th>
                                         <th>Patient Age</th>
+                                        <th>Lab Name</th>
+                                        <th>Test Name</th>
+                                        <th>Sample Collection Details</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -254,9 +255,10 @@
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $list->first_name }} {{ $list->middle_name }} {{ $list->last_name }}</td>
-                                            <td>{{ $list->mob_no }}</td>
-                                            <td>{{ $list->aadhar_no }}</td>
                                             <td>{{ $list->age }}</td>
+                                            <td>{{ $list->lab_name }}</td>
+                                            <td>{{ $list->main_category_name }}</td>
+                                            <td>{{ $list->date }}</td>
                                             <td>
                                                 {{-- <a href="{{ route('patient.details', $list->patient_id) }}" target="_blank" class="btn btn-secondary px-2 py-1"  title="View Details">View Details</a> --}}
                                                 {{-- <a href="#" class="btn btn-secondary px-2 py-1"  title="View Details">View Details</a> --}}
@@ -300,7 +302,7 @@
                 if (!data.error2)
                     swal("Successful!", data.success, "success")
                         .then((action) => {
-                            window.location.href = '{{ route('register.patient') }}';
+                            window.location.href = '{{ route('register.patient.list') }}';
                         });
                 else
                     swal("Error!", data.error2, "error");
@@ -391,7 +393,7 @@
                     if (!data.error2)
                         swal("Successful!", data.success, "success")
                             .then((action) => {
-                                window.location.href = '{{ route('register.patient') }}';
+                                window.location.href = '{{ route('register.patient.list') }}';
                             });
                     else
                         swal("Error!", data.error2, "error");
