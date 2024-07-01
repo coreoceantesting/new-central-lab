@@ -53,7 +53,7 @@
                     <!-- end col-->
                 </div>
 
-                <div class="row">
+                <div class="row d-none">
                     <div class="col-md-6">
                         <div class="card card-animate">
                             <div class="card-body">
@@ -124,7 +124,7 @@
                     <!-- end col-->
                 </div>
 
-                <div class="row">
+                <div class="row d-none">
                     <div class="col-md-6">
                         <div class="card card-animate">
                             <div class="card-body">
