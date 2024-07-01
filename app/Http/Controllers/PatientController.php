@@ -52,11 +52,13 @@ class PatientController extends Controller
             ->get();
         $lab_list = Lab::latest()->get();
         $referance_doc_list = [];
+        $health_post_name = "";
         if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
         {
             $referance_doc_list = DB::table('reference_doctors')->where('user_id', Auth::id())->get();
+            $health_post_name = Auth::user()->name;
         }
-        return view('admin.patientRegistration',compact('patient_list', 'lab', 'fromDate', 'toDate', 'lab_list', 'subCategories', 'mainCategories','referance_doc_list'));
+        return view('admin.patientRegistration',compact('patient_list', 'lab', 'fromDate', 'toDate', 'lab_list', 'subCategories', 'mainCategories','referance_doc_list', 'health_post_name'));
     }
 
     // public function store(StorePatientRequest $request)
@@ -114,11 +116,13 @@ class PatientController extends Controller
             ->get();
         $lab_list = Lab::latest()->get();
         $referance_doc_list = [];
+        $health_post_name = "";
         if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
         {
             $referance_doc_list = DB::table('reference_doctors')->where('user_id', Auth::id())->get();
+            $health_post_name = Auth::user()->name;
         }
-        return view('admin.registerPatient',compact('lab_list', 'subCategories', 'mainCategories','referance_doc_list'));
+        return view('admin.registerPatient',compact('lab_list', 'subCategories', 'mainCategories','referance_doc_list', 'health_post_name'));
     }
 
     public function store(StorePatientRequest $request)
@@ -170,6 +174,7 @@ class PatientController extends Controller
                     'lab' => $combination['lab_id'],
                     'refering_doctor_name' => $selectedDoctors,
                     'date' => $input['date'],
+                    'health_post_name' => Auth::user()->name,
                     'created_by' => Auth::user()->id,
                     'created_at' => now(), // Use Laravel helper for current time
                 ];
