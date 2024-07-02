@@ -51,16 +51,8 @@ class ListingController extends Controller
         // ->orderBy('patient_id', 'desc')
         // ->get();
 
-        $mainCategories = MainCategory::latest()->get();
-        $subCategories = DB::table('sub_categories')
-            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
-            ->select('sub_categories.*', 'main_categories.main_category_name')
-            ->whereNull('sub_categories.deleted_at')
-            ->get();
-        $lab_list = Lab::latest()->get();
-
             // dd($mainCategories, $subCategories);
-        return view('admin.qualityCheck.pendingForQualityCheck',compact('patient_list', 'mainCategories', 'subCategories', 'lab_list' ,'fromDate', 'toDate'));
+        return view('admin.qualityCheck.pendingForQualityCheck',compact('patient_list','fromDate', 'toDate'));
     }
 
     public function patient_approved_list(Request $request)
@@ -97,16 +89,8 @@ class ListingController extends Controller
         // ->orderBy('patient_id', 'desc')
         // ->get();
 
-        $mainCategories = MainCategory::latest()->get();
-        $subCategories = DB::table('sub_categories')
-            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
-            ->select('sub_categories.*', 'main_categories.main_category_name')
-            ->whereNull('sub_categories.deleted_at')
-            ->get();
-        $lab_list = Lab::latest()->get();
-
             // dd($mainCategories, $subCategories);
-        return view('admin.qualityCheck.approvedList',compact('patient_list', 'mainCategories', 'subCategories', 'lab_list' ,'fromDate', 'toDate'));
+        return view('admin.qualityCheck.approvedList',compact('patient_list','fromDate', 'toDate'));
     }
 
     public function patient_rejected_list(Request $request)
@@ -143,16 +127,7 @@ class ListingController extends Controller
         // ->orderBy('patient_id', 'desc')
         // ->get();
 
-        $mainCategories = MainCategory::latest()->get();
-        $subCategories = DB::table('sub_categories')
-            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
-            ->select('sub_categories.*', 'main_categories.main_category_name')
-            ->whereNull('sub_categories.deleted_at')
-            ->get();
-        $lab_list = Lab::latest()->get();
-
-            // dd($mainCategories, $subCategories);
-        return view('admin.qualityCheck.rejectedList',compact('patient_list', 'mainCategories', 'subCategories', 'lab_list' ,'fromDate', 'toDate'));
+        return view('admin.qualityCheck.rejectedList',compact('patient_list','fromDate', 'toDate'));
     }
 
     public function update_status_resampling(Request $request, $id)
@@ -176,6 +151,20 @@ class ListingController extends Controller
             return $this->respondWithAjax($e, 'updating', 'Patient status');
         }
 
+    }
+
+    public function view_details(Request $request, $id)
+    {
+        $details = DB::table('patient_details')->where('patient_id', $id)->first();
+        $selected_tests = explode(',', $details->tests);
+        $lab_list = Lab::latest()->get();
+        $mainCategories = MainCategory::latest()->get();
+        $subCategories = DB::table('sub_categories')
+            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
+            ->select('sub_categories.*', 'main_categories.main_category_name')
+            ->whereNull('sub_categories.deleted_at')
+            ->get();
+        return view('admin.viewDetail',compact('details', 'mainCategories', 'subCategories', 'selected_tests', 'lab_list'));
     }
 
 }

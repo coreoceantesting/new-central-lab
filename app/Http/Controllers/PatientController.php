@@ -426,16 +426,8 @@ class PatientController extends Controller
         // ->orderBy('patient_id', 'desc')
         // ->get();
 
-        $mainCategories = MainCategory::latest()->get();
-        $subCategories = DB::table('sub_categories')
-            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
-            ->select('sub_categories.*', 'main_categories.main_category_name')
-            ->whereNull('sub_categories.deleted_at')
-            ->get();
-        $lab_list = Lab::latest()->get();
-
             // dd($mainCategories, $subCategories);
-        return view('admin.pendingforreceivesamplelist',compact('patient_list', 'mainCategories', 'subCategories', 'lab_list' ,'fromDate', 'toDate'));
+        return view('admin.pendingforreceivesamplelist',compact('patient_list','fromDate', 'toDate'));
     }
 
     public function received_sample_list(Request $request)
@@ -472,16 +464,8 @@ class PatientController extends Controller
         // ->orderBy('patient_id', 'desc')
         // ->get();
 
-        $mainCategories = MainCategory::latest()->get();
-        $subCategories = DB::table('sub_categories')
-            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
-            ->select('sub_categories.*', 'main_categories.main_category_name')
-            ->whereNull('sub_categories.deleted_at')
-            ->get();
-        $lab_list = Lab::latest()->get();
-
             // dd($mainCategories, $subCategories);
-        return view('admin.receivedSampleList',compact('patient_list', 'mainCategories', 'subCategories', 'lab_list' ,'fromDate', 'toDate'));
+        return view('admin.receivedSampleList',compact('patient_list','fromDate', 'toDate'));
     }
 
     public function update_status_received(Request $request, $id)

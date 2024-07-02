@@ -262,7 +262,7 @@
                                             <td>
                                                 {{-- <a href="{{ route('patient.details', $list->patient_id) }}" target="_blank" class="btn btn-secondary px-2 py-1"  title="View Details">View Details</a> --}}
                                                 {{-- <a href="#" class="btn btn-secondary px-2 py-1"  title="View Details">View Details</a> --}}
-                                                <button class="edit-element btn btn-primary text-dark px-2 py-1" title="View Details" data-id="{{ $list->patient_id }}"><i data-feather="eye"></i></button>
+                                                <a href="{{ route('view.details', $list->patient_id) }}" class="edit-element btn btn-primary btn-sm text-dark px-2 py-1" title="View Details"><i data-feather="eye"></i></a>
                                                 {{-- <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $list->patient_id }}"><i data-feather="trash-2"></i> </button> --}}
                                                 {{-- {!! DNS1D::getBarcodeHTML("$list->first_name $list->last_name", 'C39') !!} --}}
                                             </td>
@@ -323,51 +323,6 @@
     });
 </script>
 
-
-<!-- View -->
-<script>
-    $("#buttons-datatables").on("click", ".edit-element", function(e) {
-        e.preventDefault();
-        var model_id = $(this).attr("data-id");
-        var url = "{{ route('view.patient', ":model_id") }}";
-
-        $.ajax({
-            url: url.replace(':model_id', model_id),
-            type: 'GET',
-            data: {
-                '_token': "{{ csrf_token() }}"
-            },
-            success: function(data, textStatus, jqXHR) {
-                editFormBehaviour();
-                if (!data.error)
-                {
-                    $("#editForm input[name='edit_model_id']").val(data.details.patient_id);
-                    $("#editForm input[name='first_name']").val(data.details.first_name);
-                    $("#editForm input[name='middle_name']").val(data.details.middle_name);
-                    $("#editForm input[name='last_name']").val(data.details.last_name);
-                    $("#editForm input[name='mob_no']").val(data.details.mob_no);
-                    $("#editForm input[name='aadhar_no']").val(data.details.aadhar_no);
-                    $("#editForm input[name='age']").val(data.details.age);
-                    $("#editForm select[name='gender']").val(data.details.gender);
-                    $("#editForm textarea[name='address']").val(data.details.address);
-                    // $("#editForm select[name='tests']").val(data.details.tests);
-                    $('.edit_test').html(data.html);
-                    $('.multiple-select').multipleSelect()
-                    $("#editForm select[name='lab']").val(data.details.lab);
-                    $("#editForm input[name='refering_doctor_name']").val(data.details.refering_doctor_name);
-                    $("#editForm input[name='date']").val(data.details.date);
-                }
-                else
-                {
-                    alert(data.error);
-                }
-            },
-            error: function(error, jqXHR, textStatus, errorThrown) {
-                alert("Some thing went wrong");
-            },
-        });
-    });
-</script>
 
 
 <!-- Update -->

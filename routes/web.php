@@ -101,6 +101,9 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     Route::get('patient-rejected-list', [App\Http\Controllers\ListingController::class, 'patient_rejected_list'])->name('patient_rejected_list');
     // resampling
     Route::put('resampling/{id}', [App\Http\Controllers\ListingController::class, 'update_status_resampling'])->name('resampling.patient');
+    // view detail in diffrent page
+    Route::get('view-details/{id}', [App\Http\Controllers\ListingController::class, 'view_details'])->name('view.details');
+
 
     // enter parameter
     Route::get('add-parameter/{id}', [App\Http\Controllers\PatientController::class, 'put_parameter'])->name('enter.patientParameter');
