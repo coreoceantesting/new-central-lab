@@ -84,7 +84,7 @@
                                     <!-- Reference doctor fields will be appended here -->
                                 </div>
                             </div>
-                            <button type="button" class="btn btn-sm btn-primary mt-2" id="edit-add-reference-doctor-btn">Add Reference Doctor</button>
+                            <button type="button" class="btn btn-sm btn-primary mt-2" id="edit-add-reference-doctor-btn">Add More</button>
 
                         </div>
                         <div class="card-footer">
