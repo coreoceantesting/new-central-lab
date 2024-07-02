@@ -55,6 +55,7 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     Route::resource('maincategories', App\Http\Controllers\Admin\Masters\MainCategoryController::class );
     Route::resource('subcategories', App\Http\Controllers\Admin\Masters\SubCategoryController::class );
     Route::resource('methods', App\Http\Controllers\Admin\Masters\MethodController::class );
+    Route::resource('health-post', App\Http\Controllers\Admin\Masters\HealthPostController::class );
 
 
 

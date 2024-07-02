@@ -62,6 +62,9 @@
                             <li class="nav-item">
                                 <a href="{{ route('methods.index') }}" class="nav-link" data-key="t-horizontal">Method</a>
                             </li>
+                            <li class="nav-item">
+                                <a href="{{ route('health-post.index') }}" class="nav-link" data-key="t-horizontal">Health Post</a>
+                            </li>
                         </ul>
                     </div>
                 </li>
