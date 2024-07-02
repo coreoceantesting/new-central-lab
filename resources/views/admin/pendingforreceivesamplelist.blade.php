@@ -156,7 +156,7 @@
                                             <td>{{ $list->status }}</td>
                                             <td>
                                                 <button class="edit-element btn btn-primary text-dark px-2 py-1" title="View Details" data-id="{{ $list->patient_id }}"><i data-feather="eye"></i></button>
-                                                @if ($list->status == 'pending')
+                                                @if ($list->status == 'pending' || $list->status == 'resampling')
                                                 <button class="received-element btn btn-primary text-dark px-2 py-1" title="Received" data-id="{{ $list->patient_id }}">Receive</button>
                                                 @endif
                                             </td>

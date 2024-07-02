@@ -159,10 +159,10 @@
                                             <td>{{ $list->status }}</td>
                                             <td>
                                                 <button class="edit-element btn btn-primary text-dark px-2 py-1" title="View Details" data-id="{{ $list->patient_id }}"><i data-feather="eye"></i></button>
-                                                @if ($list->status == 'received')
+                                                {{-- @if ($list->status == 'received')
                                                     <button class="approved-element btn btn-success text-dark px-2 py-1" title="approve" data-id="{{ $list->patient_id }}">Approve</button>
                                                     <button class="rejected-element btn btn-danger text-dark px-2 py-1" title="reject" data-id="{{ $list->patient_id }}">Reject</button>
-                                                @endif
+                                                @endif --}}
                                             </td>
                                         </tr>
                                     @endforeach

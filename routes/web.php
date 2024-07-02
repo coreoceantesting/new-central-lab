@@ -99,6 +99,8 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     Route::get('quality-check-list', [App\Http\Controllers\ListingController::class, 'quality_check_list'])->name('quality_check_list');
     Route::get('patient-approved-list', [App\Http\Controllers\ListingController::class, 'patient_approved_list'])->name('patient_approved_list');
     Route::get('patient-rejected-list', [App\Http\Controllers\ListingController::class, 'patient_rejected_list'])->name('patient_rejected_list');
+    // resampling
+    Route::put('resampling/{id}', [App\Http\Controllers\ListingController::class, 'update_status_resampling'])->name('resampling.patient');
 
     // enter parameter
     Route::get('add-parameter/{id}', [App\Http\Controllers\PatientController::class, 'put_parameter'])->name('enter.patientParameter');

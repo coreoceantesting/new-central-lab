@@ -22,7 +22,7 @@ class ListingController extends Controller
         $query = DB::table('patient_details')
             ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id')
             ->leftJoin('main_categories', 'patient_details.main_category_id', '=', 'main_categories.id')
-            // ->where('patient_details.status', 'received')
+            ->where('patient_details.status', 'received')
             ->where('patient_details.patient_status', 'pending')
             ->whereNull('patient_details.deleted_at');
 
@@ -153,6 +153,29 @@ class ListingController extends Controller
 
             // dd($mainCategories, $subCategories);
         return view('admin.qualityCheck.rejectedList',compact('patient_list', 'mainCategories', 'subCategories', 'lab_list' ,'fromDate', 'toDate'));
+    }
+
+    public function update_status_resampling(Request $request, $id)
+    {
+        try
+        {
+            DB::beginTransaction();
+
+            DB::table('patient_details')->where('patient_id', $id)->update([
+                'status' => "resampling",
+                'patient_status' => "pending",
+                'resampling_by' => Auth::user()->name,
+                'resampling_at'=> date('Y-m-d H:i:s')
+            ]);
+            DB::commit();
+
+            return response()->json(['success'=> 'Patient Details Send For Resampling Successfully!']);
+        }
+        catch(\Exception $e)
+        {
+            return $this->respondWithAjax($e, 'updating', 'Patient status');
+        }
+
     }
 
 }

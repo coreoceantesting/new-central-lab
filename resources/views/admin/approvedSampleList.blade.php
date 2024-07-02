@@ -59,8 +59,7 @@
                                             <td>{{ $list->patient_approval_by }}</td>
                                             <td>
                                                 <a href="{{ route('enter.patientParameter', $list->patient_id) }}" class="btn btn-primary text-dark px-2 py-1" title="Test Parameter">Enter Test Parameter</a>
-                                                <a class="btn btn-success text-dark px-2 py-1" title="Test Parameter">ReSampling</a>
-                                                {{-- <button class="btn btn-primary text-dark px-2 py-1" title="Test Parameter" data-id="{{ $list->patient_id }}">Enter Test Parameter</button> --}}
+                                                <button class="resampling-element btn btn-success text-dark px-2 py-1" title="ReSampling" data-id="{{ $list->patient_id }}">ReSampling</button>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -75,6 +74,53 @@
 
 
 </x-admin.layout>
+
+{{-- received update status --}}
+<script>
+    $("#buttons-datatables").on("click", ".resampling-element", function(e) {
+        e.preventDefault();
+        swal({
+            title: "Are you sure to ReSampling this Patient Details?",
+            // text: "Make sure if you have filled Vendor details before proceeding further",
+            icon: "info",
+            buttons: ["Cancel", "Confirm"]
+        })
+        .then((justTransfer) =>
+        {
+            if (justTransfer)
+            {
+                var model_id = $(this).attr("data-id");
+                var url = "{{ route('resampling.patient', ":model_id") }}";
+
+                $.ajax({
+                    url: url.replace(':model_id', model_id),
+                    type: 'POST',
+                    data: {
+                        '_method': "PUT",
+                        '_token': "{{ csrf_token() }}"
+                    },
+                    success: function(data, textStatus, jqXHR) {
+                        if (!data.error && !data.error2) {
+                            swal("Success!", data.success, "success")
+                                .then((action) => {
+                                    window.location.reload();
+                                });
+                        } else {
+                            if (data.error) {
+                                swal("Error!", data.error, "error");
+                            } else {
+                                swal("Error!", data.error2, "error");
+                            }
+                        }
+                    },
+                    error: function(error, jqXHR, textStatus, errorThrown) {
+                        swal("Error!", "Something went wrong", "error");
+                    },
+                });
+            }
+        });
+    });
+</script>
 
 
 
