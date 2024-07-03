@@ -53,30 +53,36 @@
         .test-result tr { border: 1px solid black; text-align: center; }
 
         .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             margin-top: 20px; /* Adjust the top margin as needed */
+            overflow: hidden; /* Clear floats */
         }
+
         .left-side {
-            flex: 1;
-            text-align: left;
+            float: left;
+            width: calc(100% - 120px); /* Adjust the width to leave space for QR Code */
             padding-left: 25px;
         }
+
         .right-side {
-            flex: 1;
+            padding-bottom: 100px;
+            float: right;
+            width: 200px; /* Width of the QR Code section */
             text-align: right;
         }
+
         .signature {
             margin-bottom: 20px;
             height: 50px; /* Adjust the height as needed for the signature */
         }
+
         .name {
             font-weight: lighter;
         }
+
         .designation {
             font-weight: bold;
         }
+
         .qr-code img {
             max-width: 100px;
             height: auto;
@@ -287,31 +293,37 @@
         </ul>
 
         <hr>
-        <div class="container">
-            <div class="left-side">
-                <!-- Signature -->
-                <div class="signature">
-                    <!-- Your signature content here -->
-                    {{-- <img src="{{ public_path('admin/images/Panvel_Municipal_Corporation.png') }}" alt="QR Code" height="50"> --}}
-                    signature
-                </div>
-                <!-- Name -->
-                <div class="name">
-                    Dr. Rutuja Londhe
-                </div>
-                <!-- Designation -->
-                <div class="designation">
-                    M.B.B.S, M.D(Pathology)
-                </div>
-            </div>
-            <div class="right-side">
-                <!-- QR Code -->
-                <div class="qr-code">
-                    {{-- <img class="address-icon-new2" src="{{ public_path('admin/images/qr.jpg') }}" alt="QR Code"> --}}
-                    QR CODE
-                </div>
-            </div>
-        </div>
+
+        {{-- footer section --}}
+        <table>
+            <tr>
+                <td>
+                    <!-- Signature -->
+                    <div class="signature">
+                        <!-- Your signature content here -->
+                        <!-- <img src="{{ public_path('admin/images/Panvel_Municipal_Corporation.png') }}" alt="QR Code" height="50"> -->
+                        Signature
+                    </div>
+                    <!-- Name -->
+                    <div class="name">
+                        Dr. Rutuja Londhe
+                    </div>
+                    <!-- Designation -->
+                    <div class="designation">
+                        M.B.B.S, M.D(Pathology)
+                    </div>
+                </td>
+                <td style="text-align: center">
+                    <!-- QR Code -->
+                    <div class="qr-code">
+                        <img class="address-icon-new2" src="{{ public_path('admin/images/qr.jpg') }}" alt="QR Code">
+                        <!-- QR CODE -->
+                    </div>
+                </td>
+            </tr>
+        </table>
+        
+        
 
         {{-- <div class="page-break"></div> --}}
     @endforeach
