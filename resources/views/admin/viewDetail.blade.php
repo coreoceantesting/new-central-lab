@@ -46,11 +46,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="gender">Select Gender <span class="text-danger">*</span></label>
-                                <select class="form-control" name="gender" id="gender">
-                                    <option value="" disabled>Select Gender</option>
-                                    <option value="Male" @if($details->gender == "Male") selected  @endif disabled>Male</option>
-                                    <option value="Female" @if($details->gender == "Female") selected  @endif disabled>Female</option>
-                                </select>
+                                <input class="form-control" type="text" value="{{ $details->gender }}" readonly>
                                 <span class="text-danger is-invalid gender_err"></span>
                             </div>
                             <div class="col-md-4">
@@ -95,6 +91,12 @@
                                 <label class="col-form-label" for="date">Date <span class="text-danger">*</span></label>
                                 <input class="form-control" id="date" name="date" type="datetime-local" value="{{ $details->date }}" readonly>
                                 <span class="text-danger is-invalid date_err"></span>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="health_post_name">Health Post Name <span class="text-danger">*</span></label>
+                                <input class="form-control" id="health_post_name" name="health_post_name" type="text" value="{{ $details->health_post_name }}" readonly>
+                                <span class="text-danger is-invalid health_post_name_err"></span>
                             </div>
 
                         </div>
