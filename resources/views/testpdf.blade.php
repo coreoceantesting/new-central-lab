@@ -186,7 +186,7 @@
                 <table class="nested-table">
                     <tr>
                         <td style="border-bottom: 1px solid black;"><strong>Sample Collected At:</strong></td>
-                        <td style="border-bottom: 1px solid black;">{{ $patient_details?->labName?->lab_name }}</td>
+                        <td style="border-bottom: 1px solid black;">{{ $patient_details?->health_post_name }}</td>
                     </tr>
                     <tr>
                         <td style="border-bottom: 1px solid black;"><strong>Receive Lab:</strong></td>
