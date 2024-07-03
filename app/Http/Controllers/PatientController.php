@@ -129,7 +129,7 @@ class PatientController extends Controller
         if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
         {
             $referance_doc_list = DB::table('medical_officer_details')->where('health_post_id', Auth::user()->health_post_id)->whereNull('deleted_at')->get();
-            $health_post_name = Auth::user()->name;
+            $health_post_name = DB::table('health_posts')->where('id', Auth::user()->health_post_id)->first('health_post_name');
         }
         return view('admin.registerPatient',compact('lab_list', 'subCategories', 'mainCategories','referance_doc_list', 'health_post_name'));
     }
@@ -183,7 +183,7 @@ class PatientController extends Controller
                     'lab' => $combination['lab_id'],
                     'refering_doctor_name' => $selectedDoctors,
                     'date' => $input['date'],
-                    'health_post_name' => Auth::user()->name,
+                    'health_post_name' => $input['health_post_name'],
                     'health_post_id' => Auth::user()->health_post_id,
                     'created_by' => Auth::user()->id,
                     'created_at' => now(), // Use Laravel helper for current time
