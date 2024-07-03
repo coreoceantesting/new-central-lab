@@ -19,15 +19,15 @@
                         <div class="mb-3 row">
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="name">User Name <span class="text-danger">*</span></label>
-                                <input class="form-control" id="name" name="name" type="text" placeholder="Enter User Name">
-                                <span class="text-danger is-invalid name_err"></span>
+                                <label class="col-form-label" for="first_name">First Name <span class="text-danger">*</span></label>
+                                <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Enter User First Name">
+                                <span class="text-danger is-invalid first_name_err"></span>
                             </div>
 
                             <div class="col-md-4 mt-3">
-                                <label class="col-form-label" for="email">User Email <span class="text-danger">*</span></label>
-                                <input class="form-control" id="email" name="email" type="email" placeholder="Enter User Email">
-                                <span class="text-danger is-invalid email_err"></span>
+                                <label class="col-form-label" for="last_name">Last Name <span class="text-danger">*</span></label>
+                                <input class="form-control" id="last_name" name="last_name" type="text" placeholder="Enter User Last Name">
+                                <span class="text-danger is-invalid last_name_err"></span>
                             </div>
 
                             <div class="col-md-4 mt-3">
@@ -35,6 +35,12 @@
                                 <input class="form-control" id="mobile" name="mobile" type="number" min="0" onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
                                     placeholder="Enter User Mobile">
                                 <span class="text-danger is-invalid mobile_err"></span>
+                            </div>
+
+                            <div class="col-md-4 mt-3">
+                                <label class="col-form-label" for="email">User Email (Username) <span class="text-danger">*</span></label>
+                                <input class="form-control" id="email" name="email" type="email" placeholder="Enter User Email">
+                                <span class="text-danger is-invalid email_err"></span>
                             </div>
 
                             <div class="col-md-4 mt-3">
@@ -48,7 +54,7 @@
                                 <span class="text-danger is-invalid role_err"></span>
                             </div>
 
-                            <div class="col-md-4 mt-3">
+                            <div class="col-md-4 mt-3" id="labContainer" style="display:none;">
                                 <label class="col-form-label" for="lab">Select Lab <span class="text-danger">(required if role is doctor & Lab Technician)*</span></label>
                                 <select class="form-control" id="lab" name="lab">
                                     <option value="">--Select Lab--</option>
@@ -57,6 +63,17 @@
                                     @endforeach
                                 </select>
                                 <span class="text-danger is-invalid lab_err"></span>
+                            </div>
+
+                            <div class="col-md-4 mt-3" id="healthPostContainer" style="display:none;">
+                                <label class="col-form-label" for="health_post_id">Select Health Post <span class="text-danger">(required if role is Health Post)*</span></label>
+                                <select class="form-control" id="health_post_id" name="health_post_id">
+                                    <option value="">--Select Health Post--</option>
+                                    @foreach ($health_posts_list as $list)
+                                        <option value="{{ $list->id }}">{{ $list->health_post_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid health_post_id_err"></span>
                             </div>
 
                             <div class="col-md-4 mt-3">
@@ -71,14 +88,7 @@
                                 <span class="text-danger is-invalid confirm_password_err"></span>
                             </div>
 
-                        </div>
-                        <div class="row mt-3" id="reference-doctor-container"></div>
-
-                        <!-- Add More button container -->
-                        <div class="col-md-4 mt-3" id="add-reference-doctor-btn-container" style="display:none;">
-                            <button type="button" class="btn btn-primary" id="add-reference-doctor-btn">Add More</button>
-                        </div>
-                        
+                        </div>                        
                     </div>
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary" id="addSubmit">Submit</button>
@@ -106,16 +116,16 @@
 
                         <div class="mb-3 row">
 
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="name">User Name <span class="text-danger">*</span></label>
-                                <input class="form-control" name="name" type="text" placeholder="Enter User Name">
-                                <span class="text-danger is-invalid name_err"></span>
+                            <div class="col-md-4 mt-3">
+                                <label class="col-form-label" for="first_name">First Name <span class="text-danger">*</span></label>
+                                <input class="form-control" id="first_name" name="first_name" type="text" placeholder="Enter User First Name">
+                                <span class="text-danger is-invalid first_name_err"></span>
                             </div>
 
-                            <div class="col-md-4">
-                                <label class="col-form-label" for="email">User Email <span class="text-danger">*</span></label>
-                                <input class="form-control" name="email" type="email" placeholder="Enter User Email">
-                                <span class="text-danger is-invalid email_err"></span>
+                            <div class="col-md-4 mt-3">
+                                <label class="col-form-label" for="last_name">Last Name <span class="text-danger">*</span></label>
+                                <input class="form-control" id="last_name" name="last_name" type="text" placeholder="Enter User Last Name">
+                                <span class="text-danger is-invalid last_name_err"></span>
                             </div>
 
                             <div class="col-md-4">
@@ -125,9 +135,15 @@
                                 <span class="text-danger is-invalid mobile_err"></span>
                             </div>
 
+                            <div class="col-md-4">
+                                <label class="col-form-label" for="email">User Email(Username) <span class="text-danger">*</span></label>
+                                <input class="form-control" name="email" type="email" placeholder="Enter User Email">
+                                <span class="text-danger is-invalid email_err"></span>
+                            </div>
+
                             <div class="col-md-4 mt-3">
                                 <label class="col-form-label">Select User Type / Role <span class="text-danger">*</span></label>
-                                <select class="js-example-basic-single col-sm-12" name="role">
+                                <select class="js-example-basic-single col-sm-12 edit_role_new" name="role">
                                     <option value="">--Select Role--</option>
                                     @foreach ($roles as $role)
                                         <option value="{{ $role->id }}">{{ $role->name }}</option>
@@ -136,7 +152,7 @@
                                 <span class="text-danger is-invalid role_err"></span>
                             </div>
 
-                            <div class="col-md-4 mt-3">
+                            <div class="col-md-4 mt-3" id="edit_lab_container" style="display:none;">
                                 <label class="col-form-label" for="lab">Select Lab<span class="text-danger">(required if role is Doctor & Lab Technician)*</span></label>
                                 <select class="form-control" id="lab" name="lab">
                                     <option value="">--Select Lab--</option>
@@ -147,15 +163,18 @@
                                 <span class="text-danger is-invalid lab_err"></span>
                             </div>
 
-                        </div>
-                        <div class="row mt-3">
-                            <label class="col-form-label">Reference Doctors</label>
-                            <div id="edit-reference-doctor-container">
-                                <!-- Reference doctor fields will be appended here -->
+                            <div class="col-md-4 mt-3" id="edit_health_post_container" style="display:none;">
+                                <label class="col-form-label" for="health_post_id">Select Health Post <span class="text-danger">(required if role is Health Post)*</span></label>
+                                <select class="form-control" id="health_post_id" name="health_post_id">
+                                    <option value="">--Select Health Post--</option>
+                                    @foreach ($health_posts_list as $list)
+                                        <option value="{{ $list->id }}">{{ $list->health_post_name }}</option>
+                                    @endforeach
+                                </select>
+                                <span class="text-danger is-invalid health_post_id_err"></span>
                             </div>
-                        </div>
-                        <button type="button" class="btn btn-sm btn-primary mt-2" id="edit-add-reference-doctor-btn">Add Reference Doctor</button>
 
+                        </div>
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-primary" id="editSubmit">Update</button>
@@ -214,7 +233,7 @@
                                         <td>
                                             <button class="edit-element btn text-primary px-2 py-1" title="Edit User" data-id="{{ $user->id }}"><i data-feather="edit"></i></button>
                                             <button class="btn text-primary change-password px-2 py-1" title="Change Password" data-id="{{ $user->id }}"><i data-feather="lock"></i></button>
-                                            <button class="btn text-warning assign-role px-2 py-1" title="Assign Role" data-id="{{ $user->id }}"><i data-feather="user-check"></i></button>
+                                            {{-- <button class="btn text-warning assign-role px-2 py-1" title="Assign Role" data-id="{{ $user->id }}"><i data-feather="user-check"></i></button> --}}
                                         </td>
                                     </tr>
                                 @endforeach
@@ -465,75 +484,63 @@
 
 <!-- Edit -->
 <script>
-    $("#buttons-datatables").on("click", ".edit-element", function(e) {
-        e.preventDefault();
-        // $(".edit-element").show();
-        var model_id = $(this).attr("data-id");
-        var url = "{{ route('users.edit', ':model_id') }}";
+    $(document).ready(function() {
+        // Event listener for role change
+        $(".edit_role_new").change(function() {
+            var selectedRole = $(this).val();
+            if (selectedRole == '5' || selectedRole == '4') {
+                $('#edit_lab_container').show();
+                $('#edit_health_post_container').hide();
+            } else if (selectedRole == '3') {
+                $('#edit_lab_container').hide();
+                $('#edit_health_post_container').show();
+            } else {
+                $('#edit_lab_container').hide();
+                $('#edit_health_post_container').hide();
+            }
+        });
 
-        $.ajax({
-            url: url.replace(':model_id', model_id),
-            type: 'GET',
-            data: {
-                '_token': "{{ csrf_token() }}"
-            },
-            success: function(data, textStatus, jqXHR) {
-                editFormBehaviour();
+        // Event listener for edit button click
+        $("#buttons-datatables").on("click", ".edit-element", function(e) {
+            e.preventDefault();
+            var model_id = $(this).attr("data-id");
+            var url = "{{ route('users.edit', ':model_id') }}";
 
-                if (!data.error) {
+            $.ajax({
+                url: url.replace(':model_id', model_id),
+                type: 'GET',
+                data: {
+                    '_token': "{{ csrf_token() }}"
+                },
+                success: function(data, textStatus, jqXHR) {
+                    // Show the edit form container
+                    $('#editContainer').show();
+
+                    // Populate form fields
                     $("#editForm input[name='edit_model_id']").val(data.user.id);
-                    $("#editForm input[name='dob']").val(data.user.dob);
-                    data.user.gender == 'm' ? $("#editForm input[name='gender'][value='m']").prop("checked", true) : $("#editForm input[name='gender'][value='f']").prop("checked", true);
-                    $("#editForm select[name='role']").html(data.roleHtml);
-                    $("#editForm input[name='name']").val(data.user.name);
+                    $("#editForm input[name='first_name']").val(data.user.first_name);
+                    $("#editForm input[name='last_name']").val(data.user.last_name);
                     $("#editForm input[name='email']").val(data.user.email);
                     $("#editForm input[name='mobile']").val(data.user.mobile);
-                    $("#editForm select[name='lab']").val(data.user.lab);
-                    $("#editForm select[name='ward_id']").html(data.wardHtml);
 
-                    $("#editForm #reference-doctor-container").empty();
-
-                    // Populate existing reference doctor names
-                    if (data.referenceDoctors.length > 0) {
-                        $.each(data.referenceDoctors, function(index, doctor) {
-                            var fieldHTML = `
-                                <div class="col-md-4 reference-doctor-field mt-3">
-                                    <label class="col-form-label" for="reference_doctor_name_${index}">Reference Doctor Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" name="reference_doctor_names[]" type="text" placeholder="Enter Reference Doctor Name" value="${doctor.reference_doctor_name}" required>
-                                    <button type="button" class="btn btn-danger remove-reference-doctor-btn mt-2">Remove</button>
-                                    <span class="text-danger is-invalid reference_doctor_name_err"></span>
-                                </div>
-                            `;
-                            $("#edit-reference-doctor-container").append(fieldHTML);
-                        });
+                    // Set selected role and trigger change event
+                    $("#editForm select[name='role']").html(data.roleHtml).trigger('change');
+                    // console.log($("#editForm select[name='role']").val());
+                    var role_value = $("#editForm select[name='role']").val();
+                    // console.log(role_value);
+                    // Set selected lab or health post based on role
+                    if (role_value == '5' || role_value == '4') {
+                        $("#editForm select[name='lab']").val(data.user.lab);
+                    } else if (role_value == '3') {
+                        $("#editForm select[name='health_post_id']").val(data.user.health_post_id);
                     }
 
-                } else {
-                    swal("Error!", data.error, "error");
-                }
-            },
-            error: function(error, jqXHR, textStatus, errorThrown) {
-                swal("Error!", "Some thing went wrong", "error");
-            },
+                },
+                error: function(error, jqXHR, textStatus, errorThrown) {
+                    swal("Error!", "Something went wrong", "error");
+                },
+            });
         });
-    });
-
-    // Add More Reference Doctor Button Click Handler
-    $(document).on('click', '#edit-add-reference-doctor-btn', function() {
-        var fieldHTML = `
-                <div class="col-md-4 reference-doctor-field mt-3">
-                    <label class="col-form-label" for="reference_doctor_names">Reference Doctor Name <span class="text-danger">*</span></label>
-                    <input class="form-control" name="reference_doctor_names[]" type="text" placeholder="Enter Reference Doctor Name" required>
-                    <button type="button" class="btn btn-danger remove-reference-doctor-btn mt-2">Remove</button>
-                    <span class="text-danger is-invalid reference_doctor_names_err"></span>
-                </div>
-            `;
-            $('#edit-reference-doctor-container').append(fieldHTML);
-    });
-
-    // Remove Reference Doctor Button Click Handler
-    $(document).on('click', '.removeDoctor', function() {
-        $(this).closest('.form-group').remove();
     });
 </script>
 
@@ -677,46 +684,21 @@
     });
 </script>
 
-{{-- add more refrence doctor name --}}
-
+{{-- hide and show lab and health post dropdown --}}
 <script>
     $(document).ready(function() {
-        // Function to add a reference doctor's name input field
-        function addReferenceDoctorField() {
-            var fieldHTML = `
-                <div class="col-md-4 reference-doctor-field mt-3">
-                    <label class="col-form-label" for="reference_doctor_name">Reference Doctor Name <span class="text-danger">*</span></label>
-                    <input class="form-control" name="reference_doctor_name[]" type="text" placeholder="Enter Reference Doctor Name" required>
-                    <button type="button" class="btn btn-danger remove-reference-doctor-btn mt-2">Remove</button>
-                    <span class="text-danger is-invalid reference_doctor_name_err"></span>
-                </div>
-            `;
-            $('#reference-doctor-container').append(fieldHTML);
-        }
-
-        // Handle change event on role dropdown
         $('#role').change(function() {
             var selectedRole = $(this).val();
-            if (selectedRole == 3) { // Assuming 'HealthPost' is the value for the health post role
-                $('#reference-doctor-container').empty(); // Clear any existing fields
-                addReferenceDoctorField(); // Add the first field
-                $('#add-reference-doctor-btn-container').show(); // Show the 'Add More' button container
+            if (selectedRole == '5' || selectedRole == '4') {
+                $('#labContainer').show();
+                $('#healthPostContainer').hide();
+            } else if (selectedRole == '3') {
+                $('#labContainer').hide();
+                $('#healthPostContainer').show();
             } else {
-                $('#reference-doctor-container').empty(); // Clear any existing fields
-                $('#add-reference-doctor-btn-container').hide(); // Hide the 'Add More' button container
+                $('#labContainer').hide();
+                $('#healthPostContainer').hide();
             }
         });
-
-        // Handle click event on 'Add More' button
-        $('#add-reference-doctor-btn').click(function() {
-            addReferenceDoctorField();
-        });
-
-        // Handle click event on 'Remove' button
-        $(document).on('click', '.remove-reference-doctor-btn', function() {
-            $(this).closest('.reference-doctor-field').remove();
-        });
     });
-
-
 </script>

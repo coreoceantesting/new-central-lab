@@ -25,10 +25,12 @@ class UpdateUserRequest extends FormRequest
         return [
             'role' => 'required',
             'lab' => 'nullable',
-            'name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'name' => 'nullable',
+            'health_post_id' => 'nullable',
             'email' => 'required|email',
-            'mobile' => 'required|digits:10',
-            'reference_doctor_names' => 'array',    
+            'mobile' => 'required|digits:10',    
         ];
     }
 }

@@ -25,12 +25,14 @@ class StoreUserRequest extends FormRequest
         return [
             'role' => 'required',
             'lab' => 'nullable',
-            'name' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'health_post_id' => 'nullable',
+            'name' => 'nullable',
             'email' => 'required|unique:users,email|email',
             'mobile' => 'required|unique:users,mobile|digits:10',
             'password' => 'required|min:8',
             'confirm_password' => 'required|same:password',
-            'reference_doctor_name' => 'required|array',
         ];
     }
 }
