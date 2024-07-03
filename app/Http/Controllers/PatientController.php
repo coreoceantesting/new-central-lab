@@ -850,9 +850,15 @@ class PatientController extends Controller
         $query = DB::table('patient_details')
         ->where('patient_status', 'approved')
         ->where('status', 'parameter_submitted')
-        ->where('first_approval_status', 'approved')
         ->where('second_approval_status', 'pending')
-        ->whereNull('deleted_at');
+        ->whereNull('deleted_at')
+        ->whereNotExists(function ($query) {
+            $query->select(DB::raw(1))
+                ->from('patient_details as pd')
+                ->whereColumn('pd.patient_id', 'patient_details.patient_id')
+                ->where('pd.first_approval_status', 'approved')
+                ->where('pd.first_approver_doctor_id', auth()->user()->id);
+        });
 
         $fromDate = $request->input('fromdate');
         $toDate = $request->input('todate');
