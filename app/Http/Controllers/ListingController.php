@@ -188,7 +188,19 @@ class ListingController extends Controller
             ->select('sub_categories.*', 'main_categories.main_category_name')
             ->whereNull('sub_categories.deleted_at')
             ->get();
-        return view('admin.viewDetail',compact('details', 'mainCategories', 'subCategories', 'selected_tests', 'lab_list'));
+
+        // Prepare structured data for selected tests under each main category
+        $selectedTestsByMainCategory = [];
+        foreach ($mainCategories as $mainCategory) {
+            $selectedTestsByMainCategory[$mainCategory->id] = [
+                'main_category' => $mainCategory,
+                'sub_categories' => $subCategories->where('main_category', $mainCategory->id)
+                                                ->whereIn('id', $selected_tests)
+            ];
+        }
+
+
+        return view('admin.viewDetail',compact('details', 'mainCategories', 'subCategories', 'selected_tests', 'lab_list', 'selectedTestsByMainCategory'));
     }
 
 }

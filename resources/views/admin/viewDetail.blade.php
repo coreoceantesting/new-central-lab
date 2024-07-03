@@ -45,7 +45,7 @@
                                 <span class="text-danger is-invalid age_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="gender">Select Gender <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="gender">Gender <span class="text-danger">*</span></label>
                                 <input class="form-control" type="text" value="{{ $details->gender }}" readonly>
                                 <span class="text-danger is-invalid gender_err"></span>
                             </div>
@@ -55,23 +55,24 @@
                                 <span class="text-danger is-invalid address_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="tests">Select Test <span class="text-danger">*</span></label>
-                                <select class="form-control multiple-select new" name="tests[]" id="tests" multiple>
-                                    @foreach($mainCategories as $mainCategory)
-                                        <optgroup label="{{$mainCategory->main_category_name}}">
-                                            @foreach($subCategories as $subCategory)
-                                                @if($subCategory->main_category === $mainCategory->id)
-                                                    <option value="{{ $subCategory->id }}" @if(in_array($subCategory->id, $selected_tests)) selected @endif disabled>{{ $subCategory->sub_category_name }}</option>
-                                                @endif
-                                            @endforeach
-                                        </optgroup>
+                                <label class="col-form-label">Selected Tests</label>
+                                <ul>
+                                    @foreach($selectedTestsByMainCategory as $categoryData)
+                                        @if($categoryData['sub_categories']->isNotEmpty())
+                                            <li><strong>{{ $categoryData['main_category']->main_category_name }}</strong>
+                                                <ul>
+                                                    @foreach($categoryData['sub_categories'] as $subCategory)
+                                                        <li>{{ $subCategory->sub_category_name }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            </li>
+                                        @endif
                                     @endforeach
-                                </select>
-                                <span class="text-danger is-invalid gender_err"></span>
-                            </div>
+                                </ul>
+                            </div>                            
 
                             <div class="col-md-4">
-                                <label class="col-form-label" for="lab">Select Lab <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="lab">Lab <span class="text-danger">*</span></label>
                                 <select class="form-control" name="lab" id="lab">
                                     <option value="" disabled>Select Lab</option>
                                     @foreach ($lab_list as $list)
