@@ -175,6 +175,7 @@ class PatientController extends Controller
                     'refering_doctor_name' => $selectedDoctors,
                     'date' => $input['date'],
                     'health_post_name' => Auth::user()->name,
+                    'health_post_id' => Auth::user()->health_post_id,
                     'created_by' => Auth::user()->id,
                     'created_at' => now(), // Use Laravel helper for current time
                 ];
