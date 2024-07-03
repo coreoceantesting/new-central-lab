@@ -50,7 +50,7 @@
                                             <td>{{ $list->aadhar_no }}</td>
                                             <td>{{ $list->age }}</td>
                                             <td>
-                                                <a href="{{ url('/testreport',$list->patient_id) }}" target="blank" class="btn btn-primary text-dark px-2 py-1" title="Test Parameter">View</a>
+                                                <a href="{{ url('/testreport',$list->patient_id) }}" target="blank" class="btn btn-primary text-dark px-2 py-1" title="Test Parameter">View Report</a>
                                                 <button class="btn btn-warning text-dark px-2 py-1 sendsms" data-id="{{ $list->patient_id }}" title="Send SMS">Send SMS</button>
                                             </td>
                                         </tr>

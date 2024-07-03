@@ -26,7 +26,7 @@ class StorePatientRequest extends FormRequest
             'middle_name' => 'nullable',
             'last_name' => 'required',
             'mob_no' => 'required|min:10|max:10',
-            'aadhar_no' => 'nullable|sometimes|min:12|max:12',
+            'aadhar_no' => 'min:12|max:12',
             'age' => 'required',
             'gender' => 'required',
             'address' => 'nullable',
