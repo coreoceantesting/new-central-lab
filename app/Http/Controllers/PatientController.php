@@ -55,7 +55,7 @@ class PatientController extends Controller
         $health_post_name = "";
         if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
         {
-            $referance_doc_list = DB::table('reference_doctors')->where('user_id', Auth::id())->get();
+            $referance_doc_list = DB::table('medical_officer_details')->where('health_post_id', Auth::user()->health_post_id)->whereNull('deleted_at')->get();
             $health_post_name = Auth::user()->name;
         }
         return view('admin.patientRegistration',compact('patient_list', 'lab', 'fromDate', 'toDate', 'lab_list', 'subCategories', 'mainCategories','referance_doc_list', 'health_post_name'));
@@ -119,7 +119,7 @@ class PatientController extends Controller
         $health_post_name = "";
         if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
         {
-            $referance_doc_list = DB::table('reference_doctors')->where('user_id', Auth::id())->get();
+            $referance_doc_list = DB::table('medical_officer_details')->where('health_post_id', Auth::user()->health_post_id)->whereNull('deleted_at')->get();
             $health_post_name = Auth::user()->name;
         }
         return view('admin.registerPatient',compact('lab_list', 'subCategories', 'mainCategories','referance_doc_list', 'health_post_name'));
@@ -200,7 +200,7 @@ class PatientController extends Controller
         $referance_doc_list = [];
         if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
         {
-            $referance_doc_list = DB::table('reference_doctors')->where('user_id', Auth::id())->get();
+            $referance_doc_list = DB::table('medical_officer_details')->where('health_post_id', Auth::user()->health_post_id)->whereNull('deleted_at')->get();
         } 
         $mainCategories = MainCategory::latest()->get();
         $subCategories = DB::table('sub_categories')
@@ -232,11 +232,11 @@ class PatientController extends Controller
         $htmlnew = '<label class="col-form-label" for="refering_doctor_name">Health Post MO Name</label>';
         $htmlnew .= '<select class="form-control multiple-select" name="refering_doctor_name[]" id="refering_doctor_name" multiple>';
             foreach($referance_doc_list as $list){
-                $htmlnew .= '<option value="'. $list->reference_doctor_name .'"';
-                if(in_array($list->reference_doctor_name, $selected_doc)) {
+                $htmlnew .= '<option value="'. $list->medical_officer_name .'"';
+                if(in_array($list->medical_officer_name, $selected_doc)) {
                     $htmlnew .= ' selected';
                 }
-                $htmlnew .= '>'. $list->reference_doctor_name .'</option>';
+                $htmlnew .= '>'. $list->medical_officer_name .'</option>';
             }
         $htmlnew .= '</select>';
         $htmlnew .= '<span class="text-danger is-invalid refering_doctor_name_err"></span>';

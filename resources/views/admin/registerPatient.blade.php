@@ -101,7 +101,7 @@
                                     {{-- <input class="form-control" id="refering_doctor_name" name="refering_doctor_name" type="text" placeholder="Enter Doctor Name"> --}}
                                     <select class="form-control multiple-select" name="refering_doctor_name[]" id="refering_doctor_name" multiple>
                                         @foreach ($referance_doc_list as $item)
-                                            <option value="{{ $item->reference_doctor_name }}">{{ $item->reference_doctor_name }}</option>    
+                                            <option value="{{ $item->medical_officer_name }}">{{ $item->medical_officer_name }}</option>    
                                         @endforeach
                                     </select>
                                     <span class="text-danger is-invalid refering_doctor_name_err"></span>
