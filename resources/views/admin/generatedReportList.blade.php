@@ -35,9 +35,10 @@
                                     <tr>
                                         <th>Sr.NO</th>
                                         <th>Patient Name</th>
-                                        <th>Patient Mobile No</th>
-                                        <th>Patient AadharCard No</th>
                                         <th>Patient Age</th>
+                                        <th>Lab Name</th>
+                                        <th>Test Name</th>
+                                        <th>Sample Collection Detail</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -46,9 +47,10 @@
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $list->first_name }} {{ $list->middle_name }} {{ $list->last_name }}</td>
-                                            <td>{{ $list->mob_no }}</td>
-                                            <td>{{ $list->aadhar_no }}</td>
                                             <td>{{ $list->age }}</td>
+                                            <td>{{ $list->lab_name }}</td>
+                                            <td>{{ $list->main_category_name }}</td>
+                                            <td>{{ $list->date }}</td>
                                             <td>
                                                 <a href="{{ url('/testreport',$list->patient_id) }}" target="blank" class="btn btn-primary text-dark px-2 py-1" title="Test Parameter">View Report</a>
                                                 <button class="btn btn-warning text-dark px-2 py-1 sendsms" data-id="{{ $list->patient_id }}" title="Send SMS">Send SMS</button>
