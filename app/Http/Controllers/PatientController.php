@@ -854,15 +854,15 @@ class PatientController extends Controller
         ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id')
         ->leftJoin('main_categories', 'patient_details.main_category_id', '=', 'main_categories.id')
         ->where('patient_details.patient_status', 'approved')
+        ->where('patient_details.first_approval_status', 'approved')
         ->where('patient_details.status', 'parameter_submitted')
         ->where('patient_details.second_approval_status', 'pending')
         ->whereNull('patient_details.deleted_at')
         ->whereNotExists(function ($query) {
             $query->select(DB::raw(1))
-                ->from('patient_details as pd')
-                ->whereColumn('pd.patient_id', 'patient_details.patient_id')
-                ->where('pd.first_approval_status', 'approved')
-                ->where('pd.second_approval_by', auth()->user()->id);
+                ->from('patient_details')
+                ->whereColumn('patient_details.patient_id', 'patient_details.patient_id')
+                ->where('patient_details.first_approval_by', auth()->user()->id);
         });
 
         $fromDate = $request->input('fromdate');
