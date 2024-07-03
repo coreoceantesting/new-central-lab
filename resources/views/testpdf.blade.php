@@ -28,6 +28,17 @@
             vertical-align: middle;
         }
 
+        .address-icon-new {
+            width: 300px;
+            height: 50px;
+            vertical-align: middle;
+        }
+
+        .address-icon-new2 {
+            width: 100px;
+            height: 100px;
+        }
+
 
         /* Styles for the patient information table */
         .info-table { border: 1px solid black; width: 100%; }
@@ -118,56 +129,88 @@
     <!-- Patient Information Table -->
     <table class="info-table">
         <tr>
-            <td style="border-right:1px solid black">
+            <td style="text-align: center"><h3><b>Patient Details</b></h3></td>
+        </tr>
+    </table>
+    <table class="info-table">
+        <tr>
+            <td><strong>Patient Name:</strong></td>
+            <td style="padding-right:62%;">{{ $patient_details->first_name ." ".$patient_details->middle_name." ".$patient_details->last_name }}</td>
+        </tr>
+    </table>
+
+    <table class="info-table">
+        <tr>
+            <td style="border-right: 2px solid black;">
                 <table class="nested-table">
                     <tr>
-                        <td><strong>Patient ID:</strong></td>
-                        <td>{{ $patient_details->patient_uniqe_id }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Patient Name:</strong></td>
-                        <td>{{ $patient_details->first_name ." ".$patient_details->middle_name." ".$patient_details->last_name }}</td>
+                        <td style="border-bottom: 1px solid black;"><strong>Report ID:</strong></td>
+                        <td style="border-bottom: 1px solid black;">{{ $patient_details->patient_uniqe_id }}</td>
                     </tr>
                     <tr>
                         <td><strong>Age:</strong></td>
                         <td>{{ $patient_details->age }} Yrs</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Gender:</strong></td>
-                        <td>{{ $patient_details->gender }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ref. By Doctor:</strong></td>
-                        <td>{{ $patient_details->refering_doctor_name }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Sample Collected At:</strong></td>
-                        <td>{{ $patient_details?->labName?->lab_name }}</td>
                     </tr>
                 </table>
             </td>
             <td>
                 <table class="nested-table">
                     <tr>
-                        <td style="padding-left: 10px;"><strong>Registered On:</strong></td>
-                        <td>{{ $patient_details?->created_at  }}</td>
+                        <td style="padding-left: 10px; border-bottom: 1px solid black;"><strong>Patient ID:</strong></td>
+                        <td style="border-bottom: 1px solid black;">{{ $patient_details->patient_uniqe_id }}</td>
                     </tr>
                     <tr>
-                        <td style="padding-left: 10px;"><strong>Collected On:</strong></td>
-                        <td>{{ $patient_details?->received_at }}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding-left: 10px;"><strong>Reported On:</strong></td>
-                        <td>{{ $patient_details?->first_approval_at }}</td>
-                    </tr>
-                    <tr>
-                        <td style="padding-left: 10px;"><strong>Sample ID:</strong></td>
-                        <td>Barcode</td>
+                        <td style="padding-left: 10px;"><strong>Gender:</strong></td>
+                        <td>{{ $patient_details->gender }}</td>
                     </tr>
                 </table>
             </td>
         </tr>
     </table>
+    <br>
+    <table class="info-table">
+        <tr>
+            <td><strong>Sample ID:</strong></td>
+            <td style="padding-right:42%;"><img class="address-icon-new" src="{{ public_path('admin/images/barcode.jpg') }}"></td>
+        </tr>
+    </table>
+    <table class="info-table">
+        <tr>
+            <td style="border-right: 2px solid black;">
+                <table class="nested-table">
+                    <tr>
+                        <td style="border-bottom: 1px solid black;"><strong>Sample Collected At:</strong></td>
+                        <td style="border-bottom: 1px solid black;">{{ $patient_details?->labName?->lab_name }}</td>
+                    </tr>
+                    <tr>
+                        <td style="border-bottom: 1px solid black;"><strong>Receive Lab:</strong></td>
+                        <td style="border-bottom: 1px solid black;">{{ $patient_details?->labName?->lab_name }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Report On:</strong></td>
+                        <td>{{ $patient_details?->second_approval_at }}</td>
+                    </tr>
+                </table>
+            </td>
+            <td>
+                <table class="nested-table">
+                    <tr>
+                        <td style="padding-left: 10px; border-bottom: 1px solid black;"><strong>Collected On:</strong></td>
+                        <td style="border-bottom: 1px solid black;">{{ $patient_details->created_at }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 10px;border-bottom: 1px solid black;"><strong>Received On:</strong></td>
+                        <td style="border-bottom: 1px solid black;">{{ $patient_details->received_at }}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding-left: 10px;"><strong>Medical Officer Name:</strong></td>
+                        <td>{{ $patient_details->refering_doctor_name }}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    {{-- patient information table  --}}
 
         <!-- Main Test Name Table -->
         <h2 style="text-align: center;border:1px solid black;color:black;padding:3px;margin-bottom:1px;">{{ $main_category_name }}</h2>
@@ -178,16 +221,16 @@
                 <td style="text-align: left">
                     <table class="nested-table">
                         <tr>
-                            <td style="text-align: left;width:10px">Sample:</td>
-                            <td style="text-align: left">Sample Name</td>
+                            <td style="text-align: left;width:10px">Method:</td>
+                            <td style="text-align: left">{{ $test_detail?->method?->method_name }}</td>
                         </tr>
                     </table>
                 </td>
                 <td style="text-align: left">
                     <table class="nested-table">
                         <tr>
-                            <td style="text-align: right">Method:</td>
-                            <td style="text-align: left">{{ $test_detail?->method?->method_name }}</td>
+                            <td style="text-align: right">Method Type:</td>
+                            <td style="text-align: left">{{ $test_detail?->type }}</td>
                         </tr>
                     </table>
                 </td>
@@ -234,13 +277,6 @@
         <p style="margin-top: 2px;margin-bottom:2px;margin-left:8px"><strong>Kit used:</strong> Kit Name</p>
         <hr style="margin-top:1px;">
         <strong>Note: The result relate only to the specimens tested and sholud be corelated with clinical finding. </strong><br>
-        {{-- <strong>Indications</strong>
-        <p style="margin-top: 2px;margin-bottom:2px;font-size:12px">This page has 9 different Microsoft Excel sample datasets that you can download, to use for testing, Excel training and demos, and other learning activities. See the data descriptions below, and choose the file that will work best for you This page has 9 different Microsoft Excel sample datasets that you can download, to use for testing, Excel training and demos, and other learning activities. See the data descriptions below, and choose the file that will work best for you.</p>
-        <strong>Methodology</strong>
-        <p style="margin-top: 2px;margin-bottom:2px;font-size:12px">This page has 9 different Microsoft Excel sample datasets that you can download, to use for testing, Excel training and demos, and other learning activities. See the data descriptions below, and choose the file that will work best for you.</p>
-        <strong>Clinical Significance</strong>
-        <p style="margin-top: 2px;margin-bottom:2px;font-size:12px">Detection Of COVID- 19 RNA in patients with COVID-19 infection.</p>
-        <br> --}}
         <strong style="text-decoration: underline">Interpretation Guidance :- </strong>
         <ul>
             <li style="font-size:12px">
@@ -257,7 +293,7 @@
                 <div class="signature">
                     <!-- Your signature content here -->
                     {{-- <img src="{{ public_path('admin/images/Panvel_Municipal_Corporation.png') }}" alt="QR Code" height="50"> --}}
-                    signature image
+                    signature
                 </div>
                 <!-- Name -->
                 <div class="name">
@@ -271,7 +307,7 @@
             <div class="right-side">
                 <!-- QR Code -->
                 <div class="qr-code">
-                    {{-- <img src="{{ public_path('admin/images/Panvel_Municipal_Corporation.png') }}" alt="QR Code"> --}}
+                    {{-- <img class="address-icon-new2" src="{{ public_path('admin/images/qr.jpg') }}" alt="QR Code"> --}}
                     QR CODE
                 </div>
             </div>
