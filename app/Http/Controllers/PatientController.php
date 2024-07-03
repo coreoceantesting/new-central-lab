@@ -858,7 +858,7 @@ class PatientController extends Controller
                 ->from('patient_details as pd')
                 ->whereColumn('pd.patient_id', 'patient_details.patient_id')
                 ->where('pd.first_approval_status', 'approved')
-                ->where('pd.first_approver_doctor_id', auth()->user()->id);
+                ->where('pd.second_approval_by', auth()->user()->id);
         });
 
         $fromDate = $request->input('fromdate');
