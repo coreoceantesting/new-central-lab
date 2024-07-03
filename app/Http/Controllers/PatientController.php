@@ -21,7 +21,8 @@ class PatientController extends Controller
     public function index(Request $request)
     {
         $query = DB::table('patient_details')
-            ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id') // Assuming 'lab' field in 'patient_details' references 'id' in 'labs' table
+            ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id')
+            ->leftJoin('main_categories', 'patient_details.main_category_id', '=', 'main_categories.id') // Assuming 'lab' field in 'patient_details' references 'id' in 'labs' table
             ->whereNull('patient_details.deleted_at');
 
         $fromDate = $request->input('fromdate');
@@ -48,7 +49,7 @@ class PatientController extends Controller
         }
 
         // Select desired fields from both tables
-        $query->select('patient_details.*', 'labs.lab_name'); // Adjust fields as per your requirement
+        $query->select('patient_details.*', 'labs.lab_name', 'main_categories.main_category_name'); // Adjust fields as per your requirement
 
         // Get the filtered or unfiltered patient list
         $patient_list = $query->orderBy('patient_details.patient_id', 'desc')->get();
