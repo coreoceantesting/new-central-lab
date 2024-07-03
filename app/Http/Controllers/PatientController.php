@@ -38,6 +38,15 @@ class PatientController extends Controller
             $query->where('patient_details.lab', $lab);
         }
 
+        if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
+        {
+            $query->where('patient_details.health_post_id', Auth::user()->health_post_id);
+        }
+
+        if(Auth::user()->roles->pluck('name')->contains("Lab Technician")){
+            $query->where('patient_details.lab', Auth::user()->lab);
+        }
+
         // Select desired fields from both tables
         $query->select('patient_details.*', 'labs.lab_name'); // Adjust fields as per your requirement
 
@@ -334,6 +343,15 @@ class PatientController extends Controller
             $query->where('patient_details.lab', $lab);
         }
 
+        if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
+        {
+            $query->where('patient_details.health_post_id', Auth::user()->health_post_id);
+        }
+
+        if(Auth::user()->roles->pluck('name')->contains("Lab Technician")){
+            $query->where('patient_details.lab', Auth::user()->lab);
+        }
+
         // Select desired fields from both tables
         $query->select('patient_details.*', 'labs.lab_name', 'main_categories.main_category_name'); // Adjust fields as per your requirement
 
@@ -376,6 +394,15 @@ class PatientController extends Controller
         if ($lab) {
             $query->where('patient_details.lab', $lab);
         }
+
+        if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
+        {
+            $query->where('patient_details.health_post_id', Auth::user()->health_post_id);
+        }
+
+        if(Auth::user()->roles->pluck('name')->contains("Lab Technician")){
+            $query->where('patient_details.lab', Auth::user()->lab);
+        }
         
         $query->select('patient_details.*', 'labs.lab_name', 'main_categories.main_category_name');
         $patient_list = $query->orderBy('patient_details.patient_id', 'desc')->get();
@@ -396,9 +423,11 @@ class PatientController extends Controller
     {
         $query = DB::table('patient_details')
             ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id')
-            ->leftJoin('main_categories', 'patient_details.main_category_id', '=', 'main_categories.id') // Assuming 'lab' field in 'patient_details' references 'id' in 'labs' table
-            ->where('patient_details.status', 'pending')
-            ->orWhere('patient_details.status', 'resampling')
+            ->leftJoin('main_categories', 'patient_details.main_category_id', '=', 'main_categories.id')
+            ->where(function ($query) {
+                $query->where('patient_details.status', 'pending')
+                    ->orWhere('patient_details.status', 'resampling');
+            })
             ->where('patient_details.patient_status', 'pending')
             ->whereNull('patient_details.deleted_at');
 
@@ -415,20 +444,19 @@ class PatientController extends Controller
         if ($lab) {
             $query->where('patient_details.lab', $lab);
         }
-        
+
+        if (Auth::user()->hasRole('HealthPost')) {
+            // Filter by health_post_id if user role is HealthPost
+            $query->where('patient_details.health_post_id', Auth::user()->health_post_id);
+        } elseif (Auth::user()->hasRole('Lab Technician')) {
+            // Filter by lab if user role is Lab Technician
+            $query->where('patient_details.lab', Auth::user()->lab);
+        }
+
         $query->select('patient_details.*', 'labs.lab_name', 'main_categories.main_category_name');
         $patient_list = $query->orderBy('patient_details.patient_id', 'desc')->get();
 
-        // $patient_list = DB::table('patient_details')
-        // ->where('status', 'pending')
-        // ->orwhere('status', 'received')
-        // ->where('patient_status', 'pending')
-        // ->whereNull('deleted_at')
-        // ->orderBy('patient_id', 'desc')
-        // ->get();
-
-            // dd($mainCategories, $subCategories);
-        return view('admin.pendingforreceivesamplelist',compact('patient_list','fromDate', 'toDate'));
+        return view('admin.pendingforreceivesamplelist', compact('patient_list', 'fromDate', 'toDate'));
     }
 
     public function received_sample_list(Request $request)
@@ -452,6 +480,15 @@ class PatientController extends Controller
 
         if ($lab) {
             $query->where('patient_details.lab', $lab);
+        }
+
+        if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
+        {
+            $query->where('patient_details.health_post_id', Auth::user()->health_post_id);
+        }
+
+        if(Auth::user()->roles->pluck('name')->contains("Lab Technician")){
+            $query->where('patient_details.lab', Auth::user()->lab);
         }
         
         $query->select('patient_details.*', 'labs.lab_name', 'main_categories.main_category_name');
@@ -563,6 +600,14 @@ class PatientController extends Controller
             $query->where('patient_details.lab', $lab);
         }
         
+        if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
+        {
+            $query->where('patient_details.health_post_id', Auth::user()->health_post_id);
+        }
+
+        if(Auth::user()->roles->pluck('name')->contains("Lab Technician")){
+            $query->where('patient_details.lab', Auth::user()->lab);
+        }
         $query->select('patient_details.*', 'labs.lab_name', 'main_categories.main_category_name');
         $patient_list = $query->orderBy('patient_details.patient_id', 'desc')->get();
 
