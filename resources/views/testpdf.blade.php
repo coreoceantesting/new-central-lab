@@ -171,7 +171,7 @@
     <table class="info-table">
         <tr>
             <td><strong>Sample ID:</strong></td>
-            <td style="padding-right:42%;"><img class="address-icon-new" src="{{ public_path('admin/images/barcode.jpg') }}"></td>
+            <td style="padding-right:42%;"><img class="address-icon-new" src="{{ public_path('admin/images/barcodenew.jpg') }}"></td>
         </tr>
     </table>
     <table class="info-table">
