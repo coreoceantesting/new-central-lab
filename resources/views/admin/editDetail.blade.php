@@ -79,6 +79,14 @@
 
                             </div>
 
+                            {{-- <div class="col-md-4">
+                                <label class="col-form-label" for="lab">Labs <span class="text-danger">*</span></label>
+                                <div id='labnames'>
+
+                                </div>
+                                <span class="text-danger is-invalid lab_err"></span>
+                            </div> --}}
+
                             <div class="col-md-4">
                                 <label class="col-form-label" for="lab">Select Lab <span class="text-danger">*</span></label>
                                 <select class="form-control" name="lab" id="lab" disabled>
@@ -182,4 +190,70 @@
     $(function () {
       $('.multiple-select').multipleSelect()
     })
+</script>
+
+{{-- on change of test fetch lab name --}}
+<script>
+    $(document).ready(function() {
+
+            var selectedTests = $('#tests').val();
+            if (selectedTests.length > 0) {
+                $.ajax({
+                    url: '{{ route("get.labs") }}',
+                    method: 'POST',
+                    data: {
+                        testIds: selectedTests,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        var labDiv = $('#labnames');
+                        labDiv.empty(); // Clear previous lab names
+
+                        if (response.labs.length > 0) {
+                            response.labs.forEach(function(lab) {
+                                labDiv.append('<p>' + lab.lab_name + '</p>');
+                            });
+                        } else {
+                            labDiv.append('<p>No labs found</p>');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', status, error);
+                    }
+                });
+            } else {
+                $('#labnames').empty();
+            }
+
+        $('#tests').change(function() {
+            var selectedTests = $(this).val();
+            if (selectedTests.length > 0) {
+                $.ajax({
+                    url: '{{ route("get.labs") }}',
+                    method: 'POST',
+                    data: {
+                        testIds: selectedTests,
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function(response) {
+                        var labDiv = $('#labnames');
+                        labDiv.empty(); // Clear previous lab names
+
+                        if (response.labs.length > 0) {
+                            response.labs.forEach(function(lab) {
+                                labDiv.append('<p>' + lab.lab_name + '</p>');
+                            });
+                        } else {
+                            labDiv.append('<p>No labs found</p>');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('AJAX Error:', status, error);
+                    }
+                });
+            } else {
+                $('#labnames').empty();
+            }
+        });
+    });
 </script>
