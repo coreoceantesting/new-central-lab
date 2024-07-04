@@ -847,21 +847,22 @@ class PatientController extends Controller
 
     public function second_verification_list(Request $request)
     {
+        $userId = auth()->user()->id;
 
         $query = DB::table('patient_details')
-        ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id')
-        ->leftJoin('main_categories', 'patient_details.main_category_id', '=', 'main_categories.id')
-        ->where('patient_details.patient_status', 'approved')
-        ->where('patient_details.first_approval_status', 'approved')
-        ->where('patient_details.status', 'parameter_submitted')
-        ->where('patient_details.second_approval_status', 'pending')
-        ->whereNull('patient_details.deleted_at')
-        ->whereNotExists(function ($query) {
-            $query->select(DB::raw(1))
-                ->from('patient_details')
-                ->whereColumn('patient_details.patient_id', 'patient_details.patient_id')
-                ->where('patient_details.first_approval_by', auth()->user()->id);
-        });
+            ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id')
+            ->leftJoin('main_categories', 'patient_details.main_category_id', '=', 'main_categories.id')
+            ->where('patient_details.patient_status', 'approved')
+            ->where('patient_details.first_approval_status', 'approved')
+            ->where('patient_details.status', 'parameter_submitted')
+            ->where('patient_details.second_approval_status', 'pending')
+            ->whereNull('patient_details.deleted_at')
+            ->whereNotExists(function ($query) use ($userId) {
+                $query->select(DB::raw(1))
+                    ->from('patient_details as pd_inner')
+                    ->whereColumn('pd_inner.patient_id', 'patient_details.patient_id')
+                    ->where('pd_inner.first_approval_by', $userId);
+            });
 
         $fromDate = $request->input('fromdate');
         $toDate = $request->input('todate');
@@ -873,20 +874,9 @@ class PatientController extends Controller
         }
 
         $query->select('patient_details.*', 'labs.lab_name', 'main_categories.main_category_name');
-        // Get the filtered or unfiltered patient list
         $patient_list = $query->orderBy('patient_details.patient_id', 'desc')->get();
 
-        // $patient_list = DB::table('patient_details')
-        // ->where('patient_status', 'approved')
-        // ->where('status', 'parameter_submitted')
-        // ->where('first_approval_status', 'approved')
-        // ->where('second_approval_status', 'pending')
-        // ->whereNull('deleted_at')
-        // ->orderBy('patient_id', 'desc')
-        // ->get();
-
-            // dd($mainCategories, $subCategories);
-        return view('admin.secondVerificationList',compact('patient_list', 'fromDate', 'toDate'));
+        return view('admin.secondVerificationList', compact('patient_list', 'fromDate', 'toDate'));
     }
 
     public function second_doctor_approved_status(Request $request, $id)
