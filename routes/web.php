@@ -104,6 +104,10 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     Route::put('resampling/{id}', [App\Http\Controllers\ListingController::class, 'update_status_resampling'])->name('resampling.patient');
     // view detail in diffrent page
     Route::get('view-details/{id}', [App\Http\Controllers\ListingController::class, 'view_details'])->name('view.details');
+    // resampling list
+    Route::get('resampling-list', [App\Http\Controllers\ListingController::class, 'resampling_list'])->name('resampling.list');
+    // recolllection 
+    Route::put('recollection/{id}', [App\Http\Controllers\ListingController::class, 'update_status_recollection'])->name('recollection.patient');
 
 
     // enter parameter

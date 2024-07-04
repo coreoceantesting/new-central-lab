@@ -425,10 +425,7 @@ class PatientController extends Controller
         $query = DB::table('patient_details')
             ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id')
             ->leftJoin('main_categories', 'patient_details.main_category_id', '=', 'main_categories.id')
-            ->where(function ($query) {
-                $query->where('patient_details.status', 'pending')
-                    ->orWhere('patient_details.status', 'resampling');
-            })
+            ->where('patient_details.status', 'pending')
             ->where('patient_details.patient_status', 'pending')
             ->whereNull('patient_details.deleted_at');
 
