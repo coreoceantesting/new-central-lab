@@ -41,6 +41,7 @@
                                         <th>Sample Collection Details</th>
                                         <th>Status</th>
                                         <th>Remark</th>
+                                        <th>Rejected By</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -54,6 +55,12 @@
                                             <td>{{ $list->date }}</td>
                                             <td>{{ $list->status }}</td>
                                             <td>{{ $list->remark }}</td>
+                                            @if ($list->status == 'rejected' && $list->first_approval_status == 'pending')   
+                                                <td>{{ $list->patient_approval_by }}</td>
+                                            @endif
+                                            @if ($list->status == 'rejected' && $list->first_approval_status == 'rejected')   
+                                                <td>{{ $list->first_approval_by }}</td>
+                                            @endif
                                         </tr>
                                     @endforeach
                             </table>
