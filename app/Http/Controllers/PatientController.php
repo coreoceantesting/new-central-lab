@@ -827,6 +827,7 @@ class PatientController extends Controller
             $remarksString = implode(', ', $remarks);
 
             DB::table('patient_details')->where('patient_id', $id)->update([
+                'status' => "rejected",
                 'first_approval_status' => "rejected",
                 'first_approval_remark' => $remarksString,
                 'remark' => $remarksString,
@@ -941,8 +942,6 @@ class PatientController extends Controller
     {
 
         $query = DB::table('patient_details')
-        ->where('status', 'parameter_submitted')
-        ->Where('patient_status', 'approved')
         ->Where('first_approval_status', 'approved')
         ->Where('second_approval_status', 'rejected')
         ->whereNull('deleted_at');

@@ -48,6 +48,7 @@
                                         <th>Received Details</th>
                                         <th>Approval Date & Time</th>
                                         <th>Approval By</th>
+                                        <th>Rejected Remark</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -63,6 +64,7 @@
                                             <td>{{ \Carbon\Carbon::parse($list->received_at)->format('Y-m-d H:i:s') }}</td>
                                             <td>{{ \Carbon\Carbon::parse($list->patient_approval_at)->format('Y-m-d H:i:s') }}</td>
                                             <td>{{ $list->patient_approval_by }}</td>
+                                            <td>{{ $list->remark }}</td>
                                             <td>
                                                 <a href="{{ route('view.details', $list->patient_id) }}" class="edit-element btn btn-primary btn-sm text-dark px-2 py-1" title="View Details"><i data-feather="eye"></i></a>
                                                 {{-- @if ($list->status == 'received')
