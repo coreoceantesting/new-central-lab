@@ -990,6 +990,16 @@ class PatientController extends Controller
             $toDateTime = $toDate . ' 23:59:59';
             $query->whereBetween('date', [$fromDateTime, $toDateTime]);
         }
+
+        if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
+        {
+            $query->where('patient_details.health_post_id', Auth::user()->health_post_id);
+        }
+
+        if(Auth::user()->roles->pluck('name')->contains("Lab Technician")){
+            $query->where('patient_details.lab', Auth::user()->lab);
+        }
+
         $query->select('patient_details.*', 'labs.lab_name', 'main_categories.main_category_name');
         // Get the filtered or unfiltered patient list
         $patient_list = $query->orderBy('patient_details.patient_id', 'desc')->get();
