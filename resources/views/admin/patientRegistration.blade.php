@@ -174,8 +174,8 @@
                                             <td>{{ $list->main_category_name }}</td>
                                             <td>{{ $list->date }}</td>
                                             <td>
-                                                <button class="edit-element btn text-secondary px-2 py-1" title="Edit ward" data-id="{{ $list->patient_id }}"><i data-feather="edit"></i></button>
-                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete ward" data-id="{{ $list->patient_id }}"><i data-feather="trash-2"></i> </button>
+                                                <a href="{{ route('edit.patient.details', $list->patient_id) }}" class="btn text-secondary px-2 py-1" title="Edit patient"><i data-feather="edit"></i></a>
+                                                <button class="btn text-danger rem-element px-2 py-1" title="Delete Patient" data-id="{{ $list->patient_id }}"><i data-feather="trash-2"></i> </button>
                                             </td>
                                         </tr>
                                     @endforeach

@@ -109,6 +109,8 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
     // recolllection 
     Route::put('recollection/{id}', [App\Http\Controllers\ListingController::class, 'update_status_recollection'])->name('recollection.patient');
 
+    Route::get('edit-patient-registration/{id}', [App\Http\Controllers\ListingController::class, 'edit_details'])->name('edit.patient.details');
+
 
     // enter parameter
     Route::get('add-parameter/{id}', [App\Http\Controllers\PatientController::class, 'put_parameter'])->name('enter.patientParameter');

@@ -262,4 +262,24 @@ class ListingController extends Controller
 
     }
 
+    public function edit_details(Request $request, $id)
+    {
+        $details = DB::table('patient_details')->where('patient_id', $id)->first();
+        $selected_tests = explode(',', $details->tests);
+        $selected_doc = explode(',', $details->refering_doctor_name);
+        $referance_doc_list = [];
+        $lab_list = Lab::latest()->get();
+        if(Auth::user()->roles->pluck('name')->contains("HealthPost"))
+        {
+            $referance_doc_list = DB::table('medical_officer_details')->where('health_post_id', Auth::user()->health_post_id)->whereNull('deleted_at')->get();
+        } 
+        $mainCategories = MainCategory::latest()->get();
+        $subCategories = DB::table('sub_categories')
+            ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
+            ->select('sub_categories.*', 'main_categories.main_category_name')
+            ->whereNull('sub_categories.deleted_at')
+            ->get();
+        return view('admin.editDetail',compact('details', 'mainCategories', 'subCategories', 'selected_tests', 'lab_list', 'selected_doc', 'referance_doc_list'));
+    }
+
 }
