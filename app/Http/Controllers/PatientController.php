@@ -328,6 +328,7 @@ class PatientController extends Controller
         $query = DB::table('patient_details')
             ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id')
             ->leftJoin('main_categories', 'patient_details.main_category_id', '=', 'main_categories.id') // Assuming 'lab' field in 'patient_details' references 'id' in 'labs' table
+            ->where('patient_details.status', 'pending')
             ->whereNull('patient_details.deleted_at');
 
         $fromDate = $request->input('fromdate');

@@ -68,7 +68,7 @@ class ListingController extends Controller
         $query = DB::table('patient_details')
             ->leftJoin('labs', 'patient_details.lab', '=', 'labs.id')
             ->leftJoin('main_categories', 'patient_details.main_category_id', '=', 'main_categories.id')
-            // ->where('patient_details.status', 'received')
+            ->where('patient_details.status', 'received')
             ->where('patient_details.patient_status', 'approved')
             ->whereNull('patient_details.deleted_at');
 
