@@ -273,12 +273,14 @@ class ListingController extends Controller
         {
             $referance_doc_list = DB::table('medical_officer_details')->where('health_post_id', Auth::user()->health_post_id)->whereNull('deleted_at')->get();
         } 
-        $mainCategories = MainCategory::latest()->get();
+        $mainCategories = MainCategory::where('main_categories.lab_id', $details->lab)->latest()->get();
         $subCategories = DB::table('sub_categories')
             ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
+            ->where('main_categories.lab_id', $details->lab)
             ->select('sub_categories.*', 'main_categories.main_category_name')
             ->whereNull('sub_categories.deleted_at')
             ->get();
+        // dd($subCategories);
         return view('admin.editDetail',compact('details', 'mainCategories', 'subCategories', 'selected_tests', 'lab_list', 'selected_doc', 'referance_doc_list'));
     }
 

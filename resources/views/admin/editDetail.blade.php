@@ -62,7 +62,7 @@
                             </div>
                             <div class="col-md-4">
                                 <label class="col-form-label" for="tests">Select Test <span class="text-danger">*</span></label>
-                                <select class="form-control multiple-select new" name="tests[]" id="tests" multiple disabled>
+                                <select class="form-control multiple-select new" name="tests[]" id="tests" multiple>
                                     @foreach($mainCategories as $mainCategory)
                                         <optgroup label="{{ $mainCategory->main_category_name }}">
                                             @foreach($subCategories as $subCategory)

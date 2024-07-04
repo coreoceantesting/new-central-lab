@@ -276,6 +276,7 @@ class PatientController extends Controller
             DB::beginTransaction();
             $input = $request->validated();
             $selectedDoctor = implode(',', $input['refering_doctor_name']);
+            $selectedTests = implode(',', $input['tests']);
 
             $data['first_name'] = $input['first_name'];
             $data['middle_name'] = $input['middle_name'];
@@ -285,7 +286,7 @@ class PatientController extends Controller
             $data['age'] = $input['age'];
             $data['gender'] = $input['gender'];
             $data['address'] = $input['address'];
-            // $data['tests'] = $selectedTests;
+            $data['tests'] = $selectedTests;
             // $data['lab'] = $input['lab'];
             $data['refering_doctor_name'] = $selectedDoctor;
             $data['date'] = $input['date'];
