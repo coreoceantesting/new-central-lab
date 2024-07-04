@@ -668,7 +668,8 @@ class PatientController extends Controller
 
     public function put_parameter(Request $request, $id)
     {
-        $patient_detail = DB::table('patient_details')->where('patient_id', $id)->first();
+        // $patient_detail = DB::table('patient_details')->where('patient_id', $id)->first();
+        $patient_detail = PatientDetail::with('labName')->where('patient_id', $id)->first();
 
         $selected_tests = explode(',', $patient_detail->tests);
         $method_list = Method::latest()->get();
