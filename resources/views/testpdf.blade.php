@@ -250,7 +250,7 @@
                 <th>Result</th>
                 <th>Unit</th>
                 <th>Biological Refereance Interval</th>
-                <th>Type</th>
+                {{-- <th>Type</th> --}}
             </tr>
             <tr>
                 <td>{{ $test_detail?->test_name?->sub_category_name }}</td>
@@ -274,7 +274,7 @@
                     {{ $test_detail?->test_name?->bioreferal }}
                     @endif
                 </td>
-                <td>{{ $test_detail?->type }}</td>
+                {{-- <td>{{ $test_detail?->type }}</td> --}}
             </tr>
         </table>
         @endforeach
