@@ -12,23 +12,43 @@
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered">
+                            <th>Patient Name: {{$patient_detail->first_name}} {{$patient_detail->middle_name}} {{$patient_detail->last_name}}</th>
+                        </table>
+                        <table class="table table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Full Name</th>
-                                    <td>{{$patient_detail->first_name}} {{$patient_detail->middle_name}} {{$patient_detail->last_name}}</td>
-                                    <th>Mobile Number</th>
-                                    <td>{{$patient_detail->mob_no}}</td>
+                                    <th>Report Id</th>
+                                    <td>{{$patient_detail->patient_uniqe_id}}</td>
+                                    <th>Patient Id</th>
+                                    <td>{{$patient_detail->patient_uniqe_id}}</td>
                                 </tr>
                                 <tr>
-                                    <th>Adharcard No</th>
-                                    <td>{{$patient_detail->aadhar_no}}</td>
                                     <th>Age</th>
                                     <td>{{$patient_detail->age}}</td>
-                                </tr>
-                                <tr>
                                     <th>Gender</th>
                                     <td>{{$patient_detail->gender}}</td>
-                                    <th>Medical Officer Name</th>
+                                </tr>
+                            </thead>
+                        </table>
+                        <table class="table table-bordered">
+                            <th>Sample Id: <img height="50" width="200" src="{{ asset('admin/images/barcodenew.jpg') }}"></th>
+                        </table>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Collected At</th>
+                                    <td>{{$patient_detail->health_post_name}}</td>
+                                    <th>Collected On</th>
+                                    <td>{{$patient_detail->date}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Received Lab</th>
+                                    <td>{{$patient_detail?->labName?->lab_name}}</td>
+                                    <th>Received On</th>
+                                    <td>{{$patient_detail->received_at}}</td>
+                                </tr>
+                                <tr>
+                                    <th>MO(Medical Officer) Name</th>
                                     <td>{{$patient_detail->refering_doctor_name}}</td>
                                 </tr>
                             </thead>

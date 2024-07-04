@@ -775,7 +775,8 @@ class PatientController extends Controller
 
     public function view_patient_parameter(Request $request, $id)
     {
-        $patient_detail = DB::table('patient_details')->where('patient_id', $id)->first();
+        // $patient_detail = DB::table('patient_details')->where('patient_id', $id)->first();
+        $patient_detail = PatientDetail::with('labName')->where('patient_id', $id)->first();
         $method_list = Method::latest()->get();
 
         $test_report = DB::table('test_result')
