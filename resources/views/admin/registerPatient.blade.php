@@ -115,7 +115,7 @@
 
                                 <div class="col-md-4">
                                     <label class="col-form-label" for="date">Health Post Name <span class="text-danger">*</span></label>
-                                    <input class="form-control" id="health_post_name" value="{{ $health_post_name->health_post_name }}" name="health_post_name" type="text" readonly>
+                                    <input class="form-control" id="health_post_name" value="{{ $health_post_name->health_post_name ?? '' }}" name="health_post_name" type="text" readonly>
                                     <span class="text-danger is-invalid date_err"></span>
                                 </div>
 
