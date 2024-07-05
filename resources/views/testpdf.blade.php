@@ -313,10 +313,11 @@
                         M.B.B.S, M.D(Pathology)
                     </div>
                 </td>
-                <td style="text-align: center">
+                <td>
                     <!-- QR Code -->
                     <div class="qr-code">
                         <img class="address-icon-new2" src="{{ public_path('admin/images/qr.jpg') }}" alt="QR Code">
+                        {{-- {!! $qr_code !!} --}}
                         <!-- QR CODE -->
                     </div>
                 </td>

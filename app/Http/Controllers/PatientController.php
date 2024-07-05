@@ -15,6 +15,7 @@ use App\Http\Requests\Admin\UpdatePatientRequest;
 use App\Models\PatientDetail;
 use App\Models\TestResult;
 use \Mpdf\Mpdf as PDF;
+use Milon\Barcode\Facades\DNS2DFacade as DNS2D;
 
 class PatientController extends Controller
 {
@@ -1054,7 +1055,8 @@ class PatientController extends Controller
                                             ->groupBy(function ($item) {
                                                 return $item->test_name->MainCategory->main_category_name;
                                             });
-
+        $link = url('testreport/' . $id);
+        $data['qr_code'] = DNS2D::getBarcodeHTML($link, 'QRCODE',3,3);
         // Render the view to a string
         $html = view('testpdf', $data)->render();
 
