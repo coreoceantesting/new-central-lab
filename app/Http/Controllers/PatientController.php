@@ -144,7 +144,7 @@ class PatientController extends Controller
             $input = $request->validated();
             $selectedTests = $input['tests'];
             $selectedDoctors = implode(',', $input['refering_doctor_name']) ;
-            $patient_unique_id = date('Y').''.rand(1000, 9999);
+            $patient_unique_id = date('Y').''.date('d').''.rand(1000, 9999);
 
             $lab_id = [];
             $subCategoryArr = [];
