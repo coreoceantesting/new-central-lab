@@ -325,6 +325,7 @@
                     $("#editForm input[name='units']").val(data.subcategory.units);
                     $("#editForm select[name='main_category']").val(data.subcategory.main_category);
                     $("#editForm select[name='method']").val(data.subcategory.method);
+                    $("#editForm select[name='interval_type']").val(data.subcategory.interval_type);
                     if(data.subcategory.interval_type == 1)
                     {
                         $("#editForm input[name='from_range']").closest('.col-md-4').removeClass("d-none");

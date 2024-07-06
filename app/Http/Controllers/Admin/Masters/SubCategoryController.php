@@ -117,6 +117,9 @@ class SubCategoryController extends Controller
             $data['bioreferal'] = $input['bioreferal'];
             $data['main_category'] = $input['main_category'];
             $data['method'] = $input['method'];
+            $data['interval_type'] = $input['interval_type'];
+            $data['from_range'] = $input['from_range'];
+            $data['to_range'] = $input['to_range'];
             $data['updated_by'] = Auth::user()->id;
             $data['updated_at'] = date('Y-m-d H:i:s');
 
