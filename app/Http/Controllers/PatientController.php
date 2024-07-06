@@ -1054,6 +1054,7 @@ class PatientController extends Controller
                                             ->where('patient_id', $id)
                                             ->get()
                                             ->groupBy(function ($item) {
+                                                // return $item->test_name->MainCategory->main_category_name;
                                                 return $item->test_name && $item->test_name->MainCategory
                                                 ? $item->test_name->MainCategory->main_category_name
                                                 : 'Unknown Category';

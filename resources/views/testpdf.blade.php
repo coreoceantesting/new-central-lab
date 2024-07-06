@@ -219,7 +219,10 @@
     {{-- patient information table  --}}
 
         <!-- Main Test Name Table -->
-        <h2 style="text-align: center;border:1px solid black;color:black;padding:3px;margin-bottom:1px;">{{ $main_category_name }}</h2>
+        <h2 style="text-align: center;border:1px solid black;color:black;padding:3px;margin-bottom:1px;">
+            {{-- {{ $main_category_name }} --}}
+            {{ $main_category_name !== 'Unknown Category' ? $main_category_name : 'Uncategorized Tests' }}
+        </h2>
         {{-- sample method --}}
         @foreach ($test_details as $test_detail)
         <table>
