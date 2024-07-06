@@ -4,7 +4,7 @@
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
     {{-- new dashboard --}}
-    <div class="row">
+    <div class="row d-none">
         <div class="col-xl-12">
             <div class="d-flex flex-column h-100">
                 <div class="row">

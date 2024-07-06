@@ -65,7 +65,7 @@
                                     <select class="form-control" name="main_category" id="main_category">
                                         <option value="">Select Main Category</option>
                                         @foreach ($main_category as $list)
-                                            <option value="{{ $list->id }}">{{ $list->main_category_name }}</option>
+                                            <option value="{{ $list->id }}">{{ $list->main_category_name }} ( {{ $list->lab_name }} )</option>
                                         @endforeach
                                     </select>
                                     <span class="text-danger is-invalid main_category_err"></span>
@@ -145,7 +145,7 @@
                                     <select class="form-control" name="main_category" id="main_category">
                                         <option value="">Select Main Category</option>
                                         @foreach ($main_category as $list)
-                                            <option value="{{ $list->id }}">{{ $list->main_category_name }}</option>
+                                            <option value="{{ $list->id }}">{{ $list->main_category_name }} ( {{ $list->lab_name }} )</option>
                                         @endforeach
                                     </select>
                                     <span class="text-danger is-invalid main_category_err"></span>
@@ -194,7 +194,7 @@
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
                                             <td>{{ $category->sub_category_name }}</td>
-                                            <td>{{ $category->main_category_name }}</td>
+                                            <td>{{ $category->main_category_name }} ( {{ $category->lab_name }} )</td>
                                             <td>{{ $category->method_name }}</td>
                                             <td>{{ $category->units }}</td>
                                             <td>

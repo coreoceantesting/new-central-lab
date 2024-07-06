@@ -20,11 +20,15 @@ class SubCategoryController extends Controller
      */
     public function index()
     {
-        $main_category = MainCategory::latest()->get();
+        $main_category = MainCategory::join('labs', 'main_categories.lab_id', '=', 'labs.id')
+                        ->select('main_categories.id', 'main_categories.main_category_name', 'labs.lab_name')
+                        ->get();
+       
         $category_list = DB::table('sub_categories')
                         ->join('main_categories', 'sub_categories.main_category', '=', 'main_categories.id')
+                        ->join('labs', 'main_categories.lab_id', '=', 'labs.id')
                         ->join('methods', 'sub_categories.method', '=', 'methods.id')
-                        ->select('sub_categories.*','main_categories.main_category_name', 'methods.method_name')
+                        ->select('sub_categories.*','main_categories.main_category_name', 'methods.method_name', 'labs.lab_name')
                         ->whereNull('sub_categories.deleted_at')
                         ->latest()
                         ->get();
