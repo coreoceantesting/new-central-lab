@@ -144,7 +144,7 @@ class PatientController extends Controller
             $input = $request->validated();
             $selectedTests = $input['tests'];
             $selectedDoctors = implode(',', $input['refering_doctor_name']) ;
-            $patient_unique_id = $input['first_name'].'_'.$input['last_name'].'_'.rand(1000, 9999);
+            $patient_unique_id = date('Y').''.rand(1000, 9999);
 
             $lab_id = [];
             $subCategoryArr = [];
@@ -1064,7 +1064,7 @@ class PatientController extends Controller
         
         $link = url('testreport/' . $id);
         $data['barcode'] = DNS1D::getBarcodePNG($details_string, 'c128');
-        $data['qrcode'] = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=' . urlencode($details_string_new) . '">';
+        $data['qrcode'] = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=' . urlencode($details_string_new) . '">';
         // Render the view to a string
         $html = view('testpdf', $data)->render();
 
