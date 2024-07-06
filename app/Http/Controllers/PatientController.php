@@ -1054,12 +1054,16 @@ class PatientController extends Controller
                                             ->where('patient_id', $id)
                                             ->get()
                                             ->groupBy(function ($item) {
-                                                return $item->test_name->MainCategory->main_category_name;
+                                                return $item->test_name && $item->test_name->MainCategory
+                                                ? $item->test_name->MainCategory->main_category_name
+                                                : 'Unknown Category';
                                             });
         $details_string = 'Mobile No: ' .$data['patient_details']->mob_no;
+        $details_string_new ='Name: '.$data['patient_details']->first_name.' '.$data['patient_details']->last_name.' | Mobile No: ' .$data['patient_details']->mob_no.' | Aadhar No: ' .$data['patient_details']->aadhar_no;
         
         $link = url('testreport/' . $id);
         $data['barcode'] = DNS1D::getBarcodePNG($details_string, 'c128');
+        $data['qrcode'] = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=' . urlencode($details_string_new) . '">';
         // Render the view to a string
         $html = view('testpdf', $data)->render();
 

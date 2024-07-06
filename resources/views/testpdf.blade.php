@@ -316,8 +316,8 @@
                 <td>
                     <!-- QR Code -->
                     <div class="qr-code">
-                        <img class="address-icon-new2" src="{{ public_path('admin/images/qr.jpg') }}" alt="QR Code">
-                        {{-- {!! $qr_code !!} --}}
+                        {{-- <img class="address-icon-new2" src="{{ public_path('admin/images/qr.jpg') }}" alt="QR Code"> --}}
+                        {!! $qrcode !!}
                         <!-- QR CODE -->
                     </div>
                 </td>
