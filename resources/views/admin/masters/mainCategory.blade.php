@@ -371,3 +371,33 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+        $('#main_category_name').blur(function() {
+            var main_category_name = $(this).val().trim();
+            if (main_category_name !== '') {
+                // Send AJAX request to check if lab name already exists
+                $.ajax({
+                    url: '{{ route('checkMainCategoryName') }}', // Laravel route to handle the check
+                    type: 'POST',
+                    data: {
+                        '_token': $('input[name="_token"]').val(),
+                        'main_category_name': main_category_name
+                    },
+                    success: function(response) {
+                        if (response.exists) {
+                            alert('Main Category Name already exists!');
+                            // Optionally, you can clear or reset the input field here
+                            $('#main_category_name').val('').focus();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                        alert('Error occurred while checking method name.');
+                    }
+                });
+            }
+        });
+    });
+</script>

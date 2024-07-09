@@ -405,6 +405,13 @@
                 </div>
             `;
             $('#reference-doctor-container').append(fieldHTML);
+
+            // Hide the remove button for the first set of fields
+            if ($('#reference-doctor-container').children().length === 1) {
+                $('#reference-doctor-container').children().first().find('.remove-reference-doctor-btn').hide();
+            } else {
+                $('#reference-doctor-container').children().last().find('.remove-reference-doctor-btn').show();
+            }
         }
     
         addReferenceDoctorField(); 
@@ -420,5 +427,35 @@
             $(this).closest('.reference-doctor-fields').remove();
         });
     
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('#health_post_name').blur(function() {
+            var health_post_name = $(this).val().trim();
+            if (health_post_name !== '') {
+                // Send AJAX request to check if lab name already exists
+                $.ajax({
+                    url: '{{ route('checkHealthPostName') }}', // Laravel route to handle the check
+                    type: 'POST',
+                    data: {
+                        '_token': $('input[name="_token"]').val(),
+                        'health_post_name': health_post_name
+                    },
+                    success: function(response) {
+                        if (response.exists) {
+                            alert('Health post name already exists!');
+                            // Optionally, you can clear or reset the input field here
+                            $('#health_post_name').val('').focus();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                        alert('Error occurred while checking method name.');
+                    }
+                });
+            }
+        });
     });
 </script>

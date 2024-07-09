@@ -129,4 +129,15 @@ class LabController extends Controller
             return $this->respondWithAjax($e, 'deleting', 'Lab');
         }
     }
+
+    public function checkLabName(Request $request)
+    {
+        $labName = $request->input('lab_name');
+
+        // Check if the lab name exists in the database
+        $exists = Lab::where('lab_name', $labName)->exists();
+
+        // Return JSON response to the client
+        return response()->json(['exists' => $exists]);
+    }
 }

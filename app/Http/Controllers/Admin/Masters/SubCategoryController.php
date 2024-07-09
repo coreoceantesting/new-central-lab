@@ -156,4 +156,15 @@ class SubCategoryController extends Controller
             return $this->respondWithAjax($e, 'deleting', 'Sub Category');
         }
     }
+
+    public function checkSubCategoryName(Request $request)
+    {
+    	$Name = $request->input('sub_category_name');
+    
+    	// Check if the lab name exists in the database
+    	$exists = SubCategory::where('sub_category_name', $Name)->exists();
+    
+    	// Return JSON response to the client
+    	return response()->json(['exists' => $exists]);
+    }
 }

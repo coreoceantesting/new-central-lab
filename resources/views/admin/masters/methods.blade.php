@@ -291,3 +291,33 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+        $('#method_name').blur(function() {
+            var methodName = $(this).val().trim();
+            if (methodName !== '') {
+                // Send AJAX request to check if lab name already exists
+                $.ajax({
+                    url: '{{ route('checkMethodName') }}', // Laravel route to handle the check
+                    type: 'POST',
+                    data: {
+                        '_token': $('input[name="_token"]').val(),
+                        'method_name': methodName
+                    },
+                    success: function(response) {
+                        if (response.exists) {
+                            alert('Method name already exists!');
+                            // Optionally, you can clear or reset the input field here
+                            $('#method_name').val('').focus();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                        alert('Error occurred while checking method name.');
+                    }
+                });
+            }
+        });
+    });
+</script>

@@ -291,3 +291,33 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function() {
+        $('#lab_name').blur(function() {
+            var labName = $(this).val().trim();
+            if (labName !== '') {
+                // Send AJAX request to check if lab name already exists
+                $.ajax({
+                    url: '{{ route('checkLabName') }}', // Laravel route to handle the check
+                    type: 'POST',
+                    data: {
+                        '_token': $('input[name="_token"]').val(),
+                        'lab_name': labName
+                    },
+                    success: function(response) {
+                        if (response.exists) {
+                            alert('Lab name already exists!');
+                            // Optionally, you can clear or reset the input field here
+                            $('#lab_name').val('').focus();
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                        alert('Error occurred while checking lab name.');
+                    }
+                });
+            }
+        });
+    });
+</script>

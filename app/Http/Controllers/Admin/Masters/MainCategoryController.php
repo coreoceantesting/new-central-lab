@@ -140,4 +140,15 @@ class MainCategoryController extends Controller
             return $this->respondWithAjax($e, 'deleting', 'Main Category');
         }
     }
+
+    public function checkMainCategoryName(Request $request)
+    {
+    	$Name = $request->input('main_category_name');
+    
+    	// Check if the lab name exists in the database
+    	$exists = MainCategory::where('main_category_name', $Name)->exists();
+    
+    	// Return JSON response to the client
+    	return response()->json(['exists' => $exists]);
+    }
 }

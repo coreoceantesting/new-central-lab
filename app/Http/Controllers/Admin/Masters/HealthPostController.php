@@ -167,4 +167,15 @@ class HealthPostController extends Controller
             return $this->respondWithAjax($e, 'deleting', 'Lab');
         }
     }
+
+    public function checkHealthPostName(Request $request)
+    {
+    	$Name = $request->input('health_post_name');
+    
+    	// Check if the lab name exists in the database
+    	$exists = DB::table('health_posts')->where('health_post_name', $Name)->exists();
+    
+    	// Return JSON response to the client
+    	return response()->json(['exists' => $exists]);
+    }
 }

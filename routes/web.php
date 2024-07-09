@@ -140,6 +140,13 @@ Route::middleware(['auth','PreventBackHistory', 'firewall.all'])->group(function
 
     Route::post('/send-sms', [App\Http\Controllers\SendSMSController::class, 'sendSms'])->name('send.sms');
 
+    // same name validation
+    Route::post('/checkLabName', [App\Http\Controllers\Admin\Masters\LabController::class, 'checkLabName'])->name('checkLabName');
+    Route::post('/checkMethodName', [App\Http\Controllers\Admin\Masters\MethodController::class, 'checkMethodName'])->name('checkMethodName');
+    Route::post('/checkMainCategoryName', [App\Http\Controllers\Admin\Masters\MainCategoryController::class, 'checkMainCategoryName'])->name('checkMainCategoryName');
+    Route::post('/checkSubCategoryName', [App\Http\Controllers\Admin\Masters\SubCategoryController::class, 'checkSubCategoryName'])->name('checkSubCategoryName');
+    Route::post('/checkHealthPostName', [App\Http\Controllers\Admin\Masters\HealthPostController::class, 'checkHealthPostName'])->name('checkHealthPostName');
+
 });
 
 

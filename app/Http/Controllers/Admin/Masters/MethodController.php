@@ -128,4 +128,15 @@ class MethodController extends Controller
             return $this->respondWithAjax($e, 'deleting', 'Method');
         }
     }
+
+    public function checkMethodName(Request $request)
+    {
+        $methodName = $request->input('method_name');
+
+        // Check if the lab name exists in the database
+        $exists = Method::where('method_name', $methodName)->exists();
+
+        // Return JSON response to the client
+        return response()->json(['exists' => $exists]);
+    }
 }
