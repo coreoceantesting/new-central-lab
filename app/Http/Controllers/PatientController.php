@@ -1064,7 +1064,7 @@ class PatientController extends Controller
         
         $link = url('testreport/' . $id);
         $data['barcode'] = DNS1D::getBarcodePNG($details_string, 'c128');
-        $data['qrcode'] = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=' . urlencode($details_string_new) . '">';
+        $data['qrcode'] = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=' . urlencode($details_string_new) . '">';
         // Render the view to a string
         $html = view('testpdf', $data)->render();
 
