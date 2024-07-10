@@ -174,7 +174,9 @@
                                             <td>{{ $list->main_category_name }}</td>
                                             <td>{{ $list->date }}</td>
                                             <td>
-                                                <a href="{{ route('edit.patient.details', $list->patient_id) }}" class="btn text-secondary px-2 py-1" title="Edit patient"><i data-feather="edit"></i></a>
+                                                @if ($list->status == "pending")
+                                                    <a href="{{ route('edit.patient.details', $list->patient_id) }}" class="btn text-secondary px-2 py-1" title="Edit patient"><i data-feather="edit"></i></a>
+                                                @endif
                                                 <button class="btn text-danger rem-element px-2 py-1" title="Delete Patient" data-id="{{ $list->patient_id }}"><i data-feather="trash-2"></i> </button>
                                             </td>
                                         </tr>

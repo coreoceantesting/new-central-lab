@@ -137,7 +137,7 @@ class PatientController extends Controller
         return view('admin.registerPatient',compact('lab_list', 'subCategories', 'mainCategories','referance_doc_list', 'health_post_name'));
     }
 
-    public function store(StorePatientRequest $request)
+    public function store_old(StorePatientRequest $request)
     {
         try {
             DB::beginTransaction();
@@ -204,6 +204,69 @@ class PatientController extends Controller
             return $this->respondWithAjax($e, 'creating', 'Patient Details');
         }
     }
+
+    public function store(StorePatientRequest $request)
+    {
+        try {
+            DB::beginTransaction();
+            $input = $request->validated();
+            $selectedTests = $input['tests'];
+            $selectedDoctors = implode(',', $input['refering_doctor_name']);
+            $patient_unique_id = date('Y') . '' . date('d') . '' . rand(1000, 9999);
+
+            $labTests = [];
+            $mainCategories = [];
+
+            // Fetch main category and lab for each selected test
+            foreach ($selectedTests as $testId) {
+                $mainCategoryId = SubCategory::find($testId)->main_category;
+                $labId = MainCategory::find($mainCategoryId)->lab_id;
+
+                // Store tests under their respective lab IDs
+                $labTests[$labId][] = $testId;
+                
+                // Store main categories under their respective lab IDs
+                $mainCategories[$labId][] = $mainCategoryId;
+            }
+
+            // Insert patient details for each unique lab
+            foreach ($labTests as $labId => $tests) {
+                $uniqueMainCategories = array_unique($mainCategories[$labId]);
+                
+                $data = [
+                    'patient_uniqe_id' => $patient_unique_id,
+                    'first_name' => $input['first_name'],
+                    'middle_name' => $input['middle_name'],
+                    'last_name' => $input['last_name'],
+                    'mob_no' => $input['mob_no'],
+                    'aadhar_no' => $input['aadhar_no'],
+                    'age' => $input['age'],
+                    'gender' => $input['gender'],
+                    'address' => $input['address'],
+                    'tests' => implode(',', $tests),
+                    'main_category_id' => implode(',', $uniqueMainCategories),
+                    'lab' => $labId,
+                    'refering_doctor_name' => $selectedDoctors,
+                    'date' => $input['date'],
+                    'health_post_name' => $input['health_post_name'],
+                    'health_post_id' => Auth::user()->health_post_id,
+                    'created_by' => Auth::user()->id,
+                    'created_at' => now(), // Use Laravel helper for current time
+                ];
+
+                // Insert data into patient_details table
+                PatientDetail::create($data);
+            }
+
+            DB::commit();
+
+            return response()->json(['success' => 'Patient Details stored successfully!']);
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->respondWithAjax($e, 'creating', 'Patient Details');
+        }
+    }
+
 
     public function edit(Request $request, $id)
     {
