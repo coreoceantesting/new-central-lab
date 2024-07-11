@@ -52,7 +52,15 @@
                                             <td>{{ $list->first_name }} {{ $list->middle_name }} {{ $list->last_name }}</td>
                                             <td>{{ $list->age }}</td>
                                             <td>{{ $list->lab_name }}</td>
-                                            <td>{{ $list->main_category_name }}</td>
+                                            <td>
+                                                @php
+                                                    $mainCategoryIds = explode(',', $list->main_category_id);
+                                                    $mainCategories = \App\Models\MainCategory::whereIn('id', $mainCategoryIds)->pluck('main_category_name')->toArray();
+                                                @endphp
+                                                @foreach ($mainCategories as $mainCategory)
+                                                    {{ $mainCategory }}<br>
+                                                @endforeach
+                                            </td>
                                             <td>{{ $list->second_approval_status }}</td>
                                             <td>{{ $list->second_approval_remark }}</td>
                                             {{-- <td>

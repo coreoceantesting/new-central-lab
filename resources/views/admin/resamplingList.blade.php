@@ -50,7 +50,15 @@
                                             <td>{{ $list->first_name }} {{ $list->middle_name }} {{ $list->last_name }}</td>
                                             <td>{{ $list->age }}</td>
                                             <td>{{ $list->lab_name }}</td>
-                                            <td>{{ $list->main_category_name }}</td>
+                                            <td>
+                                                @php
+                                                    $mainCategoryIds = explode(',', $list->main_category_id);
+                                                    $mainCategories = \App\Models\MainCategory::whereIn('id', $mainCategoryIds)->pluck('main_category_name')->toArray();
+                                                @endphp
+                                                @foreach ($mainCategories as $mainCategory)
+                                                    {{ $mainCategory }}<br>
+                                                @endforeach
+                                            </td>
                                             <td>{{ $list->date }}</td>
                                             <td>
                                                 <a href="{{ route('view.details', $list->patient_id) }}" class="edit-element btn btn-primary btn-sm text-dark px-2 py-1" title="View Details"><i data-feather="eye"></i></a>
