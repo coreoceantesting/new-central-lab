@@ -242,6 +242,7 @@
                                 <thead>
                                     <tr>
                                         <th>Sr.No</th>
+                                        <th>PatientID</th>
                                         <th>Patient Name</th>
                                         <th>Patient Age</th>
                                         <th>Lab Name</th>
@@ -254,6 +255,7 @@
                                     @foreach ($patient_list as $index => $list)
                                         <tr>
                                             <td>{{ $index + 1 }}</td>
+                                            <td>{{ $list->patient_uniqe_id }}</td>
                                             <td>{{ $list->first_name }} {{ $list->middle_name }} {{ $list->last_name }}</td>
                                             <td>{{ $list->age }}</td>
                                             <td>{{ $list->lab_name }}</td>
