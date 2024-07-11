@@ -96,7 +96,7 @@
                                                     </td>
                                                     <td>
                                                         <input type="hidden" name="results[{{ $loop->parent->index }}][{{ $loop->index }}][test_id]" value="{{ $test->id }}">
-                                                        <input type="{{ $test->type == 'Cumulative' ? 'text' : 'number' }}" class="form-control result-input" name="results[{{ $loop->parent->index }}][{{ $loop->index }}][result]" required>
+                                                        <input type="{{ $test->type == 'Cumulative' ? 'text' : 'number' }}" class="form-control result-input" name="results[{{ $loop->parent->index }}][{{ $loop->index }}][result]" required step="any">
                                                     </td>
                                                     <td>{{ $test->units }}</td>
                                                     @if ($test->type == "Quantitative")
@@ -128,7 +128,14 @@
     document.querySelectorAll('.type-select').forEach(function(select) {
         select.addEventListener('change', function() {
             var inputField = this.closest('tr').querySelector('.result-input');
-            inputField.type = this.value === 'Cumulative' ? 'text' : 'number';
+            // inputField.type = this.value === 'Cumulative' ? 'text' : 'number';
+            if (this.value === 'Cumulative') {
+                inputField.type = 'text';
+                inputField.removeAttribute('step');
+            } else {
+                inputField.type = 'number';
+                inputField.setAttribute('step', 'any');
+            }
         });
     });
 </script>
