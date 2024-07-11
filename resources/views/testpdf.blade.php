@@ -260,7 +260,7 @@
                 <td>
                     @if ($test_detail?->type == "Quantitative")
                         @if ($test_detail?->result < $test_detail?->test_name?->from_range || $test_detail?->result > $test_detail?->test_name?->to_range)
-                            <b>{{ $test_detail?->result }}</b>
+                            <b style="text-decoration:underline;">{{ $test_detail?->result }}</b>
                         @else
                             {{ $test_detail?->result }}
                         @endif

@@ -32,7 +32,7 @@
                                 <span class="text-danger is-invalid last_name_err"></span>
                             </div>
                             <div class="col-md-4">
-                                <label class="col-form-label" for="mob_no">Mobile No <span class="text-danger">*</span></label>
+                                <label class="col-form-label" for="mob_no">Mobile No </label>
                                 <input class="form-control" id="mob_no" name="mob_no" type="number" placeholder="Enter Mobile No" value="{{ $details->mob_no }}">
                                 <span class="text-danger is-invalid mob_no_err"></span>
                             </div>

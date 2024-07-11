@@ -212,7 +212,8 @@ class PatientController extends Controller
             $input = $request->validated();
             $selectedTests = $input['tests'];
             $selectedDoctors = implode(',', $input['refering_doctor_name']);
-            $patient_unique_id = date('Y') . '' . date('d') . '' . rand(1000, 9999);
+            $healthpostSeries = DB::table('health_posts')->where('id', Auth::user()->health_post_id)->first('initial');
+            $patient_unique_id = $healthpostSeries->initial. date('Y') . '' . date('d') . '' . rand(1000, 9999);
 
             $labTests = [];
             $mainCategories = [];

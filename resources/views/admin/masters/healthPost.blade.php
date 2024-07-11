@@ -22,7 +22,7 @@
                                     <span class="text-danger is-invalid health_post_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="initial">Initial (Series)<span class="text-danger">*</span></label>
                                     <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Health Post Initial">
                                     <span class="text-danger is-invalid initial_err"></span>
                                 </div>
@@ -69,7 +69,7 @@
                                     <span class="text-danger is-invalid health_post_name_err"></span>
                                 </div>
                                 <div class="col-md-4">
-                                    <label class="col-form-label" for="initial">Initial <span class="text-danger">*</span></label>
+                                    <label class="col-form-label" for="initial">Initial (Series)<span class="text-danger">*</span></label>
                                     <input class="form-control" id="initial" name="initial" type="text" placeholder="Enter Health Post Initial">
                                     <span class="text-danger is-invalid initial_err"></span>
                                 </div>
@@ -117,7 +117,7 @@
                                     <tr>
                                         <th>Sr.NO</th>
                                         <th>Health Post Name</th>
-                                        <th>Health Post Initial</th>
+                                        <th>Health Post Initial(Series)</th>
                                         <th>Health Post Location</th>
                                         <th>Action</th>
                                     </tr>
