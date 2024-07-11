@@ -5,7 +5,7 @@
     <title>Report</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-...SHA256-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-        body { font-family: DejaVu serif Condensed; }
+        body { font-family: 'freeserif', 'normal'; }
         table { width: 100%; }
         .header-table td { vertical-align: top; padding: 7px; }
         .logo-left, .logo-center, .address-right { text-align: center; }
