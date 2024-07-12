@@ -4,14 +4,14 @@
     {{-- <x-slot name="subheading">Test</x-slot> --}}
 
     {{-- new dashboard --}}
-    <div class="row d-none">
+    <div class="row">
         <div class="col-xl-12">
             <div class="d-flex flex-column h-100">
                 <div class="row">
-                    @canany(['dashboard.Admin', 'dashboard.HealthPost'])
+                    {{-- @canany(['dashboard.Admin', 'dashboard.HealthPost']) --}}
                         <div class="col-xl-4 col-md-4">
                             <div class="card card-animate" id="totalSlipsCardNew">
-                                <div class="card-body" style="background-color: deepskyblue">
+                                <div class="card-body" style="background-color: lightgreen">
                                     <div class="d-flex justify-content-between">
                                         <div>
                                             <a class="fw-medium text-dark mb-0">
@@ -41,13 +41,13 @@
                             </div>
                             <!-- end card-->
                         </div><!--end col-->
-                    @endcan
+                    {{-- @endcan --}}
 
-                    @canany(['dashboard.Admin', 'dashboard.HealthPost'])
+                    {{-- @canany(['dashboard.Admin', 'dashboard.HealthPost']) --}}
                         <div class="col-xl-4 col-md-4">
                             <!-- card -->
                             <div class="card card-animate" id="todaySlipsCardNew">
-                                <div class="card-body" style="background-color: deepskyblue">
+                                <div class="card-body" style="background-color: lightyellow">
                                     <div class="d-flex justify-content-between">
                                         <div>
                                             <a class="fw-medium text-dark mb-0">
@@ -77,13 +77,13 @@
                             </div>
                             <!-- end card-->
                         </div><!-- end col -->
-                    @endcan
+                    {{-- @endcan --}}
 
-                    @canany(['dashboard.Admin', 'dashboard.HealthPost'])
+                    {{-- @canany(['dashboard.Admin', 'dashboard.HealthPost']) --}}
                         <div class="col-xl-4 col-md-4">
                             <!-- card -->
                             <div class="card card-animate" id="monthlySlipsCardNew">
-                                <div class="card-body" style="background-color: deepskyblue">
+                                <div class="card-body" style="background-color: skyblue">
                                     <div class="d-flex justify-content-between">
                                         <div>
                                             <a class="fw-medium text-dark mb-0">
@@ -114,13 +114,13 @@
                             </div>
                             <!-- end card-->
                         </div><!-- end col -->
-                    @endcan
+                    {{-- @endcan --}}
                     
-                    @canany(['dashboard.Admin', 'dashboard.HealthPost'])
+                    {{-- @canany(['dashboard.Admin', 'dashboard.HealthPost']) --}}
                         <div class="col-xl-4 col-md-4">
                             <!-- card -->
                             <div class="card card-animate" id="yearlySlipsCardNew">
-                                <div class="card-body" style="background-color: deepskyblue">
+                                <div class="card-body" style="background-color: rgb(43, 218, 165)">
                                     <div class="d-flex justify-content-between">
                                         <div>
                                             <a class="fw-medium text-dark mb-0">
@@ -151,12 +151,12 @@
                             </div>
                             <!-- end card-->
                         </div><!-- end col -->
-                    @endcan
+                    {{-- @endcan --}}
                     
-                    @canany(['dashboard.Admin', 'dashboard.HealthPost'])
+                    {{-- @canany(['dashboard.Admin', 'dashboard.HealthPost']) --}}
                         <div class="col-xl-4 col-md-4">
                             {{-- card --}}
-                            <div class="card card-animate" id="actiontakenSlipsNew" style="background-color: deepskyblue">
+                            <div class="card card-animate" id="actiontakenSlipsNew" style="background-color: rgb(241, 166, 84)">
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
                                         <div>
@@ -188,9 +188,9 @@
                             </div>
                             <!-- end card-->
                         </div><!--end col-->
-                    @endcan
+                    {{-- @endcan --}}
 
-                    @canany(['dashboard.Admin', 'dashboard.LabTechnician'])
+                    {{-- @canany(['dashboard.Admin', 'dashboard.LabTechnician']) --}}
                         <div class="col-xl-4 col-md-4">
                             <!-- card -->
                             <div class="card card-animate" id="vardiahavalSlipsCardNew">
@@ -225,10 +225,10 @@
                             </div>
                             <!-- end card-->
                         </div><!-- end col -->
-                    @endcan
+                    {{-- @endcan --}}
 
                     @canany(['dashboard.Admin', 'dashboard.LabTechnician'])
-                        <div class="col-xl-4 col-md-4">
+                        <div class="col-xl-4 col-md-4 d-none">
                             <!-- card -->
                             <div class="card card-animate" id="vardiahavalSlipsCardNew">
                                 <div class="card-body" style="background-color: deepskyblue">
@@ -265,7 +265,7 @@
                     @endcan
 
                     @canany(['dashboard.Admin', 'dashboard.LabTechnician'])
-                        <div class="col-xl-4 col-md-4">
+                        <div class="col-xl-4 col-md-4 d-none">
                             <!-- card -->
                             <div class="card card-animate" id="vardiahavalSlipsCardNew">
                                 <div class="card-body" style="background-color: deepskyblue">
@@ -302,7 +302,7 @@
                     @endcan
 
                     @canany(['dashboard.Admin', 'dashboard.LabTechnician'])
-                        <div class="col-xl-4 col-md-4">
+                        <div class="col-xl-4 col-md-4 d-none">
                             <!-- card -->
                             <div class="card card-animate" id="vardiahavalSlipsCardNew">
                                 <div class="card-body" style="background-color: deepskyblue">
@@ -339,7 +339,7 @@
                     @endcan
 
                     @canany(['dashboard.Admin', 'dashboard.LabTechnician'])
-                        <div class="col-xl-4 col-md-4">
+                        <div class="col-xl-4 col-md-4 d-none">
                             <!-- card -->
                             <div class="card card-animate" id="vardiahavalSlipsCardNew">
                                 <div class="card-body" style="background-color: deepskyblue">
@@ -376,7 +376,7 @@
                     @endcan
 
                     @canany(['dashboard.Admin', 'dashboard.LabTechnician'])
-                        <div class="col-xl-4 col-md-4">
+                        <div class="col-xl-4 col-md-4 d-none">
                             <!-- card -->
                             <div class="card card-animate" id="vardiahavalSlipsCardNew">
                                 <div class="card-body" style="background-color: deepskyblue">
@@ -413,7 +413,7 @@
                     @endcan
 
                     @canany(['dashboard.Admin', 'dashboard.Doctor'])
-                        <div class="col-xl-4 col-md-4">
+                        <div class="col-xl-4 col-md-4 d-none">
                             <!-- card -->
                             <div class="card card-animate" id="vardiahavalSlipsCardNew">
                                 <div class="card-body" style="background-color: deepskyblue">
@@ -450,7 +450,7 @@
                     @endcan
 
                     @canany(['dashboard.Admin', 'dashboard.Doctor'])
-                        <div class="col-xl-4 col-md-4">
+                        <div class="col-xl-4 col-md-4 d-none">
                             <!-- card -->
                             <div class="card card-animate" id="vardiahavalSlipsCardNew">
                                 <div class="card-body" style="background-color: deepskyblue">
@@ -487,7 +487,7 @@
                     @endcan
 
                     @canany(['dashboard.Admin', 'dashboard.Doctor'])
-                        <div class="col-xl-4 col-md-4">
+                        <div class="col-xl-4 col-md-4 d-none">
                             <!-- card -->
                             <div class="card card-animate" id="vardiahavalSlipsCardNew">
                                 <div class="card-body" style="background-color: deepskyblue">
